@@ -1,0 +1,7 @@
+{
+    "remote": "http://127.94.0.2:4444/wd/hub",
+    "environment": { "browserName": "chrome" },
+    "url": "http://easier.dcm.aurea.io/DMS/dmswelcome.jsp",
+    "username": "sa",
+    "password": "sa"
+}
