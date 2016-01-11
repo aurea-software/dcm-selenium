@@ -13,7 +13,7 @@ var username = config.get("username");
 var password = config.get("password");
 
 describe("DCM Easier", function() {
-  this.timeout(30000);
+  this.timeout(120000);
 
   describe("login", function() {
     var browser;
@@ -50,7 +50,7 @@ describe("DCM Easier", function() {
       browser
         .title()
         .then(function(title) {
-          title.should.include("Aurea");
+          title.should.include("Distribution Channel Management");
         })
         .nodeify(done);
     });
