@@ -35,11 +35,11 @@ describe("DCM Easier", function() {
         .nodeify(done);  //same as : .then(function() { done(); });
     });
    
-    /*after(function (done) {
+    after(function (done) {
       browser
         .quit()
         .nodeify(done);
-    });*/
+    });
    
     it("should load login page", function (done) {
       browser
@@ -107,9 +107,7 @@ describe("DCM Easier", function() {
         .waitForElementByCss("#validate", asserters.isDisplayed , 10000)
         .elementById('Party.FirstName').type('FN1')
         .elementById('Party.LastName').type('LN1')
-        /*.selectByVisibleText('button[data-id=SyncPDB]', 'Yes')*/
         .elementById('Party.TaxID').type('12345')
-        //.elementById('RoleDISTRIBUTOR').click()
         .elementById('validate').click()
         .nodeify(done);
     });
