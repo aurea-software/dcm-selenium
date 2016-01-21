@@ -15,7 +15,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("DCM Easier", function() {
+describe("Test Case 1 - Validate new person party data", function() {
   this.timeout(30000);
     var browser;
     
@@ -51,7 +51,7 @@ describe("DCM Easier", function() {
         .notify(done);
     });
     
-    it("should load Party page", function(done) {
+    it("should load party page", function(done) {
       browser
         .frame('navbar')
         .elementById('Party').click()
@@ -124,7 +124,7 @@ describe("DCM Easier", function() {
     
     it("should validate valid create person form", function(done) {
       var taxId = common.rand(5);
-      browser
+      var v = browser
         .refresh()
         .frame()
         .frame('container')
@@ -150,9 +150,26 @@ describe("DCM Easier", function() {
         .elementById('ContactPoint.Address.City').type('city1')
         .elementById('ZipCode').type('12347')
         .elementById('validate').click()
-        //.waitForElementByCss("#save", asserters.isDisplayed , 10000)
-        //.elementsByCss('#ppError_div').should.be.empty
-        .elementById('save').click()
+        .waitForElementByCss("#ppMessage", asserters.isDisplayed , 10000)
+        .elementById('ppMessage').text();
+    
+    v.should.eventually.include("VALIDATING...SUCCESSFUL");
+    
+    v = v.elementById('Party.TaxID').clear()
+        .elementById('validate').click()
+        .waitForElementByCss("#ppError_div", asserters.isDisplayed , 10000)
+        .elementById('ppError_div').text();
+    
+    v.should.eventually.include("No SSN specified");
+    
+    v = v.elementById('Party.TaxID').type(taxId)
+        .elementById('validate').click()
+        .waitForElementByCss("#ppMessage", asserters.isDisplayed , 10000)
+        .elementById('ppMessage').text();
+    
+    v.should.eventually.include("VALIDATING...SUCCESSFUL");
+    
+    v.elementById('save').click()
         .frame()
         .frame('container')
         .frame('cacheframe0')

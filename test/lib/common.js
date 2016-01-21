@@ -37,6 +37,55 @@ define(function() {
             .title().then(function(title) {
                 title.should.equal("Distribution Channel Management");
             });
+    },
+    
+    createPersonParty : function(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn) {
+        return browser
+            .refresh()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementById('Button_Person_Main_NewPerson').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('proppage')
+            .elementById('Party.Salutation').type('Mr')
+            .elementById('Party.FirstName').type(firstName)
+            .elementById('Party.PreferredName').type(preferredName)
+            .elementById('Party.MiddleName').type(middleName)
+            .elementById('Party.LastName').type(lastName)
+            .elementById('Party.BirthDate').type('01/01/1970')
+            .elementById('DTCCID').type(dtcc)
+            .elementById('Party.NPN').type(npn)
+            .elementByCss('button[data-id=SyncPDB]').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('proppage')
+            .elementByLinkText('No').click()
+            .elementById('Party.TaxID').type(taxId)
+            .elementByCss('input[id=RoleEMPLOYEE] ~ i').click()
+            .elementByCss('input[id=RoleDISTRIBUTOR] ~ i').click()
+            .elementById('ContactPoint.Address.Street1').type('Street 1')
+            .elementById('ContactPoint.Address.City').type(city)
+            // We have to scroll down so that we can avoid the error 'Eleemnt is not clickable at this point. Another element would receive the click.'
+            .execute('scrollTo(0,3000)')
+            .elementByCss('button[data-id=US_State]').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('proppage')
+            .elementByLinkText(stateName).click()
+            .elementById('ZipCode').type('4444')
+            .elementById('save').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementById('Grid_Person_Main').text()
+            .should.eventually.include(taxId);
     }
   }
 });
