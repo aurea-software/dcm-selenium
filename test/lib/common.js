@@ -6,7 +6,7 @@ define(function() {
   return {
     rand : function(length) {
         var result = '';
-        for (var i = 1; i < length; i++) {
+        for (var i = 0; i < length; i++) {
             result += Math.floor((Math.random() * 10) );
         }
         return result;
