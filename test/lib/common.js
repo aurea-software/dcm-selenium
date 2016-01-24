@@ -11,34 +11,28 @@ define(function() {
         }
         return result;
     },
-    
+
     configBrowser : function(browser, environment) {
         // optional extra logging
         browser.on('status', function(info) {
             console.log(info);
         });
-      
+
         browser.on('command', function(meth, path, data) {
             console.log(' > ' + meth, path, data || '');
         });
 
         return browser.init(environment);
     },
-    
+
     login : function(browser, url, username, password) {
         return browser
             .get(url)
             .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').type(username)
             .elementByCss('form[name=LoginForm] input[name=PASSWORD]').type(password)
-            .elementByCss('form[name=LoginForm] button[type=submit]').click()
-            .eval("window.location.href").then(function (location) {
-                location.should.include("AppName=DMS");
-            })
-            .title().then(function(title) {
-                title.should.equal("Distribution Channel Management");
-            });
+            .elementByCss('form[name=LoginForm] button[type=submit]').click();
     },
-    
+
     createPersonParty : function(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn) {
         return browser
             .refresh()
@@ -79,13 +73,72 @@ define(function() {
             .frame('proppage')
             .elementByLinkText(stateName).click()
             .elementById('ZipCode').type('4444')
-            .elementById('save').click()
+            .elementById('save').click();
+    },
+
+    createOrganizationParty : function(browser, taxId, partyName, dtcc, npn, city, stateName) {
+        return browser
+            .refresh()
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-            .elementById('Grid_Person_Main').text()
-            .should.eventually.include(taxId);
+            .elementByCss('#Search_Person_Main_primary_display_div button').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByLinkText('Search Organization').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementById('Button_Org_Main_NewOrg').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('proppage')
+            .elementById('Party.Name').type(partyName)
+            .elementById('Party.TaxID').type(taxId)
+            .elementByCss('button[data-id=SyncPDB]').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('proppage')
+            .elementByLinkText('No').click()
+            .elementById('DTCCID').type(dtcc)
+            .elementById('Party.NPN').type(npn)
+            .elementByCss('input[id=RoleAPPOINTINGCOMPANY] ~ i').click()
+            .elementByCss('input[id=RoleEMPLOYER] ~ i').click()
+            .elementByCss('input[id=RoleDISTRIBUTOR] ~ i').click()
+            .elementById('ContactPoint.Address.Street1').type('st1')
+            .elementById('ContactPoint.Address.City').type(city)
+            .elementByCss('button[data-id=US_State]').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('proppage')
+            .elementByLinkText(stateName).click()
+            .elementById('ZipCode').type('4444')
+            .elementById('validate').click()
+            .elementById('save').click();
+    },
+
+    currentDateInString : function() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+
+        return mm + '/' + dd + '/' + yyyy;
     }
   }
 });
