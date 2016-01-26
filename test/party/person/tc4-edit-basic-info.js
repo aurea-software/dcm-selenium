@@ -39,9 +39,7 @@ describe("Test Case 4 - Edit basic info", function() {
     });
    
     after(function (done) {
-      browser
-        .quit()
-        .nodeify(done);
+      browser.quit().nodeify(done);
     });
    
     it("should login", function (done) {
@@ -56,7 +54,7 @@ describe("Test Case 4 - Edit basic info", function() {
     });
     
     it("should create person party", function(done) {
-        common.createPersonParty(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).notify(done);
+        common.createPersonParty(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
     });
     
     it("should edit basic info", function(done) {

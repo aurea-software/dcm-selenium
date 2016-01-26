@@ -52,7 +52,7 @@ var stateCode = 'AZ';
 var stateName = 'Arizona';
 
 describe("Test Case 3 - Search person party", function() {
-  this.timeout(30000);
+  this.timeout(90000);
     var browser;
     
     before(function (done) {
@@ -61,9 +61,7 @@ describe("Test Case 3 - Search person party", function() {
     });
    
     after(function (done) {
-      browser
-        .quit()
-        .nodeify(done);
+      browser.quit().nodeify(done);
     });
    
     it("should login", function (done) {
@@ -88,11 +86,11 @@ describe("Test Case 3 - Search person party", function() {
     });
     
     it('should create person party 1', function(done) {
-        common.createPersonParty(browser, taxId1, firstName1, lastName1, middleName, preferredName, city1, stateName, dtcc1, npn1).notify(done);
+        common.createPersonParty(browser, taxId1, firstName1, lastName1, middleName, preferredName, city1, stateName, dtcc1, npn1).nodeify(done);
     });
     
     it('should create person party 2', function(done) {
-        common.createPersonParty(browser, taxId2, firstName2, lastName2, middleName, preferredName, city2, stateName, dtcc2, npn2).notify(done);
+        common.createPersonParty(browser, taxId2, firstName2, lastName2, middleName, preferredName, city2, stateName, dtcc2, npn2).nodeify(done);
     });
     
     it('should search party 2 by first name and last name', function(done) {
