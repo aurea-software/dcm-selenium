@@ -16,8 +16,8 @@ var password = config.get("password");
 var common = require('../../lib/common');
 var taxId = common.rand(5);
 
-describe("Test Case 2 - Create and edit new person party", function() {
-  this.timeout(30000);
+describe("/party/person/tc2-create-and-edit-new-person-party", function() {
+  this.timeout(60000);
     var browser;
     
     before(function (done) {

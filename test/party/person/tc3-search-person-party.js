@@ -51,7 +51,7 @@ var npn2 = 'N' + r2;
 var stateCode = 'AZ';
 var stateName = 'Arizona';
 
-describe("Test Case 3 - Search person party", function() {
+describe("/party/person/tc3-search-person-party", function() {
   this.timeout(90000);
     var browser;
     

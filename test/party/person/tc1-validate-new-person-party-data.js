@@ -15,8 +15,8 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("Test Case 1 - Validate new person party data", function() {
-  this.timeout(30000);
+describe("/party/person/tc1-validate-new-person-party-data", function() {
+  this.timeout(60000);
     var browser;
     
     before(function (done) {

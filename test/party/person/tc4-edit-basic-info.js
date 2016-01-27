@@ -29,7 +29,7 @@ var newString = 'New';
 
 console.log('taxId: ' + taxId);
 
-describe("Test Case 4 - Edit basic info", function() {
+describe("/party/person/tc4-edit-basic-info", function() {
   this.timeout(60000);
     var browser;
     

@@ -24,8 +24,8 @@ result.residenceIndex = -1;
 result.textData = '';
 result.usageIndex = -1;
 
-describe("Test Case 5 - Add / edit contact info", function() {
-    this.timeout(60000);
+describe("/party/person/tc5-add-edit-contact-info", function() {
+    this.timeout(90000);
     var browser;
 
     var assertAddressDisabled = function(data) {

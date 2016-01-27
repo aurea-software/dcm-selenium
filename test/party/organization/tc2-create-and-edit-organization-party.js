@@ -18,7 +18,7 @@ var taxId = common.rand(5);
 var partyName = "PN" + taxId;
 var partyNameNew = partyName + 'New';
 
-describe("Test Case 2 - Create and edit organization party", function() {
+describe("/party/organization/tc2-create-and-edit-organization-party", function() {
     this.timeout(60000);
     var browser;
 

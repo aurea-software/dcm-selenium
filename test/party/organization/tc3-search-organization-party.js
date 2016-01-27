@@ -44,7 +44,7 @@ var npn2 = 'N' + r2;
 var stateCode = 'AZ';
 var stateName = 'Arizona';
 
-describe("Test Case 3 - Search organization party", function() {
+describe("/party/organization/tc3-search-organization-party", function() {
     this.timeout(60000);
     var browser;
 
@@ -141,7 +141,7 @@ describe("Test Case 3 - Search organization party", function() {
         prepareForOrganizationSearch()
             .elementByLinkText('Advanced Search').click()
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_NameUpper_Search_Value').clear().type(partyNamePrefix + "*")
-            .elementByLinkText('Search').click()
+            .type(wd.SPECIAL_KEYS['Enter'])
             .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become(partyName1)
             .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(2) td:nth-child(2)').text()
@@ -156,7 +156,7 @@ describe("Test Case 3 - Search organization party", function() {
             .elementByCss('#Search_Org_Main_form #Field_Party_Org_NPN_Search_Value').clear().type(npn2)
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_City_Search_Value').clear().type(city2)
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_State_Search_Value').clear().type(stateCode)
-            .elementByLinkText('Search').click()
+            .type(wd.SPECIAL_KEYS['Enter'])
             .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become(partyName2)
             .notify(done);
@@ -179,7 +179,11 @@ describe("Test Case 3 - Search organization party", function() {
         prepareForOrganizationSearch()
             .elementByLinkText('Advanced Search').click()
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_NameUpper_Search_Value').clear().type(partyNamePrefix + "*")
-            .elementByCss('button[data-id=SortField1_order').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByCss('button[data-id=SortField1_order]').click()
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -197,13 +201,17 @@ describe("Test Case 3 - Search organization party", function() {
         prepareForOrganizationSearch()
             .elementByLinkText('Advanced Search').click()
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_NameUpper_Search_Value').clear().type(partyNamePrefix + "*")
-            .elementByCss('button[data-id=SortField1').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByCss('#Search_Org_Main_form button[data-id=SortField1]').click()
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
             .elementByLinkText('Tax ID/SSN').click()
-            .elementByCss('button[data-id=SortField1_order').click()
+            .elementByCss('button[data-id=SortField1_order]').click()
             .frame()
             .frame('container')
             .frame('cacheframe0')

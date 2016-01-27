@@ -16,9 +16,9 @@ var password = config.get("password");
 var common = require('../../lib/common');
 
 var taxId = common.rand(4);
-var taxIdNew = taxId + '9';
-
 var dtcc = common.rand(4);
+
+var taxIdNew = taxId + '9';
 var dtccNew = dtcc + '9';
 
 var partyName = 'PN' + taxId;
@@ -27,7 +27,7 @@ var partyNameNew = partyName + 'New';
 console.log('taxId: ' + taxId);
 console.log('dtcc: ' + dtcc);
 
-describe("Test Case 4 - Edit basic info", function() {
+describe("/party/organization/tc4-edit-basic-info", function() {
     this.timeout(90000);
     var browser;
 
@@ -88,7 +88,9 @@ describe("Test Case 4 - Edit basic info", function() {
        browser
            .frame()
            .frame('sidebar')
-           .elementById('Tab_Org_Main_BasicInfo_link').click()
+           // ID doesn't seem consistent (Tab_Org_Main_BasicInfo_link / Tab_Person_Main_BasicInfo_link).
+           // We use link text instead.
+           .elementByLinkText('Basic Information').click()
            .frame()
            .frame('container')
            .frame('cacheframe0')
