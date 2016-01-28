@@ -140,6 +140,22 @@ define(function() {
             .elementById('validate').click()
             .elementById('save').click();
     },
+	
+	createPartyHierarchy : function(browser, name) {
+		return browser
+			.frame()
+			.frame('container')
+			.frame('cacheframe0')
+			.frame('subpage')
+			.elementById('Button_HierarchySearch_NewHierarchy').click()
+			.frame()
+			.frame('container')
+			.frame('cacheframe0')
+			.frame('proppage')
+			.elementById('Name').type(name)
+			.elementById('Description').type('Description ' + name)	
+			.elementById('save').click()
+    },
 
     currentDateInString : function() {
         var today = new Date();
