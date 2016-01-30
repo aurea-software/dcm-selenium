@@ -135,8 +135,8 @@ define(function() {
             .frame('container')
             .frame('cacheframe1')
             .frame('proppage')
-            .elementByLinkText('Name').type('LifeContractKit' + uniqueString)
-            .elementById('Description').type('Contract kit' + uniqueString)
+            .elementById('Name').type(name)
+            .elementById('Description').type(description)
             .elementById('validate').click()
             .elementById('save').click();
     },
