@@ -27,6 +27,7 @@
     "chai-as-promised": "^5.2.0",
     "nconf": "^0.8.2",
     "wd": "^0.4.0",
-    "amdefine": ">=0.1.0"
+    "amdefine": ">=0.1.0",
+    "moment": ">=2.11.1"
   }
 }
