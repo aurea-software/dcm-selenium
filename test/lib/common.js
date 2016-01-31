@@ -156,6 +156,37 @@ define(function() {
 			.elementById('Description').type('Description ' + name)	
 			.elementById('save').click()
     },
+    
+    createAgreementWithPerson : function(browser, enterKey, cacheFrameName, agreementName, agreementDesc, endDate, personFirstName) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .elementById('Button_Agreement_Main_NewAgreement').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('Name').type(agreementName)
+            .elementById('Description').type(agreementDesc)
+            .elementById('EndDate').clear().type(endDate)
+            .elementById('searchPartySearchPage_search_div').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('PartySearchPage_search_div_frame')
+            .elementById('Field_Party_Person_FirstName_Search_Value').type(personFirstName)
+            .elementByLinkText('Search').type(enterKey)
+            .elementById('Button_PartySearch_PP_Select').type(enterKey)
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('validate').click()
+            .elementById('save').click();
+    },
 
     currentDateInString : function() {
         var today = new Date();
