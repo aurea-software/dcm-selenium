@@ -33,6 +33,8 @@ define(function() {
             .elementByCss('form[name=LoginForm] button[type=submit]').click();
     },
 
+    // FIXME cache frame names are not fixed in DCM. It should be passed in as a parameter. Otherwise, using the fixed value
+    // cacheframe0 would require to create a person party in the 1st step in each test case.
     createPersonParty : function(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn) {
         return browser
             .refresh()
@@ -76,6 +78,8 @@ define(function() {
             .elementById('save').click();
     },
 
+    // FIXME cache frame names are not fixed in DCM. It should be passed in as a parameter. Otherwise, using the fixed value
+    // cacheframe0 would require to create an organization party in the 1st step in each test case.
     createOrganizationParty : function(browser, taxId, partyName, dtcc, npn, city, stateName) {
         return browser
             .refresh()
@@ -207,6 +211,35 @@ define(function() {
             .frame('cacheframe3')
             .frame('proppage')
             .elementByLinkText(contractName).click()
+            .elementById('validate').click()
+            .elementById('save').click();
+    },
+    
+    createQuota: function(browser, cacheFrameName, name, desc) {
+        return browser
+            .frame()
+            .frame('sidebar')
+            .elementById('Tab_Contracts_Main_Quotas_link').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .frame('component_iframe')
+            .elementById('Button_Contracts_Main_Quotas_NewQuota').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('Name').type(name)
+            .elementById('Description').type(desc)
+            .execute('scrollTo(0, 6000)')
+            .elementByCss('button[data-id=MeasureFormulaString]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText('allocation.getWeight()').click()
+            .elementById('MeasureDescription').type('Alloc Get Weight')
             .elementById('validate').click()
             .elementById('save').click();
     },
