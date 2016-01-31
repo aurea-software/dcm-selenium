@@ -124,20 +124,36 @@ define(function() {
             .elementById('save').click();
     },
     
-    createContractKit : function(browser, name, description) {
+    createContractKit : function(browser, cacheFrameName, name, description, startDate, endDate) {
         return browser
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame(cacheFrameName)
             .frame('subpage')
             .elementById('Button_Contracts_Main_NewContractKit').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame(cacheFrameName)
             .frame('proppage')
             .elementById('Name').type(name)
             .elementById('Description').type(description)
+            .elementById('StartDate').clear().type(startDate)
+            .elementById('EndDate').clear().type(endDate)
             .elementById('validate').click()
+            .elementById('save').click();
+    },
+    
+    createContractKitInProductionStatus : function(browser, cacheFrameName, name, description, startDate, endDate) {
+        return this.createContractKit(browser, cacheFrameName, name, description, startDate, endDate)
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .elementById('Button_Contracts_Main_ContractKitCheckIn').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
             .elementById('save').click();
     },
 	
@@ -157,7 +173,7 @@ define(function() {
 			.elementById('save').click()
     },
     
-    createAgreementWithPerson : function(browser, enterKey, cacheFrameName, agreementName, agreementDesc, endDate, personFirstName) {
+    createAgreementWithPerson : function(browser, enterKey, cacheFrameName, agreementName, agreementDesc, contractName, startDate, endDate, personFirstName) {
         return browser
             .frame()
             .frame('container')
@@ -170,6 +186,7 @@ define(function() {
             .frame('proppage')
             .elementById('Name').type(agreementName)
             .elementById('Description').type(agreementDesc)
+            .elementById('StartDate').clear().type(startDate)
             .elementById('EndDate').clear().type(endDate)
             .elementById('searchPartySearchPage_search_div').click()
             .frame()
@@ -184,6 +201,12 @@ define(function() {
             .frame('container')
             .frame(cacheFrameName)
             .frame('proppage')
+            .elementByCss('button[data-id=ContractKit]').type(enterKey)
+            .frame()
+            .frame('container')
+            .frame('cacheframe3')
+            .frame('proppage')
+            .elementByLinkText(contractName).click()
             .elementById('validate').click()
             .elementById('save').click();
     },

@@ -63,11 +63,11 @@ describe("/compensation/contract-kit/tc6-search-contract-kit", function() {
     });
 
     it("should create contract kit 1", function(done) {
-        common.createContractKit(browser, name1, desc1).nodeify(done);
+        common.createContractKit(browser, 'cacheframe1', name1, desc1, '01/01/2000', '01/01/2300').nodeify(done);
     });
 
     it("should create contract kit 2", function(done) {
-        common.createContractKit(browser, name2, desc2).nodeify(done);
+        common.createContractKit(browser, 'cacheframe1', name2, desc2, '01/01/2000', '01/01/2300').nodeify(done);
     });
     
     it("should search by name1", function(done) {

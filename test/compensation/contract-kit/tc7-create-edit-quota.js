@@ -54,7 +54,7 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
     });
 
     it("should create contract kit", function(done) {
-        common.createContractKit(browser, name, desc).nodeify(done);
+        common.createContractKit(browser, 'cacheframe1', name, desc, '01/01/2000', '01/01/2300').nodeify(done);
     });
     
     it("should create quota", function(done) {
