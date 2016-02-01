@@ -243,6 +243,44 @@ define(function() {
             .elementById('validate').click()
             .elementById('save').click();
     },
+    
+    createComponent : function(browser, enterKey, cacheFrameName, name, desc, label, quotaName) {
+        return browser
+            .frame()
+            .frame('sidebar')
+            .elementById('Tab_Contracts_Main_Components_link').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .frame('component_iframe')
+            .elementById('Button_Contracts_Main_Components_NewComponent').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('Name').type(name)
+            .elementById('Description').type(desc)
+            .elementByCss('button[name=Labels_add]').click()
+            .elementById('Labels_Value_0').type(label)
+            .execute('scrollTo(0, 6000)')
+            .elementByCss('button[name=Quotas_add]').click()
+            .elementById('complexField_QuotasSearch_search_div').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('QuotasSearch_search_div_frame')
+            .elementById('Field_Quotas_Search_Name_Search_Value').type(quotaName)
+            .elementByLinkText('Search').type(enterKey)
+            .elementById('QuotasSearchButton_PP_Select').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('validate').click()
+            .elementById('save').click();
+    },
 
     currentDateInString : function() {
         var today = new Date();
