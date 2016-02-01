@@ -35,7 +35,7 @@ var bonusDesc = 'BDesc' + uniqueString
 // As per the test case desc, this belongs to the Agreements section. But it has nothing to do with Agreements.
 // It should have been put to Contract Kits instead.
 describe("/compensation/agreement/tc11-create-bonus", function() {
-    this.timeout(600000);
+    this.timeout(60000);
     var browser;
 
     before(function (done) {
