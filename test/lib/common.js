@@ -265,6 +265,7 @@ define(function() {
             .elementById('Labels_Value_0').type(label)
             .execute('scrollTo(0, 6000)')
             .elementByCss('button[name=Quotas_add]').click()
+            .execute('scrollTo(0, 3000)')
             .elementById('complexField_QuotasSearch_search_div').click()
             .frame()
             .frame('container')
