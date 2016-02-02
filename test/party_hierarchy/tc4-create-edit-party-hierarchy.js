@@ -16,8 +16,8 @@ var password = config.get("password");
 var common = require('../lib/common');
 var randNum = common.rand(5);
 
-describe("Test Case 1 - Create and edit new party hierarchy", function() {
-  this.timeout(50000);
+describe("/party-hierarchy/tc4-create-edit-party-hierarchy", function() {
+  this.timeout(60000);
     var browser;
     
     before(function (done) {
@@ -26,9 +26,7 @@ describe("Test Case 1 - Create and edit new party hierarchy", function() {
     });
    
     after(function (done) {
-      browser
-        .quit()
-        .nodeify(done);
+      browser.quit().nodeify(done);
     });
    
     it("should login", function (done) {
