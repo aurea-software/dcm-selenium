@@ -284,6 +284,41 @@ define(function() {
             .elementById('validate').click()
             .elementById('save').click();
     },
+    
+    createCourse : function(browser, cacheFrameName, name, stateSpecificValue) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .elementById('Button_CourseManagement_Main_New').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('Name').type(name)
+            // This is not really necessary as the default value is already Yes
+            .elementByCss('button[data-id=StateSpecific]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText(stateSpecificValue).click()
+            .execute('scrollTo(0, 6000)')
+            .elementByCss('button[name=CourseSources_add]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByCss('button[data-id=CourseSources_Source_0]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText('Pearson Professional Centers').click()
+            .elementById('validate').click()
+            .elementById('save').click();
+    },
 
     currentDateInString : function() {
         var today = new Date();

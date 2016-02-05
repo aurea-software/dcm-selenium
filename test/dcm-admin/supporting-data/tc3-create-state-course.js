@@ -15,36 +15,6 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-var personR = common.rand(3);
-var organizationR = common.rand(3);
-
-var personTaxId = common.rand(5);
-var organizationTaxId = common.rand(5);
-
-console.log('personR: ' + personR);
-console.log('organizationR: ' + organizationR);
-console.log('personTaxId: ' + personTaxId);
-console.log('organizationTaxId: ' + organizationTaxId);
-
-var personFirstName = 'FN' + personTaxId;
-var personLastName = 'LN' + personTaxId;
-
-var personMiddleName = 'Middle Name';
-var personPreferredName = 'Preferred Name';
-
-var organizationPartyName = 'PN' + organizationTaxId;
-
-var personDtcc = 'D' + personR;
-var organizationDtcc = 'D' + organizationR;
-
-var personNpn = 'N' + personR;
-var organizationNpn = 'N' + organizationR;
-
-// Common data for both person and organization
-var city = 'CityZ';
-var stateCode = 'AZ';
-var stateName = 'Arizona';
-
 var c = common.rand(3);
 console.log('c: ' + c);
 
@@ -68,8 +38,6 @@ describe("/dcm-admin/supporting-data/tc3-create-state-course", function() {
         common.login(browser, url, username, password).nodeify(done);
     });
     
-    // We need to create a person for our test case
-
     it("should load dcm admin page", function(done) {
       browser
         .frame('navbar')
@@ -144,5 +112,5 @@ describe("/dcm-admin/supporting-data/tc3-create-state-course", function() {
         .elementByCss('table[name=Grid_CourseManagement_CourseReciprocity_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
         .should.eventually.become('ALABAMA')
         .nodeify(done);
-    })
+    });
 });
