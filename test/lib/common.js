@@ -112,6 +112,8 @@ define(function() {
             .elementByLinkText('No').click()
             .elementById('DTCCID').type(dtcc)
             .elementById('Party.NPN').type(npn)
+			//FIXME: checkbox seletion was failing in some cases
+			.execute('scrollTo(0, 3000)')
             .elementByCss('input[id=RoleAPPOINTINGCOMPANY] ~ i').click()
             .elementByCss('input[id=RoleEMPLOYER] ~ i').click()
             .elementByCss('input[id=RoleDISTRIBUTOR] ~ i').click()

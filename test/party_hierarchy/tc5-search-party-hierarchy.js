@@ -15,15 +15,15 @@ var password = config.get("password");
 
 var common = require('../lib/common');
 var r1 = common.rand(2);
-var name1 = 'SECOND_HIERARCHY' + r1;
+var name1 = 'WXYZ_PARTY_HIEER_' + r1;
 console.log('1st Party Hierarchy: ' + name1);
 
 var r2 = common.rand(2);
-var name2 = 'FIRST_HIERARCHY' + r2;
+var name2 = 'ABCD_PARTY_HIEER_' + r2;
 console.log('2nd Party Hierarchy: ' + name2);
 
-describe("Test Case 2 - Search party hierarchy", function() {
-  this.timeout(30000);
+describe("/party-hierarchy/tc5-search-party-hierarchy", function() {
+  this.timeout(60000);
     var browser;
     
     before(function (done) {
@@ -32,9 +32,7 @@ describe("Test Case 2 - Search party hierarchy", function() {
     });
    
     after(function (done) {
-      browser
-        .quit()
-        .nodeify(done);
+		browser.quit().nodeify(done);
     });
    
     it("should login", function (done) {
@@ -62,7 +60,7 @@ describe("Test Case 2 - Search party hierarchy", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-			.elementByCss('#Search_HierarchySearch_Main_primaryForm #Field_Hierarchy_Name_Search_Value').type('SECOND_HIERARCHY*')
+			.elementByCss('#Search_HierarchySearch_Main_primaryForm #Field_Hierarchy_Name_Search_Value').type('WXYZ_PARTY_HIEER_*')
 			.elementByLinkText('Search').click()
 			.elementById('Grid_HierarchySearch_Main').text()
 			.should.eventually.include(name1)
@@ -80,21 +78,31 @@ describe("Test Case 2 - Search party hierarchy", function() {
             .should.eventually.become('')
             .notify(done);
     });
-	
+
 	it("should perform advanced search based on Hierarchy Type and 2nd Hierarchy Name", function(done) {
 		browser
+			.refresh()
 			.frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
 			.elementByLinkText('Advanced Search').click()
             .elementByCss('#Search_HierarchySearch_Main_form #Field_Hierarchy_Name_Search_Value').clear().type(name2)
-            .elementByCss('button[data-id=Field_Hierarchy_Type_Search_Value]').click()
 			.frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-            .elementByLinkText('Org Hierarchy').click()
+			.elementByCss('form[name=Search_HierarchySearch_Main_form] button[data-id=Field_Hierarchy_Type_Search_Value]').click()
+			.frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+			.sleep(2000)
+			.elementByLinkText('Org Hierarchy').click()
+			.frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
 			.elementByLinkText('Search').click()
 			.elementById('Grid_HierarchySearch_Main').text()
 			.should.eventually.include(name2)
@@ -117,7 +125,7 @@ describe("Test Case 2 - Search party hierarchy", function() {
             .frame('cacheframe0')
             .frame('subpage')
 			.elementByLinkText('Advanced Search').click()
-			.elementByCss('#Search_HierarchySearch_Main_form #Field_Hierarchy_Name_Search_Value').type('*_HIERARCHY*')
+			.elementByCss('#Search_HierarchySearch_Main_form #Field_Hierarchy_Name_Search_Value').type('*_PARTY_HIEER_*')
 			.frame()
             .frame('container')
             .frame('cacheframe0')
@@ -136,6 +144,7 @@ describe("Test Case 2 - Search party hierarchy", function() {
 				.should.eventually.become(name1)
 				.notify(done);
     });
+	
 });
 	
 	

@@ -12,10 +12,8 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-describe("DCM Easier", function() {
-  this.timeout(120000);
-
   describe("login", function() {
+    this.timeout(120000);
     var browser;
    
     before(function (done) {
@@ -69,4 +67,3 @@ describe("DCM Easier", function() {
         .nodeify(done);
     });
   });
-});
