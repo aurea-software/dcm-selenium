@@ -13,7 +13,7 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../lib/common');
+var common = require('../../lib/common');
 
 var r1 = common.rand(3);
 var taxId1 = common.rand(6);

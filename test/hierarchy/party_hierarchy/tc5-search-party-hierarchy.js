@@ -13,7 +13,7 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../lib/common');
+var common = require('../../lib/common');
 var r1 = common.rand(2);
 var name1 = 'WXYZ_PARTY_HIEER_' + r1;
 console.log('1st Party Hierarchy: ' + name1);
