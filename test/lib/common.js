@@ -163,19 +163,20 @@ define(function() {
             .elementById('save').click();
     },
 	
-	createPartyHierarchy : function(browser, name) {
+	//FIXME: Added cacheFrameName and enterKey parameters
+	createPartyHierarchy : function(browser, cacheFrameName, enterKey, hiername) {
 		return browser
 			.frame()
 			.frame('container')
-			.frame('cacheframe0')
+			.frame(cacheFrameName)
 			.frame('subpage')
-			.elementById('Button_HierarchySearch_NewHierarchy').click()
+			.elementById('Button_HierarchySearch_NewHierarchy').type(enterKey)
 			.frame()
 			.frame('container')
-			.frame('cacheframe0')
+			.frame(cacheFrameName)
 			.frame('proppage')
-			.elementById('Name').type(name)
-			.elementById('Description').type('Description ' + name)	
+			.elementById('Name').type(hiername)
+			.elementById('Description').type('Description ' + hiername)	
 			.elementById('save').click()
     },
     
@@ -318,6 +319,36 @@ define(function() {
             .elementByLinkText('Pearson Professional Centers').click()
             .elementById('validate').click()
             .elementById('save').click();
+    },
+	
+	createPartyHierarchyRootPosition : function(browser, cacheFrameName, enterKey, firstname1, rootPosition, rootPositionDesc) {
+        return browser
+            .frame()
+            .frame('sidebar')
+            .elementById('Tab_HierarchySearch_RootPosition_Main_link').click()
+			.frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')				
+			.frame('component_iframe')
+			.elementById('Button_AddRootPosition').click()
+			.frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+			.elementById('Name').clear().type(rootPosition)
+			.elementById('Description').type(rootPositionDesc)
+			.elementById('searchPartySearchPage_search_div').click()
+			.frame('PartySearchPage_search_div_frame')
+			.elementById('Field_Party_Person_FirstName_Search_Value').type(firstname1)
+			.elementByLinkText('Search').type(enterKey)
+			.elementById('Grid_Party_GridName').click()
+			.elementById('Button_PartySearch_PP_Select').type(enterKey)
+			.frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')			
+			.elementById('save').click();
     },
 
     currentDateInString : function() {
