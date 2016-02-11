@@ -158,7 +158,8 @@ describe("/party/person/tc3-search-person-party", function() {
             .frame('subpage')
             .elementById('Search_Person_Main_ShowHideSearchLink').click()
             .elementByCss('#Search_Person_Main_form #Field_Person_Main_DTCCID_Search_Value').type(dtcc1)
-            .elementByCss('#Search_Person_Main_form #Field_Person_Main_NPN_Search_Value').type(npn1)
+            // Starting from Feb 05 2016, the NPN search field doesn't exist in the Advanced Search any more
+            //.elementByCss('#Search_Person_Main_form #Field_Person_Main_NPN_Search_Value').type(npn1)
             .elementByCss('#Search_Person_Main_form #Field_Person_Main_City_Search_Value').type(city1)
             .elementByCss('#Search_Person_Main_form #Field_Person_Main_State_Search_Value').type(stateCode)
             .elementByLinkText('Search').click()
@@ -182,13 +183,13 @@ describe("/party/person/tc3-search-person-party", function() {
             // once to turn the order to descending.
             .elementByCssSelector('#Field_Person_Main_PartyID_Grid > span.column-text').click();
             
-        v.waitForElementByCss('table[name=Grid_Person_Main] tbody tr:nth-child(1) td:nth-child(5)').text()
+        v.waitForElementByCss('table[name=Grid_Person_Main] tbody tr:nth-child(1) td:nth-child(4)').text()
             // We intentionally create party 1 before party 2. We also setup tax id
             // 2 to be bigger than tax id 1 intentionally.
             // Hence, party ids and tax ids have the same order.
             .should.eventually.become(taxId2);
         
-        v.waitForElementByCss('table[name=Grid_Person_Main] tbody tr:nth-child(2) td:nth-child(5)').text()
+        v.waitForElementByCss('table[name=Grid_Person_Main] tbody tr:nth-child(2) td:nth-child(4)').text()
             .should.eventually.become(taxId1)
             .notify(done);
     });
@@ -206,10 +207,10 @@ describe("/party/person/tc3-search-person-party", function() {
             .elementByCssSelector('#Field_Person_Main_TaxID_Grid > span.column-text').click()
             .elementByCssSelector('#Field_Person_Main_TaxID_Grid > span.column-text').click();
             
-        v.waitForElementByCss('table[name=Grid_Person_Main] tbody tr:nth-child(1) td:nth-child(5)').text()
+        v.waitForElementByCss('table[name=Grid_Person_Main] tbody tr:nth-child(1) td:nth-child(4)').text()
             .should.eventually.become(taxId2);
         
-        v.waitForElementByCss('table[name=Grid_Person_Main] tbody tr:nth-child(2) td:nth-child(5)').text()
+        v.waitForElementByCss('table[name=Grid_Person_Main] tbody tr:nth-child(2) td:nth-child(4)').text()
             .should.eventually.become(taxId1)
             .notify(done);
     });

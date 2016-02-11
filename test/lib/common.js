@@ -7,7 +7,10 @@ define(function() {
     rand : function(length) {
         var result = '';
         for (var i = 0; i < length; i++) {
-            result += Math.floor((Math.random() * 10) );
+        	// Avoid the digit 0 as we might need to parse the result back to int
+        	// and perform some mathematical operations on it, which may result in
+        	// a string having a smaller length if the original string starts with 0.
+            result += [1,2,3,4,5,6,7,8,9][Math.floor(Math.random()*9)];
         }
         return result;
     },
@@ -318,6 +321,109 @@ define(function() {
             .elementByLinkText('Pearson Professional Centers').click()
             .elementById('validate').click()
             .elementById('save').click();
+    },
+    
+    createEnum : function(browser, cacheFrameName, enumId, name1, value1) {
+      	return browser
+	        .frame()
+	        .frame('container')
+	        .frame(cacheFrameName)
+	        .frame('subpage')
+	        .elementById('Button_EnumManager_Enums_Main_CreateEnum').click()
+	        .frame()
+	        .frame('container')
+	        .frame(cacheFrameName)
+	        .frame('proppage')
+	        .elementById('Id').type(enumId)
+	        .elementByCss('button[name=Entries_add]').click()
+	        .frame()
+	        .frame('container')
+	        .frame(cacheFrameName)
+	        .frame('proppage')
+	        .elementById('Entries_Name_0').type(name1)
+	        .elementById('Entries_Value_0').type(value1)
+	        .elementById('validate').click()
+	        .elementById('save').click()
+	        .elementById('save').click();
+    },
+    
+    createLocationParty : function(browser, cacheFrameName, locationName, locationId, locationDtcc, locationStreet, locationCity, locationZipCode, subType, orgPartyName) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('Party.CurrentDetails.Name').type(locationName)
+            .elementById('Unid').type(locationId)
+            .elementByCss('button[data-id=Party\\.CurrentDetails\\.LocationType]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText('Area Office').click()
+            .elementByCss('button[data-id=Party\\.CurrentDetails\\.LocationSubtype]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText(subType).click()
+            .elementByCss('button[data-id=Party\\.CurrentDetails\\.OccupancyType]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText('Leased').click()
+            .elementByCss('button[data-id=Party\\.CurrentDetails\\.Usage]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText('Securities').click()
+            .elementById('DTCCID').type(locationDtcc)
+            .execute('scrollTo(0, 6000)')
+            .elementById('ContactPoint.Address.Street1').type(locationStreet)
+            .elementById('ContactPoint.Address.City').type(locationCity)
+            .elementById('ZipCode').type(locationZipCode)
+            // Search for owning firm
+            .elementById('searchOrgPartySearch_search_div').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('OrgPartySearch_search_div_frame')
+            .elementById('Field_Party_NameUpper_Search_Value').type(orgPartyName)
+            .elementByLinkText('Search').click()
+            .execute('scrollTo(0, 6000)')
+            .elementById('Button_PartySearch_PP_Select').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('validate').click()
+            .elementById('save').click();
+    },
+    
+    closeLocationParty : function(browser, cacheFrameName) {
+    	return browser
+    		.frame()
+    		.frame('container')
+    		.frame(cacheFrameName)
+    		.frame('subpage')
+    		.frame('component_iframe')
+    		.elementById('Button_Location_Main_BasicInfo_CloseLocation').click()
+			.frame()
+			.frame('container')
+			.frame(cacheFrameName)
+			.frame('proppage')
+			.elementByCss('button[data-id=NewStatus\\.StatusReason]').click()
+			.frame()
+			.frame('container')
+			.frame(cacheFrameName)
+			.frame('proppage')
+			.elementByLinkText('Registered Contact Left').click()
+			.elementById('validate').click()
+			.elementById('save').click()
+			.elementById('save').click();
     },
 
     currentDateInString : function() {
