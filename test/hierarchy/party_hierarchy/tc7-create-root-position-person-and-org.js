@@ -13,7 +13,7 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../lib/common');
+var common = require('../../lib/common');
 
 var r1 = common.rand(3);
 var taxId1 = common.rand(6);
@@ -42,7 +42,7 @@ console.log('Person party: Tax Id: ' + taxId1 + ', First Name: ' + firstName1  +
 console.log('Organization party: Tax Id: ' + taxId2 + ', Organization Name: ' + partyName2);
 console.log('Party Hierarchy name: ' + hiername);
 
-describe("/party-hierarchy/tc7-create-root-position-person-org", function() {
+describe("/hierarchy/party-hierarchy/tc7-create-root-position-person-org", function() {
   this.timeout(90000);
     var browser;
     
@@ -83,8 +83,10 @@ describe("/party-hierarchy/tc7-create-root-position-person-org", function() {
 			.nodeify(done);
     });
 	
+	//FIXME: added new cacheFrameName, enterKey parameters
 	it("should create party hierarchy", function(done) {
-		common.createPartyHierarchy(browser, hiername).nodeify(done);
+		//common.createPartyHierarchy(browser, hiername).nodeify(done);
+		common.createPartyHierarchy(browser, 'cacheframe0', wd.SPECIAL_KEYS['Enter'], hiername).nodeify(done);		
     });
 
 	it("should search party hierarchy by name", function(done) {

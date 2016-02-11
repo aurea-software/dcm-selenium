@@ -13,10 +13,10 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../lib/common');
+var common = require('../../lib/common');
 var randNum = common.rand(5);
 
-describe("/party-hierarchy/tc4-create-edit-party-hierarchy", function() {
+describe("/hierarchy/party-hierarchy/tc4-create-edit-party-hierarchy", function() {
   this.timeout(60000);
     var browser;
     

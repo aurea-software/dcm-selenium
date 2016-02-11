@@ -13,7 +13,7 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../lib/common');
+var common = require('../../lib/common');
 var r1 = common.rand(2);
 var name1 = 'WXYZ_PARTY_HIEER_' + r1;
 console.log('1st Party Hierarchy: ' + name1);
@@ -22,7 +22,7 @@ var r2 = common.rand(2);
 var name2 = 'ABCD_PARTY_HIEER_' + r2;
 console.log('2nd Party Hierarchy: ' + name2);
 
-describe("/party-hierarchy/tc5-search-party-hierarchy", function() {
+describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
   this.timeout(60000);
     var browser;
     
@@ -46,12 +46,15 @@ describe("/party-hierarchy/tc5-search-party-hierarchy", function() {
         .nodeify(done);
     });
 
+	//FIXED: Modified method parameters: added cacheFrameName, enterKey
 	it("should create 1st party hierarchy", function(done) {
-      common.createPartyHierarchy(browser, name1).nodeify(done);
+      //common.createPartyHierarchy(browser, name1).nodeify(done);
+      common.createPartyHierarchy(browser, 'cacheframe0', wd.SPECIAL_KEYS['Enter'], name1).nodeify(done);	
     });
 	
 	it("should create 2nd party hierarchy", function(done) {
-      common.createPartyHierarchy(browser, name2).nodeify(done);
+      //common.createPartyHierarchy(browser, name2).nodeify(done);
+      common.createPartyHierarchy(browser, 'cacheframe0', wd.SPECIAL_KEYS['Enter'], name2).nodeify(done);	
     });
 	
 	it("should search 1st party hierarchy by name with wildcard", function(done) {

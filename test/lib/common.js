@@ -1,3 +1,4 @@
+var wd = require('wd');
 if (typeof define !== 'function') {
     var define = require('amdefine')(module);
 }
@@ -58,7 +59,7 @@ define(function() {
             .elementById('Party.BirthDate').type('01/01/1970')
             .elementById('DTCCID').type(dtcc)
             .elementById('Party.NPN').type(npn)
-            .elementByCss('button[data-id=SyncPDB]').click()
+            .elementByCss('button[data-id=SyncPDB]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -107,7 +108,7 @@ define(function() {
             .frame('proppage')
             .elementById('Party.Name').type(partyName)
             .elementById('Party.TaxID').type(taxId)
-            .elementByCss('button[data-id=SyncPDB]').click()
+            .elementByCss('button[data-id=SyncPDB]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -152,7 +153,7 @@ define(function() {
             .elementById('save').click();
     },
     
-    createContractKitInProductionStatus : function(browser, cacheFrameName, name, description, startDate, endDate) {
+	createContractKitInProductionStatus : function(browser, cacheFrameName, name, description, startDate, endDate) {
         return this.createContractKit(browser, cacheFrameName, name, description, startDate, endDate)
             .frame()
             .frame('container')
@@ -166,19 +167,20 @@ define(function() {
             .elementById('save').click();
     },
 	
-	createPartyHierarchy : function(browser, name) {
+	//FIXME: Added cacheFrameName and enterKey parameters
+	createPartyHierarchy : function(browser, cacheFrameName, enterKey, hiername) {
 		return browser
 			.frame()
 			.frame('container')
-			.frame('cacheframe0')
+			.frame(cacheFrameName)
 			.frame('subpage')
-			.elementById('Button_HierarchySearch_NewHierarchy').click()
+			.elementById('Button_HierarchySearch_NewHierarchy').type(enterKey)
 			.frame()
 			.frame('container')
-			.frame('cacheframe0')
+			.frame(cacheFrameName)
 			.frame('proppage')
-			.elementById('Name').type(name)
-			.elementById('Description').type('Description ' + name)	
+			.elementById('Name').type(hiername)
+			.elementById('Description').type('Description ' + hiername)	
 			.elementById('save').click()
     },
     
@@ -213,7 +215,7 @@ define(function() {
             .elementByCss('button[data-id=ContractKit]').type(enterKey)
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame(cacheFrameName)
             .frame('proppage')
             .elementByLinkText(contractName).click()
             .elementById('validate').click()
@@ -322,110 +324,117 @@ define(function() {
             .elementById('validate').click()
             .elementById('save').click();
     },
-    
-    createEnum : function(browser, cacheFrameName, enumId, name1, value1) {
-      	return browser
-	        .frame()
-	        .frame('container')
-	        .frame(cacheFrameName)
-	        .frame('subpage')
-	        .elementById('Button_EnumManager_Enums_Main_CreateEnum').click()
-	        .frame()
-	        .frame('container')
-	        .frame(cacheFrameName)
-	        .frame('proppage')
-	        .elementById('Id').type(enumId)
-	        .elementByCss('button[name=Entries_add]').click()
-	        .frame()
-	        .frame('container')
-	        .frame(cacheFrameName)
-	        .frame('proppage')
-	        .elementById('Entries_Name_0').type(name1)
-	        .elementById('Entries_Value_0').type(value1)
-	        .elementById('validate').click()
-	        .elementById('save').click()
-	        .elementById('save').click();
+	
+	createPartyHierarchyRootPosition : function(browser, cacheFrameName, enterKey, firstname1, rootPosition, rootPositionDesc) {
+        return browser
+            .frame()
+            .frame('sidebar')
+            .elementById('Tab_HierarchySearch_RootPosition_Main_link').click()
+			.frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')				
+			.frame('component_iframe')
+			.elementById('Button_AddRootPosition').click()
+			.frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+			.elementById('Name').clear().type(rootPosition)
+			.elementById('Description').type(rootPositionDesc)
+			.elementById('searchPartySearchPage_search_div').click()
+			.frame('PartySearchPage_search_div_frame')
+			.elementById('Field_Party_Person_FirstName_Search_Value').type(firstname1)
+			.elementByLinkText('Search').type(enterKey)
+			.elementById('Grid_Party_GridName').click()
+			.elementById('Button_PartySearch_PP_Select').type(enterKey)
+			.frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')			
+			.elementById('save').click();
     },
-    
-    createLocationParty : function(browser, cacheFrameName, locationName, locationId, locationDtcc, locationStreet, locationCity, locationZipCode, subType, orgPartyName) {
+
+	createProductHierarchy : function(browser, cacheFrameName, enterKey, hiername, hierdesc) {
+		return browser			
+			.frame()
+			.frame('container')
+			.frame(cacheFrameName)
+			.frame('subpage')
+			.execute('scrollTo(0,2000)')
+			.elementById('Button_ProductHierarchySearch_ProductHierarchy_NewProductHierarchy').type(enterKey)
+			.frame()
+			.frame('container')
+			.frame(cacheFrameName)
+			.frame('proppage')
+			.elementById('Name').type(hiername)
+			.elementById('Description').type(hierdesc)
+			.frame()
+			.frame('container')
+			.frame(cacheFrameName)
+			.frame('proppage')
+			.elementById('validate').click()
+			.elementById('save').click()			
+    },
+	
+	createCompHierarchy : function(browser, cacheFrameName, hiername, hierdesc, CKname) {
+		return browser			
+			.frame()
+			.frame('container')
+			.frame(cacheFrameName)
+			.frame('subpage')
+			.execute('scrollTo(0,2000)')
+			.elementById('Button_HierarchySearch_NewAgrHierarchy').type(wd.SPECIAL_KEYS['Enter'])
+			.frame()
+			.frame('container')
+			.frame(cacheFrameName)
+			.frame('proppage')
+			.elementById('Name').type(hiername)
+			.elementById('Description').type(hierdesc)
+			.elementById('searchContractKitSearchPage_search_div').click()
+			.frame('ContractKitSearchPage_search_div_frame')
+			.elementById('Field_ContractKit_Name_Search_Value').type(CKname)
+			.elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
+			.execute('scrollTo(0,2000)')
+			.sleep(1000)
+			.elementById('Button_ContractKitSearch_PP_Select').click()
+			.frame()
+			.frame('container')
+			.frame(cacheFrameName)
+			.frame('proppage')
+			.elementById('validate').click()
+			.elementById('save').click()			
+    },
+	
+	createContractKitWithHierAndCKP : function(browser, cacheFrameName, name, description, startDate, endDate, prodhier, CKP, CKPId) {
         return browser
             .frame()
             .frame('container')
             .frame(cacheFrameName)
-            .frame('proppage')
-            .elementById('Party.CurrentDetails.Name').type(locationName)
-            .elementById('Unid').type(locationId)
-            .elementByCss('button[data-id=Party\\.CurrentDetails\\.LocationType]').click()
+            .frame('subpage')
+            .elementById('Button_Contracts_Main_NewContractKit').click()
             .frame()
             .frame('container')
             .frame(cacheFrameName)
             .frame('proppage')
-            .elementByLinkText('Area Office').click()
-            .elementByCss('button[data-id=Party\\.CurrentDetails\\.LocationSubtype]').click()
-            .frame()
+            .elementById('Name').type(name)
+            .elementById('Description').type(description)
+            .elementById('StartDate').clear().type(startDate)
+            .elementById('EndDate').clear().type(endDate)
+			.frame()
             .frame('container')
             .frame(cacheFrameName)
             .frame('proppage')
-            .elementByLinkText(subType).click()
-            .elementByCss('button[data-id=Party\\.CurrentDetails\\.OccupancyType]').click()
-            .frame()
-            .frame('container')
-            .frame(cacheFrameName)
-            .frame('proppage')
-            .elementByLinkText('Leased').click()
-            .elementByCss('button[data-id=Party\\.CurrentDetails\\.Usage]').click()
-            .frame()
-            .frame('container')
-            .frame(cacheFrameName)
-            .frame('proppage')
-            .elementByLinkText('Securities').click()
-            .elementById('DTCCID').type(locationDtcc)
-            .execute('scrollTo(0, 6000)')
-            .elementById('ContactPoint.Address.Street1').type(locationStreet)
-            .elementById('ContactPoint.Address.City').type(locationCity)
-            .elementById('ZipCode').type(locationZipCode)
-            // Search for owning firm
-            .elementById('searchOrgPartySearch_search_div').click()
-            .frame()
-            .frame('container')
-            .frame(cacheFrameName)
-            .frame('proppage')
-            .frame('OrgPartySearch_search_div_frame')
-            .elementById('Field_Party_NameUpper_Search_Value').type(orgPartyName)
-            .elementByLinkText('Search').click()
-            .execute('scrollTo(0, 6000)')
-            .elementById('Button_PartySearch_PP_Select').click()
-            .frame()
-            .frame('container')
-            .frame(cacheFrameName)
-            .frame('proppage')
+			.elementByCss('form[name=spartacus] button[data-id=Products]').type(wd.SPECIAL_KEYS['Enter'])
+			.sleep(500)
+			.elementByLinkText(prodhier).click()
+			.elementByCss('form[name=spartacus] button[data-id=Party]').type(wd.SPECIAL_KEYS['Enter'])
+			.sleep(500)
+			.elementByLinkText(CKP + ' [Party ID: ' + CKPId + ']').click()
             .elementById('validate').click()
             .elementById('save').click();
-    },
-    
-    closeLocationParty : function(browser, cacheFrameName) {
-    	return browser
-    		.frame()
-    		.frame('container')
-    		.frame(cacheFrameName)
-    		.frame('subpage')
-    		.frame('component_iframe')
-    		.elementById('Button_Location_Main_BasicInfo_CloseLocation').click()
-			.frame()
-			.frame('container')
-			.frame(cacheFrameName)
-			.frame('proppage')
-			.elementByCss('button[data-id=NewStatus\\.StatusReason]').click()
-			.frame()
-			.frame('container')
-			.frame(cacheFrameName)
-			.frame('proppage')
-			.elementByLinkText('Registered Contact Left').click()
-			.elementById('validate').click()
-			.elementById('save').click()
-			.elementById('save').click();
-    },
-
+		},
+	
     currentDateInString : function() {
         var today = new Date();
         var dd = today.getDate();
