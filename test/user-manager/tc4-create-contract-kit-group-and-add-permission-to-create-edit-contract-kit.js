@@ -99,7 +99,7 @@ describe("/user-manager/tc4-create-contract-kit-group-and-add-permission-to-crea
     });
 
     it("should add permission", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'ContractKitPropertyPage')
+        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitPropertyPage')
             .frame()
             .frame('container')
             .frame('cacheframe1')

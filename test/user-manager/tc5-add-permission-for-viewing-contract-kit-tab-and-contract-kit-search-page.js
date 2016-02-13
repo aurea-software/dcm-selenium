@@ -95,11 +95,11 @@ describe("/user-manager/tc5-add-permission-for-viewing-contract-kit-tab-and-cont
     });
 
     it("should select permission 1", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Contracts').nodeify(done);
+        common.addPermission(browser, 'cacheframe1', 'View', 'Contracts').nodeify(done);
     });
 
     it("should select permission 2", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Contracts.ContractsSearch').nodeify(done);
+        common.addPermission(browser, 'cacheframe1', 'View', 'Contracts.ContractsSearch').nodeify(done);
     });
 
     var savePermission1 = function(data) {

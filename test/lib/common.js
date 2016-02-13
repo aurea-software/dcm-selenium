@@ -40,11 +40,10 @@ define(function() {
     loginToUserManager : function(browser, url, username, password) {
         return browser
             .get(url)
-            // Just to make sure that the form has been loaded
-            .waitForElementByLinkText('Forgot password')
             .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').type(username)
             .elementByCss('form[name=LoginForm] input[name=PASSWORD]').type(password)
             .elementByCss('form[name=LoginForm] button[data-id=APPGROUP]').type(wd.SPECIAL_KEYS['Enter'])
+            .sleep(100)
             .elementByCss('form[name=LoginForm] ul > li:nth-child(2) > a').click()
             .elementByCss('form[name=LoginForm] button[type=submit]').click();
     },
@@ -674,7 +673,7 @@ define(function() {
             .elementById('save').click();
     },
 
-    addPermission : function(browser, cacheFrameName, permissionName) {
+    addPermission : function(browser, cacheFrameName, permissionType, permissionName) {
         return browser
             .frame()
             .frame('container')
@@ -687,7 +686,7 @@ define(function() {
             .frame(cacheFrameName)
             .frame('proppage')
             // #PermissionType0 > div > div > ul > li:nth-child(2) > a
-            .elementByLinkText('Edit').click()
+            .elementByLinkText(permissionType).click()
             .elementById('complexField_Page_ElementSearch_search_div').click()
             .frame()
             .frame('container')
