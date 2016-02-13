@@ -685,7 +685,6 @@ define(function() {
             .frame('container')
             .frame(cacheFrameName)
             .frame('proppage')
-            // #PermissionType0 > div > div > ul > li:nth-child(2) > a
             .elementByLinkText(permissionType).click()
             .elementById('complexField_Page_ElementSearch_search_div').click()
             .frame()

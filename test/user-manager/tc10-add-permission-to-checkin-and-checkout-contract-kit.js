@@ -22,7 +22,10 @@ var groupName = 'G' + r;
 
 console.log('r: ' + r);
 
-describe("/user-manager/tc6-add-permission-for-creating-allocation-rule", function() {
+var permission1;
+var permission2;
+
+describe("/user-manager/tc5-add-permission-for-viewing-contract-kit-tab-and-contract-kit-search-page", function() {
     this.timeout(60000);
     var browser;
 
@@ -42,10 +45,10 @@ describe("/user-manager/tc6-add-permission-for-creating-allocation-rule", functi
 
     it("should load user manager page", function(done) {
         browser
-            .frame()
-            .frame('navbar')
-            .elementById('UserManager').click()
-            .nodeify(done);
+              .frame()
+              .frame('navbar')
+              .elementById('UserManager').click()
+              .nodeify(done);
     });
 
     it("should load group page", function(done) {
@@ -91,8 +94,24 @@ describe("/user-manager/tc6-add-permission-for-creating-allocation-rule", functi
             .nodeify(done);
     });
 
-    it("should add permission", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'AllocRulePropertyPage')
+    it("should select permission 1", function(done) {
+        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckIn').nodeify(done);
+    });
+
+    it("should select permission 2", function(done) {
+        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckOut').nodeify(done);
+    });
+
+    var savePermission1 = function(data) {
+        permission1 = data;
+    };
+
+    var savePermission2 = function(data) {
+        permission2 = data;
+    };
+
+    it("should save and extract results", function(done) {
+        browser
             .frame()
             .frame('container')
             .frame('cacheframe1')
@@ -104,8 +123,34 @@ describe("/user-manager/tc6-add-permission-for-creating-allocation-rule", functi
             .frame('subpage')
             .frame('component_iframe')
             .elementByCss('table[name=Grid_UserManager_Groups_Main_AdditionalPermissions] tbody tr:nth-child(1) td:nth-child(1)').text()
-            .should.eventually.become('ALLOCRULEPROPERTYPAGE')
-            .notify(done);
+            .then(function(data) {
+                savePermission1(data);
+            })
+            .elementByCss('table[name=Grid_UserManager_Groups_Main_AdditionalPermissions] tbody tr:nth-child(2) td:nth-child(1)').text()
+            .then(function(data) {
+                savePermission2(data);
+            })
+            .nodeify(done);
+    });
+
+    // We are not sure about the order of permissions we have selected in the page. Therefore, we verify the results separately.
+
+    it("should verify results", function(done) {
+        var permission1Exists = false;
+        var permission2Exists = false;
+
+        if (permission1 === 'CONTRACTKITCHECKIN' || permission2 === 'CONTRACTKITCHECKIN') {
+            permission1Exists = true;
+        }
+
+        if (permission1 === 'CONTRACTKITCHECKOUT' || permission2 === 'CONTRACTKITCHECKOUT') {
+            permission2Exists = true;
+        }
+
+        assert.ok(permission1 !== permission2);
+        assert.ok(permission1Exists && permission2Exists);
+
+        done();
     });
 
 });
