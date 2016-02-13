@@ -39,12 +39,14 @@ define(function() {
 
     loginToUserManager : function(browser, url, username, password) {
         return browser
-        .get(url)
-        .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').type(username)
-        .elementByCss('form[name=LoginForm] input[name=PASSWORD]').type(password)
-        .elementByCss('form[name=LoginForm] button[data-id=APPGROUP]').type(wd.SPECIAL_KEYS['Enter'])
-        .elementByCss('form[name=LoginForm] ul > li:nth-child(2) > a').click()
-        .elementByCss('form[name=LoginForm] button[type=submit]').click();
+            .get(url)
+            // Just to make sure that the form has been loaded
+            .waitForElementByLinkText('Forgot password')
+            .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').type(username)
+            .elementByCss('form[name=LoginForm] input[name=PASSWORD]').type(password)
+            .elementByCss('form[name=LoginForm] button[data-id=APPGROUP]').type(wd.SPECIAL_KEYS['Enter'])
+            .elementByCss('form[name=LoginForm] ul > li:nth-child(2) > a').click()
+            .elementByCss('form[name=LoginForm] button[type=submit]').click();
     },
 
     // FIXME cache frame names are not fixed in DCM. It should be passed in as a parameter. Otherwise, using the fixed value
@@ -670,6 +672,36 @@ define(function() {
             .elementById('Name').type(groupName.toUpperCase())
             .elementById('validate').click()
             .elementById('save').click();
+    },
+
+    addPermission : function(browser, cacheFrameName, permissionName) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByCss('button[name=AllPermissions_add]').type(wd.SPECIAL_KEYS['Enter'])
+            .elementByCss('button[data-id=GroupPermissions_PermissionType_0]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            // #PermissionType0 > div > div > ul > li:nth-child(2) > a
+            .elementByLinkText('Edit').click()
+            .elementById('complexField_Page_ElementSearch_search_div').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('Page_ElementSearch_search_div_frame')
+            .elementById('Field_ElementSearch_Search_ElementName_Search_Value').type(permissionName)
+            .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('Page_ElementSearch_search_div_frame')
+            .elementById('Button_ElementSearch_Select').type(wd.SPECIAL_KEYS['Enter']);
     },
 
     currentDateInString : function() {
