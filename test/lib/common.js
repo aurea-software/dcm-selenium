@@ -660,6 +660,18 @@ define(function() {
             .elementById('save').click();
     },
 
+    createGroup : function(browser, cacheFrameName, groupName) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            // Group  name can only contain upper case characters
+            .elementById('Name').type(groupName.toUpperCase())
+            .elementById('validate').click()
+            .elementById('save').click();
+    },
+
     currentDateInString : function() {
         var today = new Date();
         var dd = today.getDate();
