@@ -702,6 +702,58 @@ define(function() {
             .elementById('Button_ElementSearch_Select').type(wd.SPECIAL_KEYS['Enter']);
     },
 
+    // loginId is also the name, password and email id (hence the term 'simple').
+    createSimpleUser : function(browser, cacheFrameName, loginId) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .elementById('Button_UserManager_Users_Main_CreateUser').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('LoginName').type(loginId)
+            .elementById('Name').type(loginId)
+            .elementById('Password').type(loginId)
+            .elementById('ConfirmPassword').type(loginId)
+            .elementById('EmailAddress').type(loginId + '@gmail.com')
+            .elementById('save').click();
+    },
+
+    addMembership : function(browser, cacheFrameName, groupName) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByCss('button[name=AllGroupContainers_add]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('complexField_Page_GroupSearch_search_div').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('Page_GroupSearch_search_div_frame')
+            .elementById('Field_GroupSearch_Search_GroupName_Search_Value').type(groupName)
+            .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('Page_GroupSearch_search_div_frame')
+            .elementById('Button_GroupSearch_Select').type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('save').click();
+    },
+
     currentDateInString : function() {
         var today = new Date();
         var dd = today.getDate();
