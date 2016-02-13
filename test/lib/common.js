@@ -632,6 +632,24 @@ define(function() {
             .elementById('save').click();
     },
 
+    createTeam : function(browser, cacheFrameName, name, desc, dtcc) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .elementById('Button_Team_Main_NewTeam').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('Party.Name').type(name)
+            .elementById('Party.Description').type(desc)
+            .elementById('DTCCID').type(dtcc)
+            .elementById('validate').click()
+            .elementById('save').click();
+    },
+
     currentDateInString : function() {
         var today = new Date();
         var dd = today.getDate();
