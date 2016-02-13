@@ -37,6 +37,16 @@ define(function() {
             .elementByCss('form[name=LoginForm] button[type=submit]').click();
     },
 
+    loginToUserManager : function(browser, url, username, password) {
+        return browser
+        .get(url)
+        .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').type(username)
+        .elementByCss('form[name=LoginForm] input[name=PASSWORD]').type(password)
+        .elementByCss('form[name=LoginForm] button[data-id=APPGROUP]').type(wd.SPECIAL_KEYS['Enter'])
+        .elementByCss('form[name=LoginForm] ul > li:nth-child(2) > a').click()
+        .elementByCss('form[name=LoginForm] button[type=submit]').click();
+    },
+
     // FIXME cache frame names are not fixed in DCM. It should be passed in as a parameter. Otherwise, using the fixed value
     // cacheframe0 would require to create a person party in the 1st step in each test case.
     createPersonParty : function(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn) {

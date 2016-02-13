@@ -3,5 +3,7 @@
     "environment": { "browserName": "chrome" },
     "url": "http://172.30.88.120:8080/DMS/dmswelcome.jsp",
     "username": "sa",
-    "password": "sa"
+    "password": "sa",
+    "adminUsername": "superuser",
+    "adminPassword": "superuser"
 }
