@@ -102,7 +102,7 @@ describe("/party/organization/tc3-search-organization-party", function() {
             // We have no control on the party id value, therefore we search by tax id instead.
             .elementById('Field_Org_Main_TaxID_Search_Value').clear().type(taxId2)
             .elementByLinkText('Search').click()
-            .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(3)').text()
+            .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(4)').text()
             // We intentionally create party 1 before party 2. We also setup tax id
             // 2 to be bigger than tax id 1 intentionally.
             // Hence, party ids and tax ids have the same order.
@@ -124,7 +124,7 @@ describe("/party/organization/tc3-search-organization-party", function() {
             .elementById('Field_Org_Main_TaxID_Search_Value').clear().type(taxId1)
             .elementByLinkText('Search').click()
             .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(2)').text().should.eventually.become(partyName1)
-            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(3)').text().should.eventually.become(taxId1)
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(4)').text().should.eventually.become(taxId1)
             .notify(done);
     });
 
@@ -153,8 +153,7 @@ describe("/party/organization/tc3-search-organization-party", function() {
         prepareForOrganizationSearch()
             .elementByLinkText('Advanced Search').click()
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_DTCCID_Search_Value').clear().type(dtcc2)
-            // Starting from Feb 05 2016, the NPN search field doesn't exist in the Advanced Search any more
-            //.elementByCss('#Search_Org_Main_form #Field_Party_Org_NPN_Search_Value').clear().type(npn2)
+            .elementByCss('#Search_Org_Main_form #Field_Party_Org_NPN_Search_Value').clear().type(npn2)
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_City_Search_Value').clear().type(city2)
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_State_Search_Value').clear().type(stateCode)
             .type(wd.SPECIAL_KEYS['Enter'])
@@ -167,9 +166,8 @@ describe("/party/organization/tc3-search-organization-party", function() {
         browser.elementByLinkText('Clear').click()
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_DTCCID_Search_Value').getAttribute('value')
             .should.eventually.become('')
-            // Starting from Feb 05 2016, the NPN search field doesn't exist in the Advanced Search any more
-            //.elementByCss('#Search_Org_Main_form #Field_Party_Org_NPN_Search_Value').getAttribute('value')
-            //.should.eventually.become('')
+            .elementByCss('#Search_Org_Main_form #Field_Party_Org_NPN_Search_Value').getAttribute('value')
+            .should.eventually.become('')
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_City_Search_Value').getAttribute('value')
             .should.eventually.become('')
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_State_Search_Value').getAttribute('value')
@@ -192,9 +190,9 @@ describe("/party/organization/tc3-search-organization-party", function() {
             .frame('subpage')
             .elementByLinkText('Descending').click()
             .elementByLinkText('Search').click()
-            .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(3)').text()
+            .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(4)').text()
             .should.eventually.become(taxId2)
-            .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(2) td:nth-child(3)').text()
+            .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(2) td:nth-child(4)').text()
             .should.eventually.become(taxId1)
             .notify(done);
     });
@@ -220,9 +218,9 @@ describe("/party/organization/tc3-search-organization-party", function() {
             .frame('subpage')
             .elementByLinkText('Ascending').click()
             .elementByLinkText('Search').click()
-            .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(3)').text()
+            .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(4)').text()
             .should.eventually.become(taxId1)
-            .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(2) td:nth-child(3)').text()
+            .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(2) td:nth-child(4)').text()
             .should.eventually.become(taxId2)
             .notify(done);
     });

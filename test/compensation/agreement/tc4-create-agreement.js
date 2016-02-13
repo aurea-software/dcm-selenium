@@ -15,6 +15,16 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
+var r1 = common.rand(6);
+console.log('r1: ' + r1);
+
+var CKPTaxId = r1;
+var CKPName = 'CKP_' + r1;
+var CKPPartyId;
+
+var ProdHierName = 'PRODHIER_' + r1;
+var ProdHierDesc = 'PRODHIER_DESC' + r1;
+
 var personR = common.rand(3);
 var organizationR = common.rand(3);
 
@@ -73,7 +83,7 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
     it("should login", function (done) {
         common.login(browser, url, username, password).nodeify(done);
     });
-    
+
     // We need to create a person for our test case
 
     it("should load party page", function(done) {
@@ -82,7 +92,7 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
         .elementById('Party').click()
         .nodeify(done);
     });
-    
+
     it("should load create person page", function(done) {
       browser
         .frame()
@@ -92,15 +102,43 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
         .elementById('Button_Person_Main_NewPerson').click()
         .nodeify(done);
     });
-    
+
     it('should create person party', function(done) {
         common.createPersonParty(browser, personTaxId, personFirstName, personLastName, personMiddleName, personPreferredName, city, stateName, personDtcc, personNpn).nodeify(done);
     });
-    
+
     // We need to create an organization for our test case
 
     it('should create organization party', function(done) {
         common.createOrganizationParty(browser, organizationTaxId, organizationPartyName, organizationDtcc, organizationNpn, city, stateName).nodeify(done);
+    });
+
+    var CKPId1 = function(ckpid) {
+        CKPPartyId = ckpid;
+    };
+
+    it('should create contract kit provider', function(done) {
+        common.createContractKitProviderDirectly(browser, 'cacheframe0', CKPName, CKPTaxId)
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
+                CKPId1(data);
+                })
+            .nodeify(done);
+    });
+
+    it("should load hierarchy tab", function(done) {
+       browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
+    });
+
+    it("should load product hierarchy page", function(done) {
+       browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
+    });
+
+    it("should create product hierarchy", function(done) {
+       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
     });
 
     it("should load compensation setup page", function(done) {
@@ -118,7 +156,7 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
     });
 
     it("should create contract kit in production status", function(done) {
-        common.createContractKitInProductionStatus(browser, 'cacheframe2', contractName, contractDesc, '01/01/2000', '01/01/2300').nodeify(done);
+        common.createContractKitWithHierAndCKPInProductionStatus(browser, 'cacheframe2', contractName, contractDesc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
     });
 
     it("should load agreement page", function(done) {

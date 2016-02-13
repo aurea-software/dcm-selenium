@@ -15,6 +15,16 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
+var r1 = common.rand(6);
+console.log('r1: ' + r1);
+
+var CKPTaxId = r1;
+var CKPName = 'CKP_' + r1;
+var CKPPartyId;
+
+var ProdHierName = 'PRODHIER_' + r1;
+var ProdHierDesc = 'PRODHIER_DESC' + r1;
+
 // Test case desc requires fixed input values. We add some dynamic factor
 // to make sure that the test data is really ours.
 var uniqueString = ' - ' + common.rand(3);
@@ -36,8 +46,40 @@ describe("/compensation/contract-kit/tc4-create-contract-kit", function() {
         common.login(browser, url, username, password).nodeify(done);
     });
 
+    it("should load party page", function(done) {
+        browser.frame('navbar').elementById('Party').click().nodeify(done);
+    });
+
+    var CKPId1 = function(ckpid) {
+        CKPPartyId = ckpid;
+    };
+
+    it('should create contract kit provider', function(done) {
+        common.createContractKitProvider(browser, 'cacheframe0', CKPName, CKPTaxId)
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
+                CKPId1(data);
+                })
+            .nodeify(done);
+    });
+
+    it("should load hierarchy tab", function(done) {
+       browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
+    });
+
+    it("should load product hierarchy page", function(done) {
+       browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
+    });
+
+    it("should create product hierarchy", function(done) {
+       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+    });
+
     it("should load compensation setup page", function(done) {
-        browser.frame('navbar').elementById('Compensation Setup').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
     it("should load contract kit page", function(done) {
@@ -52,20 +94,30 @@ describe("/compensation/contract-kit/tc4-create-contract-kit", function() {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementById('Button_Contracts_Main_NewContractKit').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementById('Name').type('LifeContractKit' + uniqueString)
             .elementById('Description').type('Contract kit' + uniqueString)
+            .frame()
+            .frame('container')
+            .frame('cacheframe4')
+            .frame('proppage')
+            .elementByCss('form[name=spartacus] button[data-id=Products]').type(wd.SPECIAL_KEYS['Enter'])
+            .sleep(500)
+            .elementByLinkText(ProdHierName).click()
+            .elementByCss('form[name=spartacus] button[data-id=Party]').type(wd.SPECIAL_KEYS['Enter'])
+            .sleep(500)
+            .elementByLinkText(CKPName + ' [Party ID: ' + CKPPartyId + ']').click()
             .elementById('validate').click()
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Inspector_Contracts_Main_BasicInfo_div_out').text()
@@ -80,14 +132,14 @@ describe("/compensation/contract-kit/tc4-create-contract-kit", function() {
             .elementById('Button_Contracts_Main_BasicInfo_EditContractKit').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementById('Description').type('Contract kit for life insurance' + uniqueString)
             .elementById('validate').click()
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Inspector_Contracts_Main_BasicInfo_div_out').text()

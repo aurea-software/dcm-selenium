@@ -15,6 +15,16 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
+var r1 = common.rand(6);
+console.log('r1: ' + r1);
+
+var CKPTaxId = r1;
+var CKPName = 'CKP_' + r1;
+var CKPPartyId;
+
+var ProdHierName = 'PRODHIER_' + r1;
+var ProdHierDesc = 'PRODHIER_DESC' + r1;
+
 var index = common.rand(3);
 
 var index1 = common.rand(3);
@@ -50,8 +60,40 @@ describe("/compensation/contract-kit/tc7-discard-working-version", function() {
         common.login(browser, url, username, password).nodeify(done);
     });
 
+    it("should load party page", function(done) {
+        browser.frame('navbar').elementById('Party').click().nodeify(done);
+    });
+
+    var CKPId1 = function(ckpid) {
+        CKPPartyId = ckpid;
+    };
+
+    it('should create contract kit provider', function(done) {
+        common.createContractKitProvider(browser, 'cacheframe0', CKPName, CKPTaxId)
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
+                CKPId1(data);
+                })
+            .nodeify(done);
+    });
+
+    it("should load hierarchy tab", function(done) {
+       browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
+    });
+
+    it("should load product hierarchy page", function(done) {
+       browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
+    });
+
+    it("should create product hierarchy", function(done) {
+       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+    });
+
     it("should load compensation setup page", function(done) {
-        browser.frame('navbar').elementById('Compensation Setup').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
     it("should load contract kit page", function(done) {
@@ -63,24 +105,24 @@ describe("/compensation/contract-kit/tc7-discard-working-version", function() {
     });
 
     it("should create contract kit 1", function(done) {
-        common.createContractKit(browser, 'cacheframe1', name1, desc1, '01/01/2000', '01/01/2300').nodeify(done);
+        common.createContractKitWithHierAndCKP(browser, 'cacheframe4', name1, desc1, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
     });
 
     it("should create contract kit 2", function(done) {
-        common.createContractKit(browser, 'cacheframe1', name2, desc2, '01/01/2000', '01/01/2300').nodeify(done);
+        common.createContractKitWithHierAndCKP(browser, 'cacheframe4', name2, desc2, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
     });
-    
+
     it("should search by name prefix", function(done) {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementById('Field_Contracts_Main_Name_Search_Value').type(namePrefix + "*")
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByCss('table[name=Grid_Contracts_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
             .should.eventually.include(name1.toUpperCase())
@@ -92,7 +134,7 @@ describe("/compensation/contract-kit/tc7-discard-working-version", function() {
             .should.eventually.include('WORKING VERSION')
             .notify(done);
     });
-    
+
     // [DCM Recording] > Contract Kit Part 2 > TC7 (Discard Working Version) looks incorrect..
     // the whole test case description has nothing to do with the test case title 'Discard Working Version'.
     // Moreover, step 2 can't go to step 3. But if we insert a step between step 2 and step 3
@@ -103,22 +145,22 @@ describe("/compensation/contract-kit/tc7-discard-working-version", function() {
             .elementById('Button_Contracts_Main_ContractKitRevert').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByCss('table[name=Grid_Contracts_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
             .should.eventually.include(name2.toUpperCase())
             .notify(done);
     });
-    
+
     // No need to test step 5 / 6 as we already verify the Production status after creating the two contract kits above.
 });

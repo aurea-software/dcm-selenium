@@ -15,6 +15,16 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
+var r1 = common.rand(6);
+console.log('r1: ' + r1);
+
+var CKPTaxId = r1;
+var CKPName = 'CKP_' + r1;
+var CKPPartyId;
+
+var ProdHierName = 'PRODHIER_' + r1;
+var ProdHierDesc = 'PRODHIER_DESC' + r1;
+
 // Test case desc requires fixed input values. We add some dynamic factor
 // to make sure that the test data is really ours.
 var uniqueString = common.rand(3);
@@ -52,8 +62,40 @@ describe("/compensation/agreement/tc11-create-bonus", function() {
         common.login(browser, url, username, password).nodeify(done);
     });
 
+    it("should load party page", function(done) {
+        browser.frame('navbar').elementById('Party').click().nodeify(done);
+    });
+
+    var CKPId1 = function(ckpid) {
+        CKPPartyId = ckpid;
+    };
+
+    it('should create contract kit provider', function(done) {
+        common.createContractKitProvider(browser, 'cacheframe0', CKPName, CKPTaxId)
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
+                CKPId1(data);
+                })
+            .nodeify(done);
+    });
+
+    it("should load hierarchy tab", function(done) {
+       browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
+    });
+
+    it("should load product hierarchy page", function(done) {
+       browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
+    });
+
+    it("should create product hierarchy", function(done) {
+       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+    });
+
     it("should load compensation setup page", function(done) {
-        browser.frame('navbar').elementById('Compensation Setup').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
     it("should load contract kit page", function(done) {
@@ -65,21 +107,21 @@ describe("/compensation/agreement/tc11-create-bonus", function() {
     });
 
     it("should create contract kit", function(done) {
-        common.createContractKit(browser, 'cacheframe1', name, desc, '01/01/2000', '01/01/2300').nodeify(done);
+        common.createContractKitWithHierAndCKP(browser, 'cacheframe4', name, desc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
     });
-    
+
     // Skipping step 3 - 4 in the test case (create working version) as our contract kit is 100% new
     // and the test case's logic has been covered in
     // /compensation/contract-kit/tc5-create-working-version-checkin-export-contract-kit
-    
+
     it("should create quota", function(done) {
-        common.createQuota(browser, 'cacheframe1', quotaName, quotaDesc).nodeify(done);
+        common.createQuota(browser, 'cacheframe4', quotaName, quotaDesc).nodeify(done);
     });
-    
+
     it('should create component', function(done) {
-        common.createComponent(browser, wd.SPECIAL_KEYS['Enter'], 'cacheframe1', componentName, componentDesc, componentLabel, quotaName).nodeify(done);
+        common.createComponent(browser, wd.SPECIAL_KEYS['Enter'], 'cacheframe4', componentName, componentDesc, componentLabel, quotaName).nodeify(done);
     });
-    
+
     it('should create bonus', function(done) {
         browser
             .frame()
@@ -87,13 +129,13 @@ describe("/compensation/agreement/tc11-create-bonus", function() {
             .elementById('Tab_Contracts_Main_Components_Bonuses_link').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Button_Contracts_Main_Components_Bonuses_NewBonus').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementById('Name').type(bonusName)
             .elementById('Description').type(bonusDesc)
@@ -101,7 +143,7 @@ describe("/compensation/agreement/tc11-create-bonus", function() {
             .elementById('searchQuotasSearch_search_div').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('proppage')
             .frame('QuotasSearch_search_div_frame')
             .elementById('Field_Quotas_Search_Name_Search_Value').type(quotaName)
@@ -109,7 +151,7 @@ describe("/compensation/agreement/tc11-create-bonus", function() {
             .elementById('QuotasSearchButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementById('SelectedObjTextDiv_Quota_link').text()
             .should.eventually.include(quotaName)
@@ -117,7 +159,7 @@ describe("/compensation/agreement/tc11-create-bonus", function() {
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('subpage')
             .frame('component_iframe')
             .elementByCss('table[name=Grid_Contracts_Main_Components_Bonuses] tbody tr:nth-child(1) td:nth-child(1)').text()

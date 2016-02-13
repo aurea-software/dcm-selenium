@@ -15,6 +15,16 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
+var r1 = common.rand(6);
+console.log('r1: ' + r1);
+
+var CKPTaxId = r1;
+var CKPName = 'CKP_' + r1;
+var CKPPartyId;
+
+var ProdHierName = 'PRODHIER_' + r1;
+var ProdHierDesc = 'PRODHIER_DESC' + r1;
+
 var r = common.rand(3);
 var taxId = common.rand(5);
 
@@ -63,7 +73,7 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
     it("should login", function (done) {
         common.login(browser, url, username, password).nodeify(done);
     });
-    
+
     // We need to create a person for our test case
 
     it("should load party page", function(done) {
@@ -72,7 +82,7 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
         .elementById('Party').click()
         .nodeify(done);
     });
-    
+
     it("should load create person page", function(done) {
       browser
         .frame()
@@ -82,9 +92,37 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
         .elementById('Button_Person_Main_NewPerson').click()
         .nodeify(done);
     });
-    
+
     it('should create person party', function(done) {
         common.createPersonParty(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
+    });
+
+    var CKPId1 = function(ckpid) {
+        CKPPartyId = ckpid;
+    };
+
+    it('should create contract kit provider', function(done) {
+        common.createContractKitProvider(browser, 'cacheframe0', CKPName, CKPTaxId)
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
+                CKPId1(data);
+                })
+            .nodeify(done);
+    });
+
+    it("should load hierarchy tab", function(done) {
+       browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
+    });
+
+    it("should load product hierarchy page", function(done) {
+       browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
+    });
+
+    it("should create product hierarchy", function(done) {
+       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
     });
 
     // We need to create a contract kit in production status for our test case
@@ -102,9 +140,9 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
     });
 
     it("should create contract kit in production status", function(done) {
-        common.createContractKitInProductionStatus(browser, 'cacheframe2', contractName, contractDesc, '01/01/2000', '01/01/2300').nodeify(done);
+        common.createContractKitWithHierAndCKPInProductionStatus(browser, 'cacheframe2', contractName, contractDesc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
     });
-    
+
     // We need to create an agreement for our test case
 
     it("should load agreement page", function(done) {
@@ -118,7 +156,7 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
     it('should create agreement with person', function(done) {
         common.createAgreementWithPerson(browser, wd.SPECIAL_KEYS['Enter'], 'cacheframe3', agreementName, agreementDesc, contractName, '01/01/2010', '01/01/2100', firstName).nodeify(done);
     });
-    
+
     it('should search agreement', function(done) {
         browser
             .frame()
@@ -136,7 +174,7 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
             .should.eventually.become(agreementName.toUpperCase())
             .notify(done);
     })
-    
+
     it('should edit basic info', function(done) {
         browser
             .elementById('Button_Agreement_Main_EditAgreement').click()
@@ -160,6 +198,6 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
             .should.eventually.include('Life contract kit')
             .notify(done);
     });
-    
+
     // Skipping step 4 - 6 because it's not necessary to verify the Create / View basic info (we have done it in step 1 - 3)
 });

@@ -133,7 +133,9 @@ define(function() {
             .elementById('validate').click()
             .elementById('save').click();
     },
-    
+
+    // Deprecated. This method will fail if the db is clean - no hiearchy, no provider.
+    // Should use createContractKitWithHierAndCKP instead.
     createContractKit : function(browser, cacheFrameName, name, description, startDate, endDate) {
         return browser
             .frame()
@@ -152,7 +154,9 @@ define(function() {
             .elementById('validate').click()
             .elementById('save').click();
     },
-    
+
+    // Deprecated. This method will fail if the db is clean - no hiearchy, no provider.
+    // Should use createContractKitWithHierAndCKPInProductionStatus instead.
 	createContractKitInProductionStatus : function(browser, cacheFrameName, name, description, startDate, endDate) {
         return this.createContractKit(browser, cacheFrameName, name, description, startDate, endDate)
             .frame()
@@ -166,7 +170,7 @@ define(function() {
             .frame('proppage')
             .elementById('save').click();
     },
-	
+
 	//FIXME: Added cacheFrameName and enterKey parameters
 	createPartyHierarchy : function(browser, cacheFrameName, enterKey, hiername) {
 		return browser
@@ -180,10 +184,10 @@ define(function() {
 			.frame(cacheFrameName)
 			.frame('proppage')
 			.elementById('Name').type(hiername)
-			.elementById('Description').type('Description ' + hiername)	
+			.elementById('Description').type('Description ' + hiername)
 			.elementById('save').click()
     },
-    
+
     createAgreementWithPerson : function(browser, enterKey, cacheFrameName, agreementName, agreementDesc, contractName, startDate, endDate, personFirstName) {
         return browser
             .frame()
@@ -221,7 +225,7 @@ define(function() {
             .elementById('validate').click()
             .elementById('save').click();
     },
-    
+
     createQuota: function(browser, cacheFrameName, name, desc) {
         return browser
             .frame()
@@ -250,7 +254,7 @@ define(function() {
             .elementById('validate').click()
             .elementById('save').click();
     },
-    
+
     createComponent : function(browser, enterKey, cacheFrameName, name, desc, label, quotaName) {
         return browser
             .frame()
@@ -289,7 +293,7 @@ define(function() {
             .elementById('validate').click()
             .elementById('save').click();
     },
-    
+
     createCourse : function(browser, cacheFrameName, name, stateSpecificValue) {
         return browser
             .frame()
@@ -324,7 +328,7 @@ define(function() {
             .elementById('validate').click()
             .elementById('save').click();
     },
-	
+
 	createPartyHierarchyRootPosition : function(browser, cacheFrameName, enterKey, firstname1, rootPosition, rootPositionDesc) {
         return browser
             .frame()
@@ -333,7 +337,7 @@ define(function() {
 			.frame()
             .frame('container')
             .frame(cacheFrameName)
-            .frame('subpage')				
+            .frame('subpage')
 			.frame('component_iframe')
 			.elementById('Button_AddRootPosition').click()
 			.frame()
@@ -351,12 +355,12 @@ define(function() {
 			.frame()
             .frame('container')
             .frame(cacheFrameName)
-            .frame('proppage')			
+            .frame('proppage')
 			.elementById('save').click();
     },
 
 	createProductHierarchy : function(browser, cacheFrameName, enterKey, hiername, hierdesc) {
-		return browser			
+		return browser
 			.frame()
 			.frame('container')
 			.frame(cacheFrameName)
@@ -374,11 +378,11 @@ define(function() {
 			.frame(cacheFrameName)
 			.frame('proppage')
 			.elementById('validate').click()
-			.elementById('save').click()			
+			.elementById('save').click()
     },
-	
+
 	createCompHierarchy : function(browser, cacheFrameName, hiername, hierdesc, CKname) {
-		return browser			
+		return browser
 			.frame()
 			.frame('container')
 			.frame(cacheFrameName)
@@ -403,9 +407,9 @@ define(function() {
 			.frame(cacheFrameName)
 			.frame('proppage')
 			.elementById('validate').click()
-			.elementById('save').click()			
+			.elementById('save').click()
     },
-	
+
 	createContractKitWithHierAndCKP : function(browser, cacheFrameName, name, description, startDate, endDate, prodhier, CKP, CKPId) {
         return browser
             .frame()
@@ -433,8 +437,201 @@ define(function() {
 			.elementByLinkText(CKP + ' [Party ID: ' + CKPId + ']').click()
             .elementById('validate').click()
             .elementById('save').click();
-		},
-	
+	},
+
+	createContractKitWithHierAndCKPInProductionStatus : function(browser, cacheFrameName, name, description, startDate, endDate, prodhier, CKP, CKPId) {
+        return this.createContractKitWithHierAndCKP(browser, cacheFrameName, name, description, startDate, endDate, prodhier, CKP, CKPId)
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .elementById('Button_Contracts_Main_ContractKitCheckIn').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('save').click();
+    },
+
+    createContractKitProviderDirectly : function(browser, cacheFrameName, name, taxId) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .elementById('Button_Org_Main_NewOrg').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('Party.Name').type(name)
+            .elementById('Party.TaxID').type(taxId)
+            .elementByCss('button[data-id=SyncPDB]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText('No').click()
+            .execute('scrollTo(0, 3000)')
+            .elementByCss('input[id=RoleFINANCIAL_SERVICES] ~ i').click()
+            .elementById('ContactPoint.Address.Street1').type('street1')
+            .elementById('ContactPoint.Address.City').type('city1')
+            .elementByCss('button[data-id=US_State]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('ZipCode').type('4444')
+            .elementById('validate').click()
+            .elementById('save').click();
+    },
+
+	createContractKitProvider : function(browser, cacheFrameName, name, taxId) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .elementByCss('#Search_Person_Main_primary_display_div button').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .elementByLinkText('Search Organization').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .elementById('Button_Org_Main_NewOrg').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('Party.Name').type(name)
+            .elementById('Party.TaxID').type(taxId)
+            .elementByCss('button[data-id=SyncPDB]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText('No').click()
+            .execute('scrollTo(0, 3000)')
+            .elementByCss('input[id=RoleFINANCIAL_SERVICES] ~ i').click()
+            .elementById('ContactPoint.Address.Street1').type('street1')
+            .elementById('ContactPoint.Address.City').type('city1')
+            .elementByCss('button[data-id=US_State]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('ZipCode').type('4444')
+            .elementById('validate').click()
+            .elementById('save').click();
+	},
+
+    createEnum : function(browser, cacheFrameName, enumId, name1, value1) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .elementById('Button_EnumManager_Enums_Main_CreateEnum').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('Id').type(enumId)
+            .elementByCss('button[name=Entries_add]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('Entries_Name_0').type(name1)
+            .elementById('Entries_Value_0').type(value1)
+            .elementById('validate').click()
+            .elementById('save').click()
+            .elementById('save').click();
+    },
+
+    createLocationParty : function(browser, cacheFrameName, locationName, locationId, locationDtcc, locationStreet, locationCity, locationZipCode, subType, orgPartyName) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('Party.CurrentDetails.Name').type(locationName)
+            .elementById('Unid').type(locationId)
+            .elementByCss('button[data-id=Party\\.CurrentDetails\\.LocationType]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText('Area Office').click()
+            .elementByCss('button[data-id=Party\\.CurrentDetails\\.LocationSubtype]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText(subType).click()
+            .elementByCss('button[data-id=Party\\.CurrentDetails\\.OccupancyType]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText('Leased').click()
+            .elementByCss('button[data-id=Party\\.CurrentDetails\\.Usage]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText('Securities').click()
+            .elementById('DTCCID').type(locationDtcc)
+            .execute('scrollTo(0, 6000)')
+            .elementById('ContactPoint.Address.Street1').type(locationStreet)
+            .elementById('ContactPoint.Address.City').type(locationCity)
+            .elementById('ZipCode').type(locationZipCode)
+            // Search for owning firm
+            .elementById('searchOrgPartySearch_search_div').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('OrgPartySearch_search_div_frame')
+            .elementById('Field_Party_NameUpper_Search_Value').type(orgPartyName)
+            .elementByLinkText('Search').click()
+            .execute('scrollTo(0, 6000)')
+            .elementById('Button_PartySearch_PP_Select').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('validate').click()
+            .elementById('save').click();
+    },
+
+    closeLocationParty : function(browser, cacheFrameName) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .frame('component_iframe')
+            .elementById('Button_Location_Main_BasicInfo_CloseLocation').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByCss('button[data-id=NewStatus\\.StatusReason]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText('Registered Contact Left').click()
+            .elementById('validate').click()
+            .elementById('save').click()
+            .elementById('save').click();
+    },
+
     currentDateInString : function() {
         var today = new Date();
         var dd = today.getDate();

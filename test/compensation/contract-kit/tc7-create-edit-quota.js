@@ -15,6 +15,16 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
+var r1 = common.rand(6);
+console.log('r1: ' + r1);
+
+var CKPTaxId = r1;
+var CKPName = 'CKP_' + r1;
+var CKPPartyId;
+
+var ProdHierName = 'PRODHIER_' + r1;
+var ProdHierDesc = 'PRODHIER_DESC' + r1;
+
 // Test case desc requires fixed input values. We add some dynamic factor
 // to make sure that the test data is really ours.
 var uniqueString = common.rand(3);
@@ -41,8 +51,40 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
         common.login(browser, url, username, password).nodeify(done);
     });
 
+    it("should load party page", function(done) {
+        browser.frame('navbar').elementById('Party').click().nodeify(done);
+    });
+
+    var CKPId1 = function(ckpid) {
+        CKPPartyId = ckpid;
+    };
+
+    it('should create contract kit provider', function(done) {
+        common.createContractKitProvider(browser, 'cacheframe0', CKPName, CKPTaxId)
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
+                CKPId1(data);
+                })
+            .nodeify(done);
+    });
+
+    it("should load hierarchy tab", function(done) {
+       browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
+    });
+
+    it("should load product hierarchy page", function(done) {
+       browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
+    });
+
+    it("should create product hierarchy", function(done) {
+       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+    });
+
     it("should load compensation setup page", function(done) {
-        browser.frame('navbar').elementById('Compensation Setup').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
     it("should load contract kit page", function(done) {
@@ -54,9 +96,9 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
     });
 
     it("should create contract kit", function(done) {
-        common.createContractKit(browser, 'cacheframe1', name, desc, '01/01/2000', '01/01/2300').nodeify(done);
+        common.createContractKitWithHierAndCKP(browser, 'cacheframe4', name, desc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
     });
-    
+
     it("should create quota", function(done) {
         browser
             .frame()
@@ -64,13 +106,13 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
             .elementById('Tab_Contracts_Main_Quotas_link').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Button_Contracts_Main_Quotas_NewQuota').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementById('Name').type('Quota1 ' + uniqueString)
             .elementById('Description').type('Quota Desc ' + uniqueString)
@@ -78,7 +120,7 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
             .elementByCss('button[data-id=MeasureFormulaString]').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementByLinkText('allocation.getWeight()').click()
             .elementById('MeasureDescription').type('Alloc Get Weight')
@@ -86,37 +128,37 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Grid_Contracts_Main_Quotas').text()
             .should.eventually.include('QUOTA1 ' + uniqueString)
             .notify(done);
     });
-    
+
     var newStartDate;
-    
+
     var processStartDate = function(data) {
         newStartDate = moment(data, 'mm/dd/yyyy').add(4, 'months').format('L');
     };
-    
+
     it('should extract start date', function(done) {
         browser.elementByCss('table[name=Grid_Contracts_Main_Quotas] tbody tr:nth-child(1) td:nth-child(3)').text().then(function(data) {
             processStartDate(data);
         }).nodeify(done);
     });
-    
+
     it('should edit quota', function(done) {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Button_Contracts_Main_Quotas_EditQuota').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementById('DurQuantity').clear().type('2')
             .elementById('Periods').clear().type('2')
@@ -124,7 +166,7 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe1')
+            .frame('cacheframe4')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Grid_Contracts_Main_Quotas').text()

@@ -57,7 +57,7 @@ describe("/party/location/tc12-search-location-party", function() {
     });
 
     after(function (done) {
-        //browser.quit().nodeify(done);
+        browser.quit().nodeify(done);
     });
 
     it("should login", function (done) {
@@ -94,7 +94,7 @@ describe("/party/location/tc12-search-location-party", function() {
             .elementById('Button_Location_Main_NewLocation').click()
             .nodeify(done);
     });
-    
+
     var storeLocationId1 = function(locationId) {
         locationId1 = locationId;
     };
@@ -131,7 +131,7 @@ describe("/party/location/tc12-search-location-party", function() {
     it("should create location party 2", function(done) {
     	common.createLocationParty(browser, 'cacheframe0', locationName2, locationId2, locationDtcc2, locationStreet2, locationCity2, locationZipCode2, 'Subtype 2', partyName).nodeify(done);
     });
-    
+
     it("should search location 2 by name", function(done) {
     	browser
 	        .frame()
@@ -148,7 +148,7 @@ describe("/party/location/tc12-search-location-party", function() {
             .should.eventually.become(locationName2.toUpperCase())
             .notify(done);
     });
-    
+
     it('should clear search input 1', function(done) {
         browser
             .elementByLinkText('Clear').click()
@@ -156,7 +156,7 @@ describe("/party/location/tc12-search-location-party", function() {
             .should.eventually.become('')
             .notify(done);
     });
-    
+
     it("should search location 1 by id", function(done) {
     	browser
 	        .frame()
@@ -173,7 +173,7 @@ describe("/party/location/tc12-search-location-party", function() {
 	        .should.eventually.become(locationName1.toUpperCase())
 	        .notify(done);
     });
-    
+
     it('should clear search input 2', function(done) {
         browser
             .elementByLinkText('Clear').click()
@@ -181,38 +181,32 @@ describe("/party/location/tc12-search-location-party", function() {
             .should.eventually.become('')
             .notify(done);
     });
-    
+
     it('should search location 2 in advanced search mode', function(done) {
         browser
-        	.refresh()
-        	.refresh()
-            .frame()
-            .frame('container')
-            .frame('cacheframe0')
-            .frame('subpage')
-            .elementByCss('#Search_Person_Main_primary_display_div button').click()
-            .frame()
-            .frame('container')
-            .frame('cacheframe0')
-            .frame('subpage')
-            .elementByLinkText('Search Location').click()
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
             .elementByLinkText('Advanced Search').click()
             .elementByCss('#Search_Location_Main_form #Field_Location_Main_LocationNameUpper_Search_Value').clear().type(locationNamePrefix + "*")
-            // TODO - Unable to find the element with link text Subtype 2. Reason: The click on Subtype doesn't seem to work. Tested:
-            // - The cursor seems to focus on the DTCC ID field.
-            // - If we click on the Status BEFORE we click the Subtype, then the element that ACTUALLY receives the click is the Type, not the Status
-            // Looks like Selenium WebDriver has a bug!
-            .elementByCss('button[data-id=Field_Location_Main_LocationSubtype_Search_Value]').click()
+            // The test case desc requires to specify the sub type in the search form. We skip this value because:
+            // - The sub type is the same for both location 1 and 2
+            // - Not sure why but the click on the sub type combo box doens't work. Already tried with:
+            // + Simplified CSS: #Search_Location_Main_form button[data-id=Field_Location_Main_LocationSubtype_Search_Value]
+            // + Chrome CSS
+            // + Chrome XPath //*[@id="Search_Location_Main_form"]/div[5]/div/button
+            // getAttribute('data-id') gives us Field_Location_Main_LocationSubtype_Search_Value, meaning WebDriver selects the correct element.
+            // However, the .click() and .type(wd.SPECIAL_KEYS['Enter']) both have no effect on the element, and there is no error returned.
+            // From  here
+            .elementByCss('#Search_Location_Main_form button[data-id=Field_Location_Main_LocationSubtype_Search_Value]').click()
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
             .elementByLinkText('Subtype 2').click()
-            .elementByCss('button[data-id=Field_Location_Main_Status_Search_Value]').click()
+            // To here
+            .elementByCss('#Search_Location_Main_form button[data-id=Field_Location_Main_Status_Search_Value]').click()
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -229,7 +223,7 @@ describe("/party/location/tc12-search-location-party", function() {
             .should.eventually.become(locationName2.toUpperCase())
             .notify(done);
     });
-    /*
+
     it('should search locations in advanced search mode', function(done) {
         browser
             .frame()
@@ -255,7 +249,7 @@ describe("/party/location/tc12-search-location-party", function() {
             .should.eventually.include(locationNamePrefix.toUpperCase())
             .notify(done);
     });
-    
+
     it('should sort locations', function(done) {
         browser
 	        .frame()
@@ -285,5 +279,5 @@ describe("/party/location/tc12-search-location-party", function() {
             .elementByCss('table[name=Grid_Location_Main] tbody tr:nth-child(2) td:nth-child(1)').text()
             .should.eventually.become(locationName1.toUpperCase())
             .notify(done);
-    });*/
+    });
 });
