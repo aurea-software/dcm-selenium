@@ -24,7 +24,7 @@ console.log('r: ' + r);
 var user = 'u' + r;
 
 // Permissions - Contract kit, Agreement and Agreement Hierarchy
-describe("/user-manager/tc4-create-user", function() {
+describe("/user-manager/tc5-add-permission-to-view-contract-kit-tab", function() {
     this.timeout(60000);
     var browser;
 
