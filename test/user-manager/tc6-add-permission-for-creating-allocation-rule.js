@@ -22,6 +22,7 @@ var groupName = 'G' + r;
 
 console.log('r: ' + r);
 
+// Groups - Compensation setup
 describe("/user-manager/tc6-add-permission-for-creating-allocation-rule", function() {
     this.timeout(60000);
     var browser;

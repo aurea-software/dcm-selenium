@@ -25,6 +25,7 @@ console.log('r: ' + r);
 var permission1;
 var permission2;
 
+// Groups - Compensation setup
 describe("/user-manager/tc3-add-permission-for-viewing-agreement-tab-and-search-page", function() {
     this.timeout(60000);
     var browser;

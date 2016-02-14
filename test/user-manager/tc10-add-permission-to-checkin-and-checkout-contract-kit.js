@@ -25,6 +25,7 @@ console.log('r: ' + r);
 var permission1;
 var permission2;
 
+// Groups - Compensation setup
 describe("/user-manager/tc10-add-permission-to-checkin-and-checkout-contract-kit", function() {
     this.timeout(60000);
     var browser;

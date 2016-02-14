@@ -20,6 +20,7 @@ var groupName = 'G' + r;
 
 console.log('r: ' + r);
 
+// Groups - Compensation setup
 describe("/user-manager/tc1-create-agreement-group", function() {
     this.timeout(60000);
     var browser;

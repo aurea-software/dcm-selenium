@@ -22,6 +22,7 @@ var groupName = 'G' + r;
 
 console.log('r: ' + r);
 
+// Groups - Compensation setup
 describe("/user-manager/tc4-create-contract-kit-group-and-add-permission-to-create-edit-contract-kit", function() {
     this.timeout(60000);
     var browser;

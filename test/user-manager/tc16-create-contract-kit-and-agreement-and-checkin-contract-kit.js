@@ -55,6 +55,7 @@ var ProdHierDesc = 'PRODHIER_DESC' + r;
 var contractName = 'CK Name' + r;
 var contractDesc = 'CK Desc' + r;
 
+// Groups - Compensation setup
 describe("/user-manager/tc16-create-contract-kit-and-agreement-and-checkin-contract-kit", function() {
     this.timeout(60000);
     var browser;

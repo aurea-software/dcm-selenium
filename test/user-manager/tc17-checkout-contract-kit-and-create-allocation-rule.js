@@ -40,6 +40,7 @@ var contractDesc = 'CK Desc' + r;
 var ruleName = 'AL' + r;
 var ruleDesc = ruleName + 'Desc';
 
+// Groups - Compensation setup
 describe("/user-manager/tc17-checkout-contract-kit-and-create-allocation-rule", function() {
     this.timeout(60000);
     var browser;

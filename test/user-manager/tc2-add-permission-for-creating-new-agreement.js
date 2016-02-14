@@ -20,6 +20,7 @@ var groupName = 'G' + r;
 
 console.log('r: ' + r);
 
+// Groups - Compensation setup
 describe("/user-manager/tc2-add-permission-for-creating-new-agreement", function() {
     this.timeout(60000);
     var browser;

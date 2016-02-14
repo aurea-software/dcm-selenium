@@ -25,6 +25,7 @@ console.log('r: ' + r);
 // This is the login id, name, password, confirmed password and email id
 var user = 'u' + r;
 
+// Groups - Compensation setup
 describe("/user-manager/tc11-create-user-and-add-agreement-group", function() {
     this.timeout(60000);
     var browser;
