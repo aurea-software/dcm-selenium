@@ -48,6 +48,13 @@ define(function() {
             .elementByCss('form[name=LoginForm] button[type=submit]').click();
     },
 
+    logout : function(browser) {
+        return browser
+            .frame()
+            .frame('navbar')
+            .elementByCss('#session > div:nth-child(2) > a').click();
+    },
+
     // FIXME cache frame names are not fixed in DCM. It should be passed in as a parameter. Otherwise, using the fixed value
     // cacheframe0 would require to create a person party in the 1st step in each test case.
     createPersonParty : function(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn) {
@@ -536,6 +543,72 @@ define(function() {
             .frame(cacheFrameName)
             .frame('proppage')
             .elementById('ZipCode').type('4444')
+            .elementById('validate').click()
+            .elementById('save').click();
+	},
+
+	// Check in contract kit a.k.a check in working version
+	checkinContractKit : function(browser, cacheFrameName, checkinComment) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .elementById('Button_Contracts_Main_ContractKitCheckIn').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('Description').type(checkinComment)
+            .elementById('validate').click()
+            .elementById('save').click();
+	},
+
+	// Checkout contract kit a.k.a create working version
+	checkoutContractKit : function(browser, cacheFrameName, checkoutComment) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .elementById('Button_Contracts_Main_ContractKitCheckOut').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('Description').type(checkoutComment)
+            .elementById('validate').click()
+            .elementById('save').click();
+	},
+
+	createAllocationRule : function(browser, cacheFrameName, name, desc, agreementHierarchy, recipientFormula) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .frame('component_iframe')
+            .elementById('Button_Contracts_Main_AllocRules_NewAllocRule').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('Name').type(name)
+            .elementById('Description').type(desc)
+            .elementByCss('button[data-id=Tree]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText(agreementHierarchy).click()
+            // Show Formula Details
+            // This is ugly & make the code hard to maintain. Unfortunately we have no better choices.
+            .elementByCssSelector("div.ppBodyDiv > div > div:nth-child(6) > div:nth-child(2) > div > label:nth-child(5) > i").click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('RecipientFormula.FormulaString').type(recipientFormula)
             .elementById('validate').click()
             .elementById('save').click();
 	},
