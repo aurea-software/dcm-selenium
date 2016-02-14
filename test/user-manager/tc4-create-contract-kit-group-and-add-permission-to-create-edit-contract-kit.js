@@ -60,11 +60,6 @@ describe("/user-manager/tc4-create-contract-kit-group-and-add-permission-to-crea
             .frame('cacheframe1')
             .frame('subpage')
             .elementByLinkText('Search Groups').click()
-            .frame()
-            .frame('container')
-            .frame('cacheframe1')
-            .frame('subpage')
-            .elementById('Button_UserManager_Groups_Main_CreateGroup').click()
             .nodeify(done);
     });
 

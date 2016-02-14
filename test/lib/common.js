@@ -665,6 +665,11 @@ define(function() {
         return browser
             .frame()
             .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            .elementById('Button_UserManager_Groups_Main_CreateGroup').click()
+            .frame()
+            .frame('container')
             .frame(cacheFrameName)
             .frame('proppage')
             // Group  name can only contain upper case characters
@@ -680,6 +685,10 @@ define(function() {
             .frame(cacheFrameName)
             .frame('proppage')
             .elementByCss('button[name=AllPermissions_add]').type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
             .elementByCss('button[data-id=GroupPermissions_PermissionType_0]').click()
             .frame()
             .frame('container')

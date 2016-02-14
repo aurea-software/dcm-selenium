@@ -63,11 +63,6 @@ describe("/user-manager/tc5-add-permission-for-viewing-contract-kit-tab-and-cont
             .frame('cacheframe1')
             .frame('subpage')
             .elementByLinkText('Search Groups').click()
-            .frame()
-            .frame('container')
-            .frame('cacheframe1')
-            .frame('subpage')
-            .elementById('Button_UserManager_Groups_Main_CreateGroup').click()
             .nodeify(done);
     });
 

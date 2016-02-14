@@ -63,16 +63,54 @@ describe("/user-manager/tc11-create-user-and-add-agreement-group", function() {
             .frame('cacheframe1')
             .frame('subpage')
             .elementByLinkText('Search Groups').click()
-            .frame()
-            .frame('container')
-            .frame('cacheframe1')
-            .frame('subpage')
-            .elementById('Button_UserManager_Groups_Main_CreateGroup').click()
             .nodeify(done);
     });
 
     it("should create group", function(done) {
         common.createGroup(browser, 'cacheframe1', groupName).nodeify(done);
+    });
+
+    it("should load permission page", function(done) {
+        browser
+            .frame()
+            .frame('sidebar')
+            .elementById('Tab_UserManager_Groups_Main_AdditionalPermissions_link').click()
+            .nodeify(done);
+    });
+
+    it("should load edit permission page", function(done) {
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            .frame('component_iframe')
+            .elementById('Button_UserManager_Groups_Main_AdditionalPermissions_EditPermissions').click()
+            .nodeify(done);
+    });
+
+    // Add all permissions related to the Agreement group (see previous test suites)
+
+    it("should select permission 1", function(done) {
+        common.addPermission(browser, 'cacheframe1', 'Edit', 'NewAgreement').nodeify(done);
+    });
+
+    it("should select permission 2", function(done) {
+        common.addPermission(browser, 'cacheframe1', 'View', 'Agreement').nodeify(done);
+    });
+
+    it("should select permission 3", function(done) {
+        common.addPermission(browser, 'cacheframe1', 'View', 'Agreement.AgreementSearch').nodeify(done);
+    });
+
+    it("should save permissions", function(done) {
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('proppage')
+            .elementById('save').click()
+            .nodeify(done);
     });
 
     it("should load user page", function(done) {

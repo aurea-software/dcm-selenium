@@ -63,11 +63,6 @@ describe("/user-manager/tc3-add-permission-for-viewing-agreement-tab-and-search-
             .frame('cacheframe1')
             .frame('subpage')
             .elementByLinkText('Search Groups').click()
-            .frame()
-            .frame('container')
-            .frame('cacheframe1')
-            .frame('subpage')
-            .elementById('Button_UserManager_Groups_Main_CreateGroup').click()
             .nodeify(done);
     });
 

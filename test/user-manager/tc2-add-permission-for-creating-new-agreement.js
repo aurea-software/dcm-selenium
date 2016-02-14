@@ -58,11 +58,6 @@ describe("/user-manager/tc2-add-permission-for-creating-new-agreement", function
             .frame('cacheframe1')
             .frame('subpage')
             .elementByLinkText('Search Groups').click()
-            .frame()
-            .frame('container')
-            .frame('cacheframe1')
-            .frame('subpage')
-            .elementById('Button_UserManager_Groups_Main_CreateGroup').click()
             .nodeify(done);
     });
 
