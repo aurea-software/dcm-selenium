@@ -763,6 +763,7 @@ define(function() {
             .elementById('save').click();
     },
 
+    // Add group permission
     addPermission : function(browser, cacheFrameName, permissionType, permissionName) {
         return browser
             .frame()
@@ -775,6 +776,44 @@ define(function() {
             .frame(cacheFrameName)
             .frame('proppage')
             .elementByCss('button[data-id=GroupPermissions_PermissionType_0]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText(permissionType).click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('complexField_Page_ElementSearch_search_div').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('Page_ElementSearch_search_div_frame')
+            .elementById('Field_ElementSearch_Search_ElementName_Search_Value').type(permissionName)
+            .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('Page_ElementSearch_search_div_frame')
+            .elementById('Button_ElementSearch_Select').type(wd.SPECIAL_KEYS['Enter']);
+    },
+
+    // Add user permission
+    addUserPermission : function(browser, cacheFrameName, permissionType, permissionName) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByCss('button[name=AllPermissions_add]').type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByCss('button[data-id=UserPermissions_PermissionType_0]').click()
             .frame()
             .frame('container')
             .frame(cacheFrameName)
