@@ -19,5 +19,5 @@ sed -i "s#\"url\":.*#\"url\": \"${DCM_URL}/DMS/dmswelcome.jsp\",#g" test/lib/con
 echo "USING SELENIUM: ${SELENIUM_URL}"
 echo "USING DCM: ${DCM_URL}"
 
-# execute nodejs application
-exec mocha
+# execute mocha with parameters
+exec mocha "$@"
