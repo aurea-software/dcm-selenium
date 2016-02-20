@@ -10,7 +10,7 @@ var wd = require('wd');
 
 var url = config.get("url");
 
-describe("login - top menu height", function() {
+describe("login - bg color", function() {
   this.timeout(30000);
   var browser;
  
@@ -35,12 +35,12 @@ describe("login - top menu height", function() {
       .quit()
       .nodeify(done);
   });
-
-  it("should be 60px", function  (done) {
+ 
+  it("should be #313541 or rgba(49, 53, 65, 1)", function  (done) {
     browser
       .get(url)
-      .elementByCss('#header').getComputedCss('height').then(function(height) {
-        height.should.equal("60px");
+      .elementByCss('body').getComputedCss('background-color').then(function(bgcolor) {
+        bgcolor.should.equal("rgba(49, 53, 65, 1)");
       })
       .nodeify(done);
   });

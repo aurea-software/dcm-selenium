@@ -36,14 +36,9 @@ describe("login - top menu bg color", function() {
       .nodeify(done);
   });
  
-  it("should load login page", function (done) {
+  it("should be #1f222d or rgba(31, 34, 45, 1)", function  (done) {
     browser
       .get(url)
-      .nodeify(done);
-  });
- 
-  it("top menu bg color should be #1f222d", function  (done) {
-    browser
       .elementByCss('#header').getComputedCss('background-color').then(function(bgcolor) {
         bgcolor.should.equal("rgba(31, 34, 45, 1)");
       })
