@@ -1,7 +1,7 @@
 {
     "remote": "http://127.0.0.1:4444/wd/hub",
     "environment": { "browserName": "chrome" },
-    "url": "http://feature2.dcm.aurea.io/DMS/dmswelcome.jsp",
+    "url": "http://172.30.88.120:8080/DMS/dmswelcome.jsp",
     "username": "sa",
     "password": "sa",
     "adminUsername": "superuser",
