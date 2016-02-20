@@ -139,7 +139,7 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
     var newStartDate;
 
     var processStartDate = function(data) {
-        newStartDate = moment(data, 'mm/dd/yyyy').add(4, 'months').format('L');
+        newStartDate = moment(data, 'MM/DD/YYYY').add(4, 'months').format('L');
     };
 
     it('should extract start date', function(done) {

@@ -24,7 +24,7 @@ console.log('r: ' + r);
 var user = 'u' + r;
 
 // Permissions - Contract kit, Agreement and Agreement Hierarchy
-describe("/user-manager/tc5-add-permission-to-view-contract-kit-tab", function() {
+describe("/user-manager/tc8-add-permission-to-checkout-contract-kit", function() {
     this.timeout(60000);
     var browser;
 
@@ -85,7 +85,7 @@ describe("/user-manager/tc5-add-permission-to-view-contract-kit-tab", function()
             .frame('cacheframe1')
             .frame('proppage')
             .frame('Page_ElementSearch_search_div_frame')
-            .elementById('Field_ElementSearch_Search_ElementName_Search_Value').type('Contracts')
+            .elementById('Field_ElementSearch_Search_ElementName_Search_Value').type('ContractKitCheckOut')
             .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
@@ -104,7 +104,7 @@ describe("/user-manager/tc5-add-permission-to-view-contract-kit-tab", function()
             .frame('subpage')
             .frame('component_iframe')
             .elementByCss('table[name=Grid_UserManager_Users_Main_AdditionalPermissions] tbody tr:nth-child(1) td:nth-child(1)').text()
-            .should.eventually.become('Contracts'.toUpperCase())
+            .should.eventually.become('ContractKitCheckOut'.toUpperCase())
             .notify(done);
     });
 

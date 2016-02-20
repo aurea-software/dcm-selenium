@@ -96,7 +96,7 @@ describe("/party/organization/tc4-edit-basic-info", function() {
            .frame('cacheframe0')
            .frame('subpage')
            .frame('component_iframe')
-           .elementById('Button_Org_Main_BasicInfo_Edit').click()
+           .elementById('Button_Org_Main_BasicInfo_Edit').type(wd.SPECIAL_KEYS['Enter'])
            .frame()
            .frame('container')
            .frame('cacheframe0')
@@ -117,7 +117,7 @@ describe("/party/organization/tc4-edit-basic-info", function() {
     });
 
     it('should not edit dtcc', function(done) {
-        browser.elementById('Button_Org_Main_BasicInfo_Edit').click()
+        browser.elementById('Button_Org_Main_BasicInfo_Edit').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -135,6 +135,7 @@ describe("/party/organization/tc4-edit-basic-info", function() {
         browser.elementById('cancel').click()
             .frame()
             .frame('sidebar')
+            .elementById('Tab_Org_Main_BasicInfo_link').click()
             .elementById('Tab_Org_Main_BasicInfo_Comments_link').click()
             .frame()
             .frame('container')

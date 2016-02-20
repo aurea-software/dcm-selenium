@@ -25,20 +25,20 @@ console.log('2nd Party Hierarchy: ' + name2);
 describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
   this.timeout(60000);
     var browser;
-    
+
     before(function (done) {
       browser = wd.promiseChainRemote(config.get("remote"));
       common.configBrowser(browser, config.get("environment")).nodeify(done);
     });
-   
+
     after(function (done) {
 		browser.quit().nodeify(done);
     });
-   
+
     it("should login", function (done) {
       common.login(browser, url, username, password).nodeify(done);
     });
-	
+
 	it("should load party hierarchy page", function(done) {
       browser
         .frame('navbar')
@@ -49,14 +49,14 @@ describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
 	//FIXED: Modified method parameters: added cacheFrameName, enterKey
 	it("should create 1st party hierarchy", function(done) {
       //common.createPartyHierarchy(browser, name1).nodeify(done);
-      common.createPartyHierarchy(browser, 'cacheframe0', wd.SPECIAL_KEYS['Enter'], name1).nodeify(done);	
+      common.createPartyHierarchy(browser, 'cacheframe0', wd.SPECIAL_KEYS['Enter'], name1).nodeify(done);
     });
-	
+
 	it("should create 2nd party hierarchy", function(done) {
       //common.createPartyHierarchy(browser, name2).nodeify(done);
-      common.createPartyHierarchy(browser, 'cacheframe0', wd.SPECIAL_KEYS['Enter'], name2).nodeify(done);	
+      common.createPartyHierarchy(browser, 'cacheframe0', wd.SPECIAL_KEYS['Enter'], name2).nodeify(done);
     });
-	
+
 	it("should search 1st party hierarchy by name with wildcard", function(done) {
 		browser
             .frame()
@@ -69,7 +69,7 @@ describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
 			.should.eventually.include(name1)
             .notify(done);
     });
-	
+
 	it("should clear text in hierarchy name field", function(done) {
 		browser
 			.frame()
@@ -111,7 +111,7 @@ describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
 			.should.eventually.include(name2)
             .notify(done);
     });
-	
+
 	it("should clear text in advanced search", function(done) {
 		browser
 			.elementByLinkText('Clear').click()
@@ -133,21 +133,20 @@ describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-			.elementByCss('button[data-id=SortField1_order]').click()
+			.elementByCss('button[data-id=SortField1_order]').type(wd.SPECIAL_KEYS['Enter'])
 			.frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
             .elementByLinkText('Descending').click()
 			.elementByLinkText('Search').click();
-			
+
 			v.waitForElementByCss('table[name=Grid_HierarchySearch_Main] tbody tr:nth-child(0) td:nth-child(3)').text()
 				.should.eventually.become(name2)
             v.waitForElementByCss('table[name=Grid_HierarchySearch_Main] tbody tr:nth-child(1) td:nth-child(3)').text()
 				.should.eventually.become(name1)
 				.notify(done);
     });
-	
+
 });
-	
-	
+

@@ -99,6 +99,7 @@ describe("/party/location/tc2-create-location-party", function() {
             .frame('cacheframe0')
             .frame('proppage')
             .elementByLinkText('Subtype 2').click()
+            .execute('scrollTo(0, 6000)')
             .elementByCss('button[data-id=Party\\.CurrentDetails\\.OccupancyType]').click()
             .frame()
             .frame('container')

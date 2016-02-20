@@ -64,7 +64,7 @@ describe("/party/organization/tc5-add-edit-contact-info", function() {
            .frame('cacheframe0')
            .frame('subpage')
            .frame('component_iframe')
-           .elementById('Button_Org_Main_ContactPoint_Create').click()
+           .elementById('Button_Org_Main_ContactPoint_Create').type(wd.SPECIAL_KEYS['Enter'])
            .frame()
            .frame('container')
            .frame('cacheframe0')
@@ -77,7 +77,7 @@ describe("/party/organization/tc5-add-edit-contact-info", function() {
            .elementByLinkText(newAddressType).click()
            .elementById('Address.Street1').type('Street123')
            .elementById('Address.City').type('City123')
-           .elementByCss('button[data-id=US_State]').click()
+           .elementByCss('button[data-id=US_State]').type(wd.SPECIAL_KEYS['Enter'])
            .frame()
            .frame('container')
            .frame('cacheframe0')
@@ -94,7 +94,7 @@ describe("/party/organization/tc5-add-edit-contact-info", function() {
             newAddressIndex = index;
         }
     };
-    
+
     var checkRow = function(rowIndex) {
         return browser.frame()
         .frame('container')
@@ -137,7 +137,7 @@ describe("/party/organization/tc5-add-edit-contact-info", function() {
     });
 
     it('should edit contact point', function(done) {
-        browser.elementById('Button_Org_Main_ContactPoint_Edit').click()
+        browser.elementById('Button_Org_Main_ContactPoint_Edit').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -151,7 +151,7 @@ describe("/party/organization/tc5-add-edit-contact-info", function() {
             .elementById('Address.Street1').clear().type('abc')
             // Test case desc requires abc. We change to def for easy validation.
             .elementById('Address.City').clear().type('def')
-            .elementByCss('button[data-id=US_State]').click()
+            .elementByCss('button[data-id=US_State]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')

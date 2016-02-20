@@ -132,6 +132,7 @@ describe("/user-manager/tc12-add-contract-kit-group", function() {
             .frame('container')
             .frame('cacheframe1')
             .frame('subpage')
+            .execute('scrollTo(0, 6000)')
             .elementByCss('#Search_UserManager_Groups_Main_primary_display_div button').click()
             .frame()
             .frame('container')
@@ -172,7 +173,10 @@ describe("/user-manager/tc12-add-contract-kit-group", function() {
         browser
             .frame()
             .frame('navbar')
-            .elementByCss('#session > div:nth-child(2) > a').click()
+            // The 'Logout' link is hidden. User needs to hoover the cursor to show the link.
+            // We change the CSS to make sure that the element is visible to click.
+            .execute('document.querySelector(\'#session > div:nth-child(2)\').style.left = \'0%\';')
+            .elementByCss('#session > div:nth-child(2) > a').type(wd.SPECIAL_KEYS['Enter'])
             .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').text()
             .should.eventually.become('')
             .notify(done);

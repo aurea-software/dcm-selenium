@@ -18,18 +18,18 @@ var common = require('../../lib/common');
 describe("/party/person/tc1-validate-new-person-party-data", function() {
   this.timeout(60000);
     var browser;
-    
+
     before(function (done) {
       browser = wd.promiseChainRemote(config.get("remote"));
       common.configBrowser(browser, config.get("environment")).nodeify(done);
     });
-   
+
     after(function (done) {
       browser
         .quit()
         .nodeify(done);
     });
-   
+
     it("should login", function (done) {
       common.login(browser, url, username, password).nodeify(done);
     });
@@ -50,14 +50,14 @@ describe("/party/person/tc1-validate-new-person-party-data", function() {
         // Second difference! Notice that we use 'notify' instead of 'nodeify'.
         .notify(done);
     });
-    
+
     it("should load party page", function(done) {
       browser
         .frame('navbar')
         .elementById('Party').click()
         .nodeify(done);
     });
-    
+
     it("should load create person page", function(done) {
       browser
         .frame()
@@ -67,7 +67,7 @@ describe("/party/person/tc1-validate-new-person-party-data", function() {
         .elementById('Button_Person_Main_NewPerson').click()
         .nodeify(done);
     });
-    
+
     it("should validate blank create person form", function(done) {
       browser
         .refresh()
@@ -90,7 +90,7 @@ describe("/party/person/tc1-validate-new-person-party-data", function() {
         .should.eventually.include("New Parties must play at least one role")
         .notify(done);
     });
-    
+
     it("should validate half blank create person form", function(done) {
       browser
         .refresh()
@@ -105,13 +105,14 @@ describe("/party/person/tc1-validate-new-person-party-data", function() {
         .frame('proppage')
         .elementById('Party.FirstName').type('FN1')
         .elementById('Party.LastName').type('LN1')
-        .elementByCss('button[data-id=SyncPDB]').click()
+        .elementByCss('button[data-id=SyncPDB]').type(wd.SPECIAL_KEYS['Enter'])
         .frame()
         .frame('container')
         .frame('cacheframe0')
         .frame('proppage')
         .elementByLinkText('No').click()
         .elementById('Party.TaxID').type(common.rand(5))
+        .execute('scrollTo(0, 6000)')
         .elementByCss('input[id=RoleDISTRIBUTOR] ~ i').click()
         .elementById('validate').click()
         .waitForElementByCss("#ppError_div", asserters.isDisplayed , 10000)
@@ -121,7 +122,7 @@ describe("/party/person/tc1-validate-new-person-party-data", function() {
         .should.eventually.include("Mailing Communications Mode requires that the Zip Code/Postal Code be specified")
         .notify(done);
     });
-    
+
     it("should validate valid create person form", function(done) {
       var taxId = common.rand(5);
       var v = browser
@@ -137,7 +138,7 @@ describe("/party/person/tc1-validate-new-person-party-data", function() {
         .frame('proppage')
         .elementById('Party.FirstName').type('FN1')
         .elementById('Party.LastName').type('LN1')
-        .elementByCss('button[data-id=SyncPDB]').click()
+        .elementByCss('button[data-id=SyncPDB]').type(wd.SPECIAL_KEYS['Enter'])
         .frame()
         .frame('container')
         .frame('cacheframe0')
@@ -152,23 +153,23 @@ describe("/party/person/tc1-validate-new-person-party-data", function() {
         .elementById('validate').click()
         .waitForElementByCss("#ppMessage", asserters.isDisplayed , 10000)
         .elementById('ppMessage').text();
-    
+
     v.should.eventually.include("VALIDATING...SUCCESSFUL");
-    
+
     v = v.elementById('Party.TaxID').clear()
         .elementById('validate').click()
         .waitForElementByCss("#ppError_div", asserters.isDisplayed , 10000)
         .elementById('ppError_div').text();
-    
+
     v.should.eventually.include("No SSN specified");
-    
+
     v = v.elementById('Party.TaxID').type(taxId)
         .elementById('validate').click()
         .waitForElementByCss("#ppMessage", asserters.isDisplayed , 10000)
         .elementById('ppMessage').text();
-    
+
     v.should.eventually.include("VALIDATING...SUCCESSFUL");
-    
+
     v.elementById('save').click()
         .frame()
         .frame('container')

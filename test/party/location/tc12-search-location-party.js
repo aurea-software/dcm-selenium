@@ -190,22 +190,13 @@ describe("/party/location/tc12-search-location-party", function() {
             .frame('subpage')
             .elementByLinkText('Advanced Search').click()
             .elementByCss('#Search_Location_Main_form #Field_Location_Main_LocationNameUpper_Search_Value').clear().type(locationNamePrefix + "*")
-            // The test case desc requires to specify the sub type in the search form. We skip this value because:
-            // - The sub type is the same for both location 1 and 2
-            // - Not sure why but the click on the sub type combo box doens't work. Already tried with:
-            // + Simplified CSS: #Search_Location_Main_form button[data-id=Field_Location_Main_LocationSubtype_Search_Value]
-            // + Chrome CSS
-            // + Chrome XPath //*[@id="Search_Location_Main_form"]/div[5]/div/button
-            // getAttribute('data-id') gives us Field_Location_Main_LocationSubtype_Search_Value, meaning WebDriver selects the correct element.
-            // However, the .click() and .type(wd.SPECIAL_KEYS['Enter']) both have no effect on the element, and there is no error returned.
-            // From  here
+            .execute('scrollTo(0, 6000)')
             .elementByCss('#Search_Location_Main_form button[data-id=Field_Location_Main_LocationSubtype_Search_Value]').click()
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
             .elementByLinkText('Subtype 2').click()
-            // To here
             .elementByCss('#Search_Location_Main_form button[data-id=Field_Location_Main_Status_Search_Value]').click()
             .frame()
             .frame('container')

@@ -114,6 +114,7 @@ describe("/compensation/contract-kit/tc6-create-edit-allocation-rule", function(
             .frame('proppage')
             .elementById('Name').type('ARule1 ' + uniqueString)
             .elementById('Description').type('Allocation Rule test ' + uniqueString)
+            .execute('scrollTo(0, 6000)')
             // Show Formula Details
             // This is ugly & make the code hard to maintain. Unfortunately we have no better choices.
             .elementByCssSelector("div.ppBodyDiv > div > div:nth-child(6) > div:nth-child(2) > div > label:nth-child(5) > i").click()

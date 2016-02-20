@@ -32,6 +32,7 @@ define(function() {
     login : function(browser, url, username, password) {
         return browser
             .get(url)
+            .setWindowSize(1024, 768)
             .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').type(username)
             .elementByCss('form[name=LoginForm] input[name=PASSWORD]').type(password)
             .elementByCss('form[name=LoginForm] button[type=submit]').click();
@@ -40,6 +41,7 @@ define(function() {
     loginToUserManager : function(browser, url, username, password) {
         return browser
             .get(url)
+            .setWindowSize(1280, 687)
             .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').type(username)
             .elementByCss('form[name=LoginForm] input[name=PASSWORD]').type(password)
             .elementByCss('form[name=LoginForm] button[data-id=APPGROUP]').type(wd.SPECIAL_KEYS['Enter'])
@@ -52,7 +54,10 @@ define(function() {
         return browser
             .frame()
             .frame('navbar')
-            .elementByCss('#session > div:nth-child(2) > a').click();
+            // The 'Logout' link is hidden. User needs to hoover the cursor to show the link.
+            // We change the CSS to make sure that the element is visible to click.
+            .execute('document.querySelector(\'#session > div:nth-child(2)\').style.left = \'0%\';')
+            .elementByCss('#session > div:nth-child(2) > a').type(wd.SPECIAL_KEYS['Enter']);
     },
 
     // FIXME cache frame names are not fixed in DCM. It should be passed in as a parameter. Otherwise, using the fixed value
@@ -84,13 +89,14 @@ define(function() {
             .frame('proppage')
             .elementByLinkText('No').click()
             .elementById('Party.TaxID').type(taxId)
+            .execute('scrollTo(0, 6000)')
             .elementByCss('input[id=RoleEMPLOYEE] ~ i').click()
             .elementByCss('input[id=RoleDISTRIBUTOR] ~ i').click()
             .elementById('ContactPoint.Address.Street1').type('Street 1')
             .elementById('ContactPoint.Address.City').type(city)
             // We have to scroll down so that we can avoid the error 'Eleemnt is not clickable at this point. Another element would receive the click.'
             .execute('scrollTo(0,3000)')
-            .elementByCss('button[data-id=US_State]').click()
+            .elementByCss('button[data-id=US_State]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -134,14 +140,13 @@ define(function() {
             .elementByLinkText('No').click()
             .elementById('DTCCID').type(dtcc)
             .elementById('Party.NPN').type(npn)
-			//FIXME: checkbox seletion was failing in some cases
-			.execute('scrollTo(0, 3000)')
+			.execute('scrollTo(0, 6000)')
             .elementByCss('input[id=RoleAPPOINTINGCOMPANY] ~ i').click()
             .elementByCss('input[id=RoleEMPLOYER] ~ i').click()
             .elementByCss('input[id=RoleDISTRIBUTOR] ~ i').click()
             .elementById('ContactPoint.Address.Street1').type('st1')
             .elementById('ContactPoint.Address.City').type(city)
-            .elementByCss('button[data-id=US_State]').click()
+            .elementByCss('button[data-id=US_State]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -303,6 +308,7 @@ define(function() {
             .frame('QuotasSearch_search_div_frame')
             .elementById('Field_Quotas_Search_Name_Search_Value').type(quotaName)
             .elementByLinkText('Search').type(enterKey)
+            .execute('scrollTo(0, 6000)')
             .elementById('QuotasSearchButton_PP_Select').click()
             .frame()
             .frame('container')
@@ -396,6 +402,10 @@ define(function() {
 			.frame(cacheFrameName)
 			.frame('proppage')
 			.elementById('validate').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
 			.elementById('save').click()
     },
 
@@ -484,7 +494,7 @@ define(function() {
             .frame('proppage')
             .elementById('Party.Name').type(name)
             .elementById('Party.TaxID').type(taxId)
-            .elementByCss('button[data-id=SyncPDB]').click()
+            .elementByCss('button[data-id=SyncPDB]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame(cacheFrameName)
@@ -494,7 +504,7 @@ define(function() {
             .elementByCss('input[id=RoleFINANCIAL_SERVICES] ~ i').click()
             .elementById('ContactPoint.Address.Street1').type('street1')
             .elementById('ContactPoint.Address.City').type('city1')
-            .elementByCss('button[data-id=US_State]').click()
+            .elementByCss('button[data-id=US_State]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame(cacheFrameName)
@@ -527,7 +537,7 @@ define(function() {
             .frame('proppage')
             .elementById('Party.Name').type(name)
             .elementById('Party.TaxID').type(taxId)
-            .elementByCss('button[data-id=SyncPDB]').click()
+            .elementByCss('button[data-id=SyncPDB]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame(cacheFrameName)
@@ -537,7 +547,7 @@ define(function() {
             .elementByCss('input[id=RoleFINANCIAL_SERVICES] ~ i').click()
             .elementById('ContactPoint.Address.Street1').type('street1')
             .elementById('ContactPoint.Address.City').type('city1')
-            .elementByCss('button[data-id=US_State]').click()
+            .elementByCss('button[data-id=US_State]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame(cacheFrameName)
@@ -601,6 +611,7 @@ define(function() {
             .frame(cacheFrameName)
             .frame('proppage')
             .elementByLinkText(agreementHierarchy).click()
+            .execute('scrollTo(0, 6000)')
             // Show Formula Details
             // This is ugly & make the code hard to maintain. Unfortunately we have no better choices.
             .elementByCssSelector("div.ppBodyDiv > div > div:nth-child(6) > div:nth-child(2) > div > label:nth-child(5) > i").click()
@@ -657,6 +668,7 @@ define(function() {
             .frame(cacheFrameName)
             .frame('proppage')
             .elementByLinkText(subType).click()
+            .execute('scrollTo(0, 6000)')
             .elementByCss('button[data-id=Party\\.CurrentDetails\\.OccupancyType]').click()
             .frame()
             .frame('container')
@@ -683,7 +695,7 @@ define(function() {
             .frame('OrgPartySearch_search_div_frame')
             .elementById('Field_Party_NameUpper_Search_Value').type(orgPartyName)
             .elementByLinkText('Search').click()
-            .execute('scrollTo(0, 6000)')
+            .execute('scrollTo(0, 10000)')
             .elementById('Button_PartySearch_PP_Select').click()
             .frame()
             .frame('container')
@@ -705,7 +717,7 @@ define(function() {
             .frame('container')
             .frame(cacheFrameName)
             .frame('proppage')
-            .elementByCss('button[data-id=NewStatus\\.StatusReason]').click()
+            .elementByCss('button[data-id=NewStatus\\.StatusReason]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame(cacheFrameName)
@@ -768,6 +780,10 @@ define(function() {
             .frame(cacheFrameName)
             .frame('proppage')
             .elementByLinkText(permissionType).click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
             .elementById('complexField_Page_ElementSearch_search_div').click()
             .frame()
             .frame('container')

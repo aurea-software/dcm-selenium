@@ -279,7 +279,7 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
             .frame('cacheframe3')
             .frame('subpage')
             .elementByLinkText('Effective Before').click()
-            .elementByCss('button[data-id=SortField1_order]').click()
+            .elementByCss('button[data-id=SortField1_order]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe3')

@@ -19,18 +19,18 @@ var taxId = common.rand(5);
 describe("/party/person/tc2-create-and-edit-new-person-party", function() {
   this.timeout(60000);
     var browser;
-    
+
     before(function (done) {
       browser = wd.promiseChainRemote(config.get("remote"));
       common.configBrowser(browser, config.get("environment")).nodeify(done);
     });
-   
+
     after(function (done) {
       browser
         .quit()
         .nodeify(done);
     });
-   
+
     it("should login", function (done) {
       common.login(browser, url, username, password).nodeify(done);
     });
@@ -41,7 +41,7 @@ describe("/party/person/tc2-create-and-edit-new-person-party", function() {
         .elementById('Party').click()
         .nodeify(done);
     });
-    
+
     it("should load create person page", function(done) {
       browser
         .frame()
@@ -51,7 +51,7 @@ describe("/party/person/tc2-create-and-edit-new-person-party", function() {
         .elementById('Button_Person_Main_NewPerson').click()
         .nodeify(done);
     });
-    
+
     it("should create person party", function(done) {
       browser
         .refresh()
@@ -72,20 +72,21 @@ describe("/party/person/tc2-create-and-edit-new-person-party", function() {
         .elementById('Party.BirthDate').type('01/01/1970')
         .elementById('DTCCID').type('1111')
         .elementById('Party.NPN').type('2222')
-        .elementByCss('button[data-id=SyncPDB]').click()
+        .elementByCss('button[data-id=SyncPDB]').type(wd.SPECIAL_KEYS['Enter'])
         .frame()
         .frame('container')
         .frame('cacheframe0')
         .frame('proppage')
         .elementByLinkText('No').click()
         .elementById('Party.TaxID').type(taxId)
+        .execute('scrollTo(0, 6000)')
         .elementByCss('input[id=RoleEMPLOYEE] ~ i').click()
         .elementByCss('input[id=RoleDISTRIBUTOR] ~ i').click()
         .elementById('ContactPoint.Address.Street1').type('st1')
         .elementById('ContactPoint.Address.City').type('city2')
         // We have to scroll down so that we can avoid the error 'Eleemnt is not clickable at this point. Another element would receive the click.'
         .execute('scrollTo(0,3000)')
-        .elementByCss('button[data-id=US_State]').click()
+        .elementByCss('button[data-id=US_State]').type(wd.SPECIAL_KEYS['Enter'])
         .frame()
         .frame('container')
         .frame('cacheframe0')
@@ -101,7 +102,7 @@ describe("/party/person/tc2-create-and-edit-new-person-party", function() {
         .should.eventually.include(taxId)
         .notify(done);
     });
-    
+
     it("should edit person party", function(done) {
       var v = browser
         .refresh()
@@ -111,7 +112,7 @@ describe("/party/person/tc2-create-and-edit-new-person-party", function() {
         .frame('subpage')
         .elementById('Field_Person_Main_TaxID_Search_Value').type(taxId)
         .elementByLinkText('Search').click()
-        .elementById('Button_Person_Main_BasicInfo_EditGrid').click()
+        .elementById('Button_Person_Main_BasicInfo_EditGrid').type(wd.SPECIAL_KEYS['Enter'])
         .frame()
         .frame('container')
         .frame('cacheframe0')
@@ -127,9 +128,9 @@ describe("/party/person/tc2-create-and-edit-new-person-party", function() {
         .elementById('validate').click()
         .waitForElementByCss("#ppMessage", asserters.isDisplayed , 10000)
         .elementById('ppMessage').text();
-    
+
     v.should.eventually.include("VALIDATING...SUCCESSFUL");
-    
+
     v.elementById('save').click()
         .frame()
         .frame('container')

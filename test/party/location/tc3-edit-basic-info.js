@@ -93,7 +93,7 @@ describe("/party/location/tc3-edit-basic-info", function() {
     it("should create location party", function(done) {
     	common.createLocationParty(browser, 'cacheframe0', locationName, locationId, locationDtcc, locationStreet, locationCity, locationZipCode, 'Subtype 2', partyName).nodeify(done);
     });
-    
+
     it("should edit location party", function(done) {
     	browser
     		.frame()
@@ -143,7 +143,7 @@ describe("/party/location/tc3-edit-basic-info", function() {
             // is not displayed in the result table. Skip for now.
             .notify(done);
     });
-    
+
     it("should refuse too long dtcc id", function(done) {
     	browser
     		.frame()
@@ -166,7 +166,7 @@ describe("/party/location/tc3-edit-basic-info", function() {
             .should.eventually.include('DTCC ID has a value longer than the allowed limit of 4')
             .notify(done);
     });
-    
+
     it("should accept valid dtcc id", function(done) {
     	browser
 			.frame()
@@ -184,7 +184,7 @@ describe("/party/location/tc3-edit-basic-info", function() {
 	        .should.eventually.become(locationDtccNew2.toUpperCase())
 	        .notify(done);
     });
-    
+
     it("should close location", function(done) {
     	browser
     		.frame()
@@ -197,7 +197,7 @@ describe("/party/location/tc3-edit-basic-info", function() {
 			.frame('container')
 			.frame('cacheframe0')
 			.frame('proppage')
-			.elementByCss('button[data-id=NewStatus\\.StatusReason]').click()
+			.elementByCss('button[data-id=NewStatus\\.StatusReason]').type(wd.SPECIAL_KEYS['Enter'])
 			.frame()
 			.frame('container')
 			.frame('cacheframe0')
@@ -217,7 +217,7 @@ describe("/party/location/tc3-edit-basic-info", function() {
             .should.eventually.become('REGISTERED CONTACT LEFT'.toUpperCase())
             .notify(done);
     });
-    
+
     it("should open location", function(done) {
     	browser
 			.frame()
@@ -230,7 +230,7 @@ describe("/party/location/tc3-edit-basic-info", function() {
 			.frame('container')
 			.frame('cacheframe0')
 			.frame('proppage')
-			.elementByCss('button[data-id=NewStatus\\.StatusReason]').click()
+			.elementByCss('button[data-id=NewStatus\\.StatusReason]').type(wd.SPECIAL_KEYS['Enter'])
 			.frame()
 			.frame('container')
 			.frame('cacheframe0')

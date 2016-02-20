@@ -42,16 +42,16 @@ var RootPositionDesc = 'ROOT_POSITION DESC_' + r1;
 describe("/hierarchy/comp-hierarchy/tc9-create-root-position", function() {
   this.timeout(60000);
     var browser;
-    
+
     before(function (done) {
       browser = wd.promiseChainRemote(config.get("remote"));
       common.configBrowser(browser, config.get("environment")).nodeify(done);
     });
-   
+
     after(function (done) {
       //browser.quit().nodeify(done);
     });
-   
+
     it("should login", function (done) {
         common.login(browser, url, username, password).nodeify(done);
     });
@@ -59,15 +59,15 @@ describe("/hierarchy/comp-hierarchy/tc9-create-root-position", function() {
 	it("should load party page", function(done) {
 		browser.frame('navbar').elementById('Party').click().nodeify(done);
     });
-    
+
 	it('should create person party ', function(done) {
         common.createPersonParty(browser, PersonTaxId, firstName1, lastName1, 'MIDDLE_NAME', 'PREFERRED_NAME', 'CITY', 'Alaska', '1234', '123456').nodeify(done);
     });
-	
+
 	var CKPId1 = function(ckpid) {
         CKPPartyId = ckpid;
     };
-	
+
 	it('should create contract kit provider', function(done) {
         browser
 			.refresh()
@@ -92,17 +92,17 @@ describe("/hierarchy/comp-hierarchy/tc9-create-root-position", function() {
             .frame('proppage')
             .elementById('Party.Name').type(CKPName)
             .elementById('Party.TaxID').type(CKPTaxId)
-            .elementByCss('button[data-id=SyncPDB]').click()
+            .elementByCss('button[data-id=SyncPDB]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('proppage')
             .elementByLinkText('No').click()
-			.execute('scrollTo(0, 3000)')
+			.execute('scrollTo(0, 6000)')
             .elementByCss('input[id=RoleFINANCIAL_SERVICES] ~ i').click()
             .elementById('ContactPoint.Address.Street1').type('street1')
             .elementById('ContactPoint.Address.City').type('city1')
-            .elementByCss('button[data-id=US_State]').click()
+            .elementByCss('button[data-id=US_State]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -119,15 +119,15 @@ describe("/hierarchy/comp-hierarchy/tc9-create-root-position", function() {
 				})
 			.nodeify(done);
     });
-		
+
     it("should load hierarchy tab", function(done) {
        browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
     });
-	
+
 	it("should load product hierarchy page", function(done) {
        browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
     });
-	
+
 	it("should create product hierarchy", function(done) {
        common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
     });
@@ -135,7 +135,7 @@ describe("/hierarchy/comp-hierarchy/tc9-create-root-position", function() {
 	it("should load compensation tab", function(done) {
         browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
-	
+
 	it("should load Contract kit page", function(done) {
        browser.frame().frame('sidebar').elementById('Contracts_sub').click().nodeify(done);
     });
@@ -143,7 +143,7 @@ describe("/hierarchy/comp-hierarchy/tc9-create-root-position", function() {
     it("should create contract kit", function(done) {
         common.createContractKitWithHierAndCKP(browser, 'cacheframe3', CKname, CKdesc, '01/01/2016', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
     });
-	
+
 	it("should checkin contract kit", function(done) {
 		browser
 			.frame()
@@ -162,11 +162,11 @@ describe("/hierarchy/comp-hierarchy/tc9-create-root-position", function() {
 	it("should load agreement tab", function(done) {
         browser.frame().frame('sidebar').elementById('Agreement_sub').click().nodeify(done);
     });
-	
+
 	it("should create agreement", function(done) {
 		common.createAgreementWithPerson(browser, wd.SPECIAL_KEYS['Enter'], 'cacheframe4', agreementName, agreementDesc, CKname, '01/01/2016', '01/01/2300', firstName1).nodeify(done);
     });
-		
+
 	it("should load hierarchy tab", function(done) {
       browser
 		.frame()
@@ -174,7 +174,7 @@ describe("/hierarchy/comp-hierarchy/tc9-create-root-position", function() {
 		.elementById('Hierarchy').click()
 		.nodeify(done);
     });
-	
+
 	it("should load comp hierarchy tab", function(done) {
       browser
 		.frame()
@@ -182,7 +182,7 @@ describe("/hierarchy/comp-hierarchy/tc9-create-root-position", function() {
 		.elementById('AgrHierarchySearch_sub').click()
 		.nodeify(done);
     });
-	
+
 	it("should create comp hierarchy", function(done) {
       common.createCompHierarchy(browser, 'cacheframe5', compHierName , compHierDesc, CKname).nodeify(done);
     });
@@ -195,7 +195,7 @@ describe("/hierarchy/comp-hierarchy/tc9-create-root-position", function() {
 			.frame()
 			.frame('container')
 			.frame('cacheframe5')
-			.frame('subpage')				
+			.frame('subpage')
 			.frame('component_iframe')
 			.elementById('Button_AddAgrHierRootPosition').click()
 			.frame()
@@ -210,7 +210,7 @@ describe("/hierarchy/comp-hierarchy/tc9-create-root-position", function() {
 			.should.eventually.include(firstName1 + ' ' + lastName1)
 			.notify(done);
     });
-		
+
 	it("should create root position", function(done) {
 		browser
 			.frame()
@@ -237,4 +237,4 @@ describe("/hierarchy/comp-hierarchy/tc9-create-root-position", function() {
 			.should.eventually.include(RootPositionName)
 			.notify(done);
 		});
-});	
+});

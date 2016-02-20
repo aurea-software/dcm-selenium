@@ -37,7 +37,7 @@ describe("/dcm-admin/supporting-data/tc15-create-enum", function() {
     it("should login", function (done) {
         common.login(browser, url, username, password).nodeify(done);
     });
-    
+
     it("should load dcm admin page", function(done) {
       browser
       	.frame()
@@ -53,7 +53,7 @@ describe("/dcm-admin/supporting-data/tc15-create-enum", function() {
             .elementById('SupportingData_sub').click()
             .nodeify(done);
     });
-    
+
     it("should load search enum page", function(done) {
     	browser
 			.frame()
@@ -68,7 +68,7 @@ describe("/dcm-admin/supporting-data/tc15-create-enum", function() {
 			.elementByLinkText('Search Enums').click()
 			.nodeify(done);
     });
-    
+
     it("should create new enum", function(done) {
       	browser
 	        .frame()
@@ -115,12 +115,9 @@ describe("/dcm-admin/supporting-data/tc15-create-enum", function() {
 	        .should.eventually.become(enumId.toUpperCase())
 	        .notify(done);
     });
-    
+
     it("should logout", function(done) {
-    	browser
-    		.frame()
-    		.frame('navbar')
-    		.elementByCss('#session > div:nth-child(2) > a').click()
+        common.logout(browser)
     		.elementByCss('form[name=LoginForm] input[name=LOGINNAME]').text()
     		.should.eventually.become('')
     		.notify(done);

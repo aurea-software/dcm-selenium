@@ -103,7 +103,7 @@ describe("/party/person/tc5-add-edit-contact-info", function() {
             .elementByLinkText('Work Address').click()
             .elementById('Address.Street1').type('Street123')
             .elementById('Address.City').type('City123')
-            .elementByCssSelector('button[data-id=US_State]').click()
+            .elementByCssSelector('button[data-id=US_State]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -123,7 +123,7 @@ describe("/party/person/tc5-add-edit-contact-info", function() {
             .frame('proppage')
             .elementById('Address.Street1').clear().type('abc')
             .elementById('Address.City').clear().type('abc')
-            .elementByCssSelector('button[data-id=US_State]').click()
+            .elementByCssSelector('button[data-id=US_State]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -236,7 +236,7 @@ describe("/party/person/tc5-add-edit-contact-info", function() {
             // Test case description requires the usage type to be MAILING. We
             // change to LICENSINGINFO to avoid the error on overlapping periods of
             // two MAILING contact points.
-            .elementByCssSelector('button[data-id=AllContactPointsCreate_UsageType_0]').click()
+            .elementByCssSelector('button[data-id=AllContactPointsCreate_UsageType_0]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')

@@ -184,10 +184,7 @@ describe("/user-manager/tc17-checkout-contract-kit-and-create-allocation-rule", 
     // The newly created user doesn't have permission to create party or product hiearchy. Hence we create the data using the default user.
 
     it("should logout", function(done) {
-        browser
-            .frame()
-            .frame('navbar')
-            .elementByCss('#session > div:nth-child(2) > a').click()
+        common.logout(browser)
             .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').text()
             .should.eventually.become('')
             .notify(done);

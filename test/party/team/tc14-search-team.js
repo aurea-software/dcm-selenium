@@ -163,10 +163,7 @@ describe("/party/team/tc14-search-team", function() {
     });
 
     it("should logout", function(done) {
-        browser
-            .frame()
-            .frame('navbar')
-            .elementByCss('#session > div:nth-child(2) > a').click()
+        common.logout(browser)
             .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').text()
             .should.eventually.become('')
             .notify(done);
