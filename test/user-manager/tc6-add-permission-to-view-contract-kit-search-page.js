@@ -62,7 +62,7 @@ describe("/user-manager/tc6-add-permission-to-view-contract-kit-search-page", fu
             .nodeify(done);
     });
 
-    it("should add permissions", function(done) {
+    it("should load edit permissions page", function(done) {
         browser
             .frame()
             .frame('container')
@@ -70,29 +70,11 @@ describe("/user-manager/tc6-add-permission-to-view-contract-kit-search-page", fu
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Button_UserManager_Users_Main_AdditionalPermissions_EditPermissions').click()
-            .frame()
-            .frame('container')
-            .frame('cacheframe1')
-            .frame('proppage')
-            .elementByCss('button[name=AllPermissions_add]').click()
-            .frame()
-            .frame('container')
-            .frame('cacheframe1')
-            .frame('proppage')
-            .elementById('complexField_Page_ElementSearch_search_div').click()
-            .frame()
-            .frame('container')
-            .frame('cacheframe1')
-            .frame('proppage')
-            .frame('Page_ElementSearch_search_div_frame')
-            .elementById('Field_ElementSearch_Search_ElementName_Search_Value').type('Contracts.ContractsSearch')
-            .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
-            .frame()
-            .frame('container')
-            .frame('cacheframe1')
-            .frame('proppage')
-            .frame('Page_ElementSearch_search_div_frame')
-            .elementById('Button_ElementSearch_Select').type(wd.SPECIAL_KEYS['Enter'])
+            .nodeify(done);
+    });
+
+    it("should add permissions", function(done) {
+        common.addUserPermission(browser, 'cacheframe1', 'View', 'Contracts.ContractsSearch')
             .frame()
             .frame('container')
             .frame('cacheframe1')
