@@ -36,12 +36,13 @@ describe("login - form inputs border", function() {
       .nodeify(done);
   });
  
-  it("should be bottom 1px solid #778086 rgb(119, 128, 134) and #28bd8b rgb(40, 189, 139) for the first input in focus", function  (done) {
+  it("should be bottom 1px solid #778086 rgb(119, 128, 134)", function  (done) {
     browser
       .get(url)
+      .elementByCss('form[name="LoginForm"] .checkbox label').click().sleep(150) // move focus out
       .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').getComputedCss('border-bottom')
       .then(function(border) {
-        border.should.equal("1px solid rgb(40, 189, 139)");
+        border.should.equal("1px solid rgb(119, 128, 134)");
       })
       .elementByCss('form[name=LoginForm] input[name=PASSWORD]').getComputedCss('border-bottom')
       .then(function(border) {
