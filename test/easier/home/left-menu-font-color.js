@@ -45,8 +45,8 @@ describe("home - left menu font color", function() {
       .frame('navbar')
       .elementById('Party').click()
       .frame().frame('sidebar')
-      .elementByCss('.sidebar ul li a').getComputedCss('color').then(function(font) {
-        font.should.equal("rgba(119, 128, 134, 1)");
+      .elementByCss('.sidebar ul li a').getComputedCss('color').then(function(color) {
+        color.should.equal("rgba(119, 128, 134, 1)");
       })
       .nodeify(done);
   });
