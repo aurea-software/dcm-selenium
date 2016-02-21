@@ -10,7 +10,7 @@ var wd = require('wd');
 
 var url = config.get("url");
 
-describe("login - form header bg color", function() {
+describe("login - form header font color", function() {
   this.timeout(30000);
   var browser;
  
@@ -36,11 +36,14 @@ describe("login - form header bg color", function() {
       .nodeify(done);
   });
  
-  it("should be #1F222D or rgba(31, 34, 45, 1)", function  (done) {
+  it("should be #23b1f7 rgba(35, 177, 247, 1) and #ffffff rgba(255, 255, 255, 1)", function  (done) {
     browser
       .get(url)
-      .elementByCss('.modal-header').getComputedCss('background-color').then(function(bgcolor) {
-        bgcolor.should.equal("rgba(31, 34, 45, 1)");
+      .elementByCss('.modal-title').getComputedCss('color').then(function(color) {
+        color.should.equal("rgba(255, 255, 255, 1)");
+      })
+      .elementByCss('.modal-title span').getComputedCss('color').then(function(color) {
+        color.should.equal("rgba(35, 177, 247, 1)");
       })
       .nodeify(done);
   });
