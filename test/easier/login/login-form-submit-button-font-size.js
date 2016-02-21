@@ -10,7 +10,7 @@ var wd = require('wd');
 
 var url = config.get("url");
 
-describe("login - form inputs border", function() {
+describe("login - form submit button font size", function() {
   this.timeout(30000);
   var browser;
  
@@ -36,21 +36,12 @@ describe("login - form inputs border", function() {
       .nodeify(done);
   });
  
-  it("should be bottom 1px solid #778086 rgb(119, 128, 134)", function  (done) {
+  it("should be 17px", function  (done) {
     browser
       .get(url)
-      .elementByCss('form[name="LoginForm"] .checkbox label').click().sleep(150) // move focus out
-      .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').getComputedCss('border-bottom')
-      .then(function(border) {
-        border.should.equal("1px solid rgb(119, 128, 134)");
-      })
-      .elementByCss('form[name=LoginForm] input[name=PASSWORD]').getComputedCss('border-bottom')
-      .then(function(border) {
-        border.should.equal("1px solid rgb(119, 128, 134)");
-      })
-      .elementByCss('.bootstrap-select button').getComputedCss('border-bottom')
-      .then(function(border) {
-        border.should.equal("1px solid rgb(119, 128, 134)");
+      .elementByCss('form[name=LoginForm] button[type=submit]').getComputedCss('font-size')
+      .then(function(font) {
+        font.should.equal("17px");
       })
       .nodeify(done);
   });
