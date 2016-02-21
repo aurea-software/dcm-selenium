@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("home - top menu text color", function() {
+describe("home - top menu text hover color", function() {
   this.timeout(30000);
   var browser;
 
