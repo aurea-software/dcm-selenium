@@ -50,8 +50,8 @@ var agreementDesc = agreementName + 'Desc';
 var contractName = 'CK' + r;
 var contractDesc = contractName + 'Desc';
 
-describe("/management-tools/transaction-manager/tc6-new-comp-event", function() {
-    this.timeout(60000);
+describe("/management-tools/transaction-manager/tc14-cancel-comp-event", function() {
+    this.timeout(90000);
     var browser;
 
     before(function (done) {
@@ -220,78 +220,31 @@ describe("/management-tools/transaction-manager/tc6-new-comp-event", function() 
     });
 
     it("should create comp event", function(done) {
-      	browser
-	        .frame()
-	        .frame('container')
-	        .frame('cacheframe5')
-	        .frame('subpage')
-	        .elementById('CompEventTopGridNewButton').click()
-	        .frame()
-	        .frame('container')
-	        .frame('cacheframe5')
-	        .frame('proppage')
-	        .elementById('TMTransactionPPDate').clear().type('01/01/2015')
+        common.createCompEvent(browser, 'cacheframe5', '01/01/2015', firstName, ProdName).nodeify(done);
+    });
 
-	        .execute('scrollTo(0, 3000)')
-	        .elementById('searchTMTransactionPPSearchAP_search_div').click()
-            .frame()
-            .frame('container')
-            .frame('cacheframe5')
-            .frame('proppage')
-            .frame('TMTransactionPPSearchAP_search_div_frame')
-            .elementById('Field_Party_Person_FirstName_Search_Value').type(firstName)
-            .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
-            .frame()
-            .frame('container')
-            .frame('cacheframe5')
-            .frame('proppage')
-            .frame('TMTransactionPPSearchAP_search_div_frame')
-            .elementById('TMTransactionPPAPButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
-
-            .frame()
-            .frame('container')
-            .frame('cacheframe5')
-            .frame('proppage')
-            .execute('scrollTo(0, 3000)')
-            .elementById('searchTMTransactionPPSearchPR_search_div').click()
-            .frame()
-            .frame('container')
-            .frame('cacheframe5')
-            .frame('proppage')
-            .frame('TMTransactionPPSearchPR_search_div_frame')
-            .elementById('TMTransactionPPPRName_Search_Value').type(ProdName)
-            .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
-            .frame()
-            .frame('container')
-            .frame('cacheframe5')
-            .frame('proppage')
-            .frame('TMTransactionPPSearchPR_search_div_frame')
-            .elementById('TMTransactionPPPRButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
-
-            .frame()
-            .frame('container')
-            .frame('cacheframe5')
-            .frame('proppage')
-            .execute('scrollTo(0, 6000)')
-            .elementByCss('button[data-id=TransactionType]').click()
-            .frame()
-            .frame('container')
-            .frame('cacheframe5')
-            .frame('proppage')
-            .elementByLinkText('Initial Purchase').click()
-            .elementById('SplitPercentage').clear().type(50)
-            .elementById('Amount').clear().type(1000)
-
-            .elementById('save').click()
+    it("should cancel comp event", function(done) {
+        browser
             .frame()
             .frame('container')
             .frame('cacheframe5')
             .frame('subpage')
-            .elementByCss('table[name=CompEventGrid] tbody tr:nth-child(1) td:nth-child(3)').text()
-            .should.eventually.become(ProdName.toUpperCase())
-            .elementByCss('table[name=CompEventGrid] tbody tr:nth-child(1) td:nth-child(4)').text()
-            .should.eventually.become(firstName.toUpperCase() + ' ' + lastName.toUpperCase())
-	        .notify(done);
+            .elementById('CompEventTopGridProduct_Search_Value').type(ProdName)
+            .elementByLinkText('Search').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe5')
+            .frame('subpage')
+            .elementById('CompEventTopGridReversalButton').click()
+            .elementByCss('#alertDialog button').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe5')
+            .frame('subpage')
+            .elementById('alertDialog').text()
+            .should.eventually.include('1 Compensable Event(s) Cancelled Sucessfully. Please click on the Search button to refresh')
+            .elementByCss('#alertDialog button').click()
+            .nodeify(done);
     });
 
 });
