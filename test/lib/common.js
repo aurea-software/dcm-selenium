@@ -891,6 +891,72 @@ define(function() {
             .elementById('save').click();
     },
 
+    createCompEvent : function(browser, cacheFrameName, transactionDate, partyFirstName, productName) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('subpage')
+            .elementById('CompEventTopGridNewButton').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('TMTransactionPPDate').clear().type(transactionDate)
+
+            .execute('scrollTo(0, 3000)')
+            .elementById('searchTMTransactionPPSearchAP_search_div').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('TMTransactionPPSearchAP_search_div_frame')
+            .elementById('Field_Party_Person_FirstName_Search_Value').type(partyFirstName)
+            .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('TMTransactionPPSearchAP_search_div_frame')
+            .elementById('TMTransactionPPAPButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
+
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .execute('scrollTo(0, 3000)')
+            .elementById('searchTMTransactionPPSearchPR_search_div').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('TMTransactionPPSearchPR_search_div_frame')
+            .elementById('TMTransactionPPPRName_Search_Value').type(productName)
+            .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('TMTransactionPPSearchPR_search_div_frame')
+            .elementById('TMTransactionPPPRButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
+
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .execute('scrollTo(0, 6000)')
+            .elementByCss('button[data-id=TransactionType]').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementByLinkText('Initial Purchase').click()
+            .elementById('SplitPercentage').clear().type(50)
+            .elementById('Amount').clear().type(1000)
+
+            .elementById('save').click();
+    },
+
     currentDateInString : function() {
         var today = new Date();
         var dd = today.getDate();
