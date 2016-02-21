@@ -47,6 +47,10 @@ describe("login - form inputs font", function() {
       .then(function(font) {
         font.should.equal("SourceSansProRegular");
       })
+      .elementByCss('.bootstrap-select button').getComputedCss('font-family')
+      .then(function(font) {
+        font.should.equal("SourceSansProRegular");
+      })      
       .elementByCss('form[name=LoginForm] .checkbox label').getComputedCss('font-family')
       .then(function(font) {
         font.should.equal("SourceSansProRegular");

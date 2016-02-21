@@ -47,6 +47,10 @@ describe("login - form inputs color", function() {
       .then(function(color) {
         color.should.equal("rgba(119, 128, 134, 1)");
       })
+      .elementByCss('.bootstrap-select button').getComputedCss('color')
+      .then(function(color) {
+        color.should.equal("rgba(119, 128, 134, 1)");
+      })
       .elementByCss('form[name=LoginForm] .checkbox label').getComputedCss('color')
       .then(function(color) {
         color.should.equal("rgba(119, 128, 134, 1)");
