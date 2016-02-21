@@ -10,7 +10,7 @@ var wd = require('wd');
 
 var url = config.get("url");
 
-describe("login - form inputs font", function() {
+describe("login - form inputs font size", function() {
   this.timeout(30000);
   var browser;
  
@@ -36,24 +36,28 @@ describe("login - form inputs font", function() {
       .nodeify(done);
   });
  
-  it("should be SourceSansProRegular", function  (done) {
+  it("should be 16px for main inputs and 14px for checkbox and forget password link", function  (done) {
     browser
       .get(url)
-      .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').getComputedCss('font-family')
+      .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').getComputedCss('font-size')
       .then(function(font) {
-        font.should.equal("SourceSansProRegular");
+        font.should.equal("16px");
       })
-      .elementByCss('form[name=LoginForm] input[name=PASSWORD]').getComputedCss('font-family')
+      .elementByCss('form[name=LoginForm] input[name=PASSWORD]').getComputedCss('font-size')
       .then(function(font) {
-        font.should.equal("SourceSansProRegular");
+        font.should.equal("16px");
       })
-      .elementByCss('.bootstrap-select button').getComputedCss('font-family')
+      .elementByCss('.bootstrap-select button').getComputedCss('font-size')
       .then(function(font) {
-        font.should.equal("SourceSansProRegular");
-      })      
-      .elementByCss('form[name=LoginForm] .checkbox label').getComputedCss('font-family')
+        font.should.equal("16px");
+      })
+      .elementByCss('form[name=LoginForm] .checkbox label').getComputedCss('font-size')
       .then(function(font) {
-        font.should.equal("SourceSansProRegular");
+        font.should.equal("14px");
+      })
+      .elementByCss('form[name=LoginForm]').getComputedCss('font-size') // forget password link
+      .then(function(font) {
+        font.should.equal("14px");
       })
       .nodeify(done);
   });

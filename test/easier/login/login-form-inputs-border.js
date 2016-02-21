@@ -10,7 +10,7 @@ var wd = require('wd');
 
 var url = config.get("url");
 
-describe("login - form inputs color", function() {
+describe("login - form inputs border", function() {
   this.timeout(30000);
   var browser;
  
@@ -36,24 +36,20 @@ describe("login - form inputs color", function() {
       .nodeify(done);
   });
  
-  it("should be #778086 rgba(119, 128, 134, 1)", function  (done) {
+  it("should be bottom 1px solid #778086 rgb(119, 128, 134) and #28bd8b rgb(40, 189, 139) for the first input in focus", function  (done) {
     browser
       .get(url)
-      .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').getComputedCss('color')
-      .then(function(color) {
-        color.should.equal("rgba(119, 128, 134, 1)");
+      .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').getComputedCss('border-bottom')
+      .then(function(border) {
+        border.should.equal("1px solid rgb(40, 189, 139)");
       })
-      .elementByCss('form[name=LoginForm] input[name=PASSWORD]').getComputedCss('color')
-      .then(function(color) {
-        color.should.equal("rgba(119, 128, 134, 1)");
+      .elementByCss('form[name=LoginForm] input[name=PASSWORD]').getComputedCss('border-bottom')
+      .then(function(border) {
+        border.should.equal("1px solid rgb(119, 128, 134)");
       })
-      .elementByCss('.bootstrap-select button').getComputedCss('color')
-      .then(function(color) {
-        color.should.equal("rgba(119, 128, 134, 1)");
-      })
-      .elementByCss('form[name=LoginForm] .checkbox label').getComputedCss('color')
-      .then(function(color) {
-        color.should.equal("rgba(119, 128, 134, 1)");
+      .elementByCss('.bootstrap-select button').getComputedCss('border-bottom')
+      .then(function(border) {
+        border.should.equal("1px solid rgb(119, 128, 134)");
       })
       .nodeify(done);
   });
