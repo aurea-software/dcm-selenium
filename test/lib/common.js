@@ -299,6 +299,34 @@ define(function() {
            .elementById('save').click();
     },
 
+    addRootPosition : function(browser, cacheFrameName, productName) {
+        return browser
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('searchPage_ProductHierarchyProduct_Picker_search_div').click()
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('Page_ProductHierarchyProduct_Picker_search_div_frame')
+            .elementById('Field_Product_Main_Name_Search_Value').type(productName)
+            .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .frame('Page_ProductHierarchyProduct_Picker_search_div_frame')
+            .elementById('Button_ProductSearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
+            .frame('container')
+            .frame(cacheFrameName)
+            .frame('proppage')
+            .elementById('validate').click()
+            .elementById('save').click();
+    },
+
     createComponent : function(browser, enterKey, cacheFrameName, name, desc, label, quotaName) {
         return browser
             .frame()
