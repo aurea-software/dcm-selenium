@@ -36,11 +36,11 @@ describe("/hierarchy/product-hierarchy/tc2-create-products", function() {
         browser = wd.promiseChainRemote(config.get("remote"));
         common.configBrowser(browser, config.get("environment")).nodeify(done);
     });
-/*
+
     after(function (done) {
         browser.quit().nodeify(done);
     });
-*/
+
     it("should login", function (done) {
         common.login(browser, url, username, password).nodeify(done);
     });
