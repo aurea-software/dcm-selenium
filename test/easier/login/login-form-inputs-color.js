@@ -10,7 +10,7 @@ var wd = require('wd');
 
 var url = config.get("url");
 
-describe("login - form inputs font", function() {
+describe("login - form inputs color", function() {
   this.timeout(30000);
   var browser;
  
@@ -36,20 +36,20 @@ describe("login - form inputs font", function() {
       .nodeify(done);
   });
  
-  it("should be SourceSansProRegular", function  (done) {
+  it("should be #778086 rgba(119, 128, 134, 1)", function  (done) {
     browser
       .get(url)
-      .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').getComputedCss('font-family')
-      .then(function(font) {
-        font.should.equal("SourceSansProRegular");
+      .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').getComputedCss('color')
+      .then(function(color) {
+        color.should.equal("rgba(119, 128, 134, 1)");
       })
-      .elementByCss('form[name=LoginForm] input[name=PASSWORD]').getComputedCss('font-family')
-      .then(function(font) {
-        font.should.equal("SourceSansProRegular");
+      .elementByCss('form[name=LoginForm] input[name=PASSWORD]').getComputedCss('color')
+      .then(function(color) {
+        color.should.equal("rgba(119, 128, 134, 1)");
       })
-      .elementByCss('form[name=LoginForm] .checkbox label').getComputedCss('font-family')
-      .then(function(font) {
-        font.should.equal("SourceSansProRegular");
+      .elementByCss('form[name=LoginForm] .checkbox label').getComputedCss('color')
+      .then(function(color) {
+        color.should.equal("rgba(119, 128, 134, 1)");
       })
       .nodeify(done);
   });
