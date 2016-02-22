@@ -40,11 +40,11 @@ describe("/hierarchy/product-hierarchy/tc13-search-product-hierarchy", function(
         browser = wd.promiseChainRemote(config.get("remote"));
         common.configBrowser(browser, config.get("environment")).nodeify(done);
     });
-
+/*
     after(function (done) {
         browser.quit().nodeify(done);
     });
-
+*/
     it("should login", function (done) {
         common.login(browser, url, username, password).nodeify(done);
     });
@@ -72,7 +72,7 @@ describe("/hierarchy/product-hierarchy/tc13-search-product-hierarchy", function(
             .frame('cacheframe1')
             .frame('subpage')
             .elementById('Field_ProductHierarchySearch_Main_Name_Search_Value').type(prodHier1Name)
-            .elementByLinkText('Search').click()
+            .type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe1')
@@ -99,9 +99,7 @@ describe("/hierarchy/product-hierarchy/tc13-search-product-hierarchy", function(
             .elementByLinkText('Advanced Search').click()
             // Step 3 looks incorrect. We must key in *H* in order to search for the two hierarchies.
             .elementByCss('#Search_ProductHierarchySearch_Main_form #Field_ProductHierarchySearch_Main_Name_Search_Value').type(prodHierNamePrefix + '*')
-            // elementByLinkText('Search') doesn't work in this case. Not sure why yet. Maybe the system recognizes a wrong Search button.
-            .elementByCss('#Search_ProductHierarchySearch_Main_SearchFormDiv > div.col-md-3.col-sm-12.col-xs-12.main-search-btns > ul > li:nth-child(1) > a').click()
-            // .elementByLinkText('Search').click()
+            .type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe1')
@@ -126,7 +124,7 @@ describe("/hierarchy/product-hierarchy/tc13-search-product-hierarchy", function(
             .frame('cacheframe1')
             .frame('subpage')
             .elementByLinkText('Descending').click()
-            .elementByLinkText('Search').click()
+            .elementByCss('#Search_ProductHierarchySearch_Main_form #Field_ProductHierarchySearch_Main_Name_Search_Value').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe1')
