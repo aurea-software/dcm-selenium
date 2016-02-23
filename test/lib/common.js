@@ -57,6 +57,8 @@ define(function() {
             // The 'Logout' link is hidden. User needs to hoover the cursor to show the link.
             // We change the CSS to make sure that the element is visible to click.
             .execute('document.querySelector(\'#session > div:nth-child(2)\').style.left = \'0%\';')
+            // Wait for the element to slide in
+            .sleep(500)
             .elementByCss('#session > div:nth-child(2) > a').type(wd.SPECIAL_KEYS['Enter']);
     },
 
@@ -295,6 +297,7 @@ define(function() {
            .frame('container')
            .frame(cacheFrameName)
            .frame('proppage')
+           .execute('scrollTo(0, 6000)')
            .elementById('validate').click()
            .elementById('save').click();
     },
