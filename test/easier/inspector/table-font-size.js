@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table header font size", function() {
+describe("inspector - table font size", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table header font size", function() {
       .nodeify(done);
   });
 
-  it("should be 13px", function  (done) {
+  it("should be 15px", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,9 @@ describe("page - table header font size", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('table.table th').getComputedCss('font-size')
-      .then(function(size) {
-        size.should.equal("13px");
+      .elementByCss('table.table td').getComputedCss('font-size')
+      .then(function(font) {
+        font.should.equal("15px");
       })
       .nodeify(done);
   });

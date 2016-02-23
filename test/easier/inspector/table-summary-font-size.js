@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table summary font transform", function() {
+describe("inspector - table summary font size", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table summary font transform", function() {
       .nodeify(done);
   });
 
-  it("should be uppercase", function  (done) {
+  it("should be 16px", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,9 @@ describe("page - table summary font transform", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.table-heading').getComputedCss('text-transform')
-      .then(function(transform) {
-        transform.should.equal("uppercase");
+      .elementByCss('.table-heading').getComputedCss('font-size')
+      .then(function(font) {
+        font.should.equal("16px");
       })
       .nodeify(done);
   });

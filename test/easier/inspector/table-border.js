@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table summary font size", function() {
+describe("inspector - table border", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table summary font size", function() {
       .nodeify(done);
   });
 
-  it("should be 16px", function  (done) {
+  it("should be 1px solid #DCE3E5 rgb(220, 227, 229)", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,9 @@ describe("page - table summary font size", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.table-heading').getComputedCss('font-size')
-      .then(function(font) {
-        font.should.equal("16px");
+      .elementByCss('.panel').getComputedCss('border')
+      .then(function(border) {
+        border.should.equal("1px solid rgb(220, 227, 229)");
       })
       .nodeify(done);
   });

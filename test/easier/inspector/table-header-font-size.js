@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table summary font", function() {
+describe("inspector - table header font size", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table summary font", function() {
       .nodeify(done);
   });
 
-  it("should be SourceSansProSemibold", function  (done) {
+  it("should be 13px", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,9 @@ describe("page - table summary font", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.table-heading').getComputedCss('font-family')
-      .then(function(font) {
-        font.should.equal("SourceSansProSemibold");
+      .elementByCss('table.table th').getComputedCss('font-size')
+      .then(function(size) {
+        size.should.equal("13px");
       })
       .nodeify(done);
   });

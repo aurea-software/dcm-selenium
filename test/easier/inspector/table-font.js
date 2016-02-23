@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table row border", function() {
+describe("inspector - table font", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table row border", function() {
       .nodeify(done);
   });
 
-  it("should be 1px solid rgb(218, 224, 229)", function  (done) {
+  it("should be SourceSansProLight", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,9 @@ describe("page - table row border", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('table.table td').getComputedCss('border-top')
-      .then(function(border) {
-        border.should.equal("1px solid rgb(218, 224, 229)");
+      .elementByCss('table.table td').getComputedCss('font-family')
+      .then(function(font) {
+        font.should.equal("SourceSansProLight");
       })
       .nodeify(done);
   });

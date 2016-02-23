@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table header font", function() {
+describe("inspector - table summary font", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table header font", function() {
       .nodeify(done);
   });
 
-  it("should be SourceSansProRegular", function  (done) {
+  it("should be SourceSansProSemibold", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,9 @@ describe("page - table header font", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('table.table th').getComputedCss('font-family')
+      .elementByCss('.table-heading').getComputedCss('font-family')
       .then(function(font) {
-        font.should.equal("SourceSansProRegular");
+        font.should.equal("SourceSansProSemibold");
       })
       .nodeify(done);
   });

@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table font color", function() {
+describe("inspector - table header font", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table font color", function() {
       .nodeify(done);
   });
 
-  it("should be #282C37 rgba(40, 44, 55, 1)", function  (done) {
+  it("should be SourceSansProRegular", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,9 @@ describe("page - table font color", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('table.table td').getComputedCss('color')
-      .then(function(color) {
-        color.should.equal("rgba(40, 44, 55, 1)");
+      .elementByCss('table.table th').getComputedCss('font-family')
+      .then(function(font) {
+        font.should.equal("SourceSansProRegular");
       })
       .nodeify(done);
   });

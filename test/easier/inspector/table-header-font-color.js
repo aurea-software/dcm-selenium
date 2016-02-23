@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table summary font color", function() {
+describe("inspector - table header font color", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table summary font color", function() {
       .nodeify(done);
   });
 
-  it("should be #28BD8B rgba(40, 189, 139, 1) and #313541 rgba(49, 53, 65, 1)", function  (done) {
+  it("should be #1F222D rgba(31, 34, 45, 1)", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,13 +48,9 @@ describe("page - table summary font color", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.table-heading').getComputedCss('color')
+      .elementByCss('table.table th').getComputedCss('color')
       .then(function(color) {
-        color.should.equal("rgba(49, 53, 65, 1)");
-      })
-      .elementByCss('.table-heading span').getComputedCss('color')
-      .then(function(color) {
-        color.should.equal("rgba(40, 189, 139, 1)");
+        color.should.equal("rgba(31, 34, 45, 1)");
       })
       .nodeify(done);
   });

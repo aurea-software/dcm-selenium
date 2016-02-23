@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table row rollover color", function() {
+describe("inspector - table summary font transform", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table row rollover color", function() {
       .nodeify(done);
   });
 
-  it("should be #ECF1F3 rgba(236, 241, 243, 1)", function  (done) {
+  it("should be uppercase", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,9 @@ describe("page - table row rollover color", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('table.table tbody tr').moveTo().sleep(500).getComputedCss('background-color')
-      .then(function(bgcolor) {
-        bgcolor.should.equal("rgba(236, 241, 243, 1)");
+      .elementByCss('.table-heading').getComputedCss('text-transform')
+      .then(function(transform) {
+        transform.should.equal("uppercase");
       })
       .nodeify(done);
   });
