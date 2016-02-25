@@ -48,8 +48,8 @@ describe("advanced search - inputs border focus", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.search-container .advanced-form input.form-control').moveTo().sleep(150)
-      .getComputedCss('border-bottom')
+      .elementByCss('.search-container .btn.advanced-link').click().sleep(500) // open advanced form
+      .elementByCss('.search-container .advanced-form input.form-control').moveTo().sleep(150).getComputedCss('border-bottom')
       .then(function(border) {
         border.should.equal("1px solid rgb(40, 189, 139)");
       })
