@@ -54,8 +54,8 @@ describe("search - dropdown menu font", function() {
         display.should.equal("block");
       })
       .elementByCss('.search-container .bootstrap-select .dropdown-menu > li > a')
-      .getComputedCss('font-family').then(function(color) {
-        color.should.equal("SourceSansProRegular");
+      .getComputedCss('font-family').then(function(font) {
+        font.should.equal("SourceSansProRegular");
       })
       .nodeify(done);
   });
