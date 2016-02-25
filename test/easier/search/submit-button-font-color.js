@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table summary font transform", function() {
+describe("search - submit button font color", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table summary font transform", function() {
       .nodeify(done);
   });
 
-  it("should be uppercase", function  (done) {
+  it("should be #ffffff rgba(255, 255, 255, 1)", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,9 @@ describe("page - table summary font transform", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.table-heading').getComputedCss('text-transform')
-      .then(function(transform) {
-        transform.should.equal("uppercase");
+      .elementByCss('.search-container .btn.btn-green')
+      .getComputedCss('color').then(function(color) {
+        color.should.equal("rgba(255, 255, 255, 1)");
       })
       .nodeify(done);
   });

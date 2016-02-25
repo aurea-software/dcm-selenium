@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table summary font size", function() {
+describe("inspector - table summary font size", function() {
   this.timeout(30000);
   var browser;
 

@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table border", function() {
+describe("inspector - table row border", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table border", function() {
       .nodeify(done);
   });
 
-  it("should be 1px solid #DCE3E5 rgb(220, 227, 229)", function  (done) {
+  it("should be 1px solid rgb(218, 224, 229)", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,9 @@ describe("page - table border", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.panel').getComputedCss('border')
+      .elementByCss('table.table td').getComputedCss('border-top')
       .then(function(border) {
-        border.should.equal("1px solid rgb(220, 227, 229)");
+        border.should.equal("1px solid rgb(218, 224, 229)");
       })
       .nodeify(done);
   });

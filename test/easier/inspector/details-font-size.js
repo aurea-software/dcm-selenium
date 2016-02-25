@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table bg color", function() {
+describe("details inspector - font size", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table bg color", function() {
       .nodeify(done);
   });
 
-  it("should be #ffffff", function  (done) {
+  it("should be 14px", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,10 @@ describe("page - table bg color", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('table.table').getComputedCss('background-color')
-      .then(function(bgcolor) {
-        bgcolor.should.equal("rgba(255, 255, 255, 1)");
+      .frame('component_iframe')
+      .elementByCss('.details-tab table.table td').getComputedCss('font-size')
+      .then(function(font) {
+        font.should.equal("14px");
       })
       .nodeify(done);
   });

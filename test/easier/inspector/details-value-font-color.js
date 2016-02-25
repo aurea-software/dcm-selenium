@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table border radius", function() {
+describe("details inspector - value font color", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table border radius", function() {
       .nodeify(done);
   });
 
-  it("should be 3px", function  (done) {
+  it("should be #161824 rgba(22, 24, 36, 1)", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,10 @@ describe("page - table border radius", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.panel').getComputedCss('border-radius')
-      .then(function(radius) {
-        radius.should.equal("3px");
+      .frame('component_iframe')
+      .elementByCss('.details-tab table.table td strong').getComputedCss('color')
+      .then(function(color) {
+        color.should.equal("rgba(22, 24, 36, 1)");
       })
       .nodeify(done);
   });

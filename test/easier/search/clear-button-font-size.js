@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table header font", function() {
+describe("search - clear button font size", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table header font", function() {
       .nodeify(done);
   });
 
-  it("should be SourceSansProRegular", function  (done) {
+  it("should be 12px", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,9 @@ describe("page - table header font", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('table.table th').getComputedCss('font-family')
-      .then(function(font) {
-        font.should.equal("SourceSansProRegular");
+      .elementByCss('.search-container .btn.btn-xs')
+      .getComputedCss('font-size').then(function(font) {
+        font.should.equal("12px");
       })
       .nodeify(done);
   });

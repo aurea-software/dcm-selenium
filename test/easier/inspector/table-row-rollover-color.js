@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - table font", function() {
+describe("inspector - table row rollover color", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - table font", function() {
       .nodeify(done);
   });
 
-  it("should be SourceSansProLight", function  (done) {
+  it("should be #ECF1F3 rgba(236, 241, 243, 1)", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,9 @@ describe("page - table font", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('table.table td').getComputedCss('font-family')
-      .then(function(font) {
-        font.should.equal("SourceSansProLight");
+      .elementByCss('table.table tbody tr').moveTo().sleep(500).getComputedCss('background-color')
+      .then(function(bgcolor) {
+        bgcolor.should.equal("rgba(236, 241, 243, 1)");
       })
       .nodeify(done);
   });
