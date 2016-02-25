@@ -37,7 +37,7 @@ describe("/dcm-admin/supporting-data/tc3-create-state-course", function() {
     it("should login", function (done) {
         common.login(browser, url, username, password).nodeify(done);
     });
-    
+
     it("should load dcm admin page", function(done) {
       browser
         .frame('navbar')
@@ -52,7 +52,7 @@ describe("/dcm-admin/supporting-data/tc3-create-state-course", function() {
             .elementById('SupportingData_sub').click()
             .nodeify(done);
     });
-    
+
     it("should create new course", function(done) {
       browser
         .frame()
@@ -83,6 +83,7 @@ describe("/dcm-admin/supporting-data/tc3-create-state-course", function() {
         .frame('container')
         .frame('cacheframe1')
         .frame('proppage')
+        .execute('scrollTo(0, 6000)')
         .elementByCss('button[data-id=CourseSources_Source_0]').click()
         .frame()
         .frame('container')

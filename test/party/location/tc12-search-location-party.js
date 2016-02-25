@@ -28,19 +28,20 @@ var partyName = 'PN' + taxId;
 console.log('taxId: ' + taxId);
 console.log('dtcc: ' + dtcc);
 
-var locationId1 = common.rand(3);
+var r = common.rand(3);
+var locationId1 = r + '1';
 console.log('locationId1: ' + locationId1);
 
-var locationDtcc1 = 'D' + locationId1;
+var locationDtcc1 = locationId1;
 var locationName1 = locationNamePrefix + locationId1;
 var locationStreet1 = 's' + locationId1;
 var locationCity1 = 'c' + locationId1;
 var locationZipCode1 = '12345';
 
-var locationId2 = '' + (parseInt(locationId1, 10) + 1);
+var locationId2 = r + '2';
 console.log('locationId2: ' + locationId2);
 
-var locationDtcc2 = 'D' + locationId2;
+var locationDtcc2 = locationId2;
 var locationName2 = locationNamePrefix + locationId2;
 var locationStreet2 = 's' + locationId2;
 var locationCity2 = 'c' + locationId2;

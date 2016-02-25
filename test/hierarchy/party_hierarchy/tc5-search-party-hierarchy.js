@@ -14,16 +14,16 @@ var username = config.get("username");
 var password = config.get("password");
 
 var common = require('../../lib/common');
-var r1 = common.rand(2);
-var name1 = 'WXYZ_PARTY_HIEER_' + r1;
+var chunk = '_PARTY_HIEER_' + common.rand(5);
+
+var name1 = 'WXYZ' + chunk;
 console.log('1st Party Hierarchy: ' + name1);
 
-var r2 = common.rand(2);
-var name2 = 'ABCD_PARTY_HIEER_' + r2;
+var name2 = 'ABCD' + chunk;
 console.log('2nd Party Hierarchy: ' + name2);
 
 describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
-  this.timeout(60000);
+  this.timeout(90000);
     var browser;
 
     before(function (done) {
@@ -63,8 +63,8 @@ describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-			.elementByCss('#Search_HierarchySearch_Main_primaryForm #Field_Hierarchy_Name_Search_Value').type('WXYZ_PARTY_HIEER_*')
-			.elementByLinkText('Search').click()
+			.elementByCss('#Search_HierarchySearch_Main_primaryForm #Field_Hierarchy_Name_Search_Value').type('WXYZ' + chunk + '*')
+			.type(wd.SPECIAL_KEYS['Enter'])
 			.elementById('Grid_HierarchySearch_Main').text()
 			.should.eventually.include(name1)
             .notify(done);
@@ -106,7 +106,8 @@ describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-			.elementByLinkText('Search').click()
+            .elementByCss('#Search_HierarchySearch_Main_form #Field_Hierarchy_Name_Search_Value')
+			.type(wd.SPECIAL_KEYS['Enter'])
 			.elementById('Grid_HierarchySearch_Main').text()
 			.should.eventually.include(name2)
             .notify(done);
@@ -122,24 +123,19 @@ describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
 
 	it("should sort both hierarchies created in descending order", function(done) {
 		var v = browser
-            .refresh()
-            .frame()
-            .frame('container')
-            .frame('cacheframe0')
-            .frame('subpage')
-			.elementByLinkText('Advanced Search').click()
-			.elementByCss('#Search_HierarchySearch_Main_form #Field_Hierarchy_Name_Search_Value').type('*_PARTY_HIEER_*')
+			.elementByCss('#Search_HierarchySearch_Main_form #Field_Hierarchy_Name_Search_Value').type('*' + chunk + '*')
 			.frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-			.elementByCss('button[data-id=SortField1_order]').type(wd.SPECIAL_KEYS['Enter'])
+			.elementByCss('#Search_HierarchySearch_Main_form button[data-id=SortField1_order]').click()
 			.frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
             .elementByLinkText('Descending').click()
-			.elementByLinkText('Search').click();
+            .elementByCss('#Search_HierarchySearch_Main_form #Field_Hierarchy_Name_Search_Value')
+			.type(wd.SPECIAL_KEYS['Enter']);
 
 			v.waitForElementByCss('table[name=Grid_HierarchySearch_Main] tbody tr:nth-child(0) td:nth-child(3)').text()
 				.should.eventually.become(name2)

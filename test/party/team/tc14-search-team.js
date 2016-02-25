@@ -16,8 +16,9 @@ var password = config.get("password");
 var common = require('../../lib/common');
 
 var prefix = common.rand(4);
-var dtcc1 = common.rand(4);
-var dtcc2 = '' + (parseInt(dtcc1, 10) + 1);
+var d = common.rand(3);
+var dtcc1 = d + '1';
+var dtcc2 = d + '2';
 console.log('prefix: ' + prefix);
 console.log('dtcc1: ' + dtcc1);
 console.log('dtcc2: ' + dtcc2);
@@ -84,7 +85,7 @@ describe("/party/team/tc14-search-team", function() {
             .frame('cacheframe0')
             .frame('subpage')
             .elementById('Field_Team_Main_Name_Search_Value').type(name1)
-            .elementByLinkText('Search').click()
+            .type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -112,7 +113,7 @@ describe("/party/team/tc14-search-team", function() {
             .frame('subpage')
             .elementByCss('#Search_Team_Main_form #Field_Team_Main_Name_Search_Value').type(namePrefix + "*")
             .elementByCss('#Search_Team_Main_form #Field_Team_Main_DTCCID_Search_Value').type(dtcc2)
-            .elementByLinkText('Search').click()
+            .type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -150,7 +151,8 @@ describe("/party/team/tc14-search-team", function() {
             .frame('cacheframe0')
             .frame('subpage')
             .elementByLinkText('Descending').click()
-            .elementByLinkText('Search').click()
+            .elementByCss('#Search_Team_Main_form #Field_Team_Main_Name_Search_Value')
+            .type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')

@@ -16,14 +16,15 @@ var password = config.get("password");
 var common = require('../../lib/common');
 
 var c = common.rand(3);
-var c1 = common.rand(3);
-var c2 = '' + (parseInt(c1, 10) + 1);
+var c1 = c + '1';
+var c2 = c + '2';
 
 console.log('c: ' + c);
 console.log('c1: ' + c1);
 console.log('c2: ' + c2);
 
-var prodHierNamePrefix = 'PH' + c;
+var prodHierNamePrefix = 'PH' + common.rand(3);
+console.log('prodHierNamePrefix: ' + prodHierNamePrefix);
 
 var prodHier1Name = prodHierNamePrefix + c1;
 var prodHier1Desc = prodHier1Name + 'Desc';

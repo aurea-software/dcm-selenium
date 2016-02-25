@@ -1,4 +1,4 @@
-var config = require('nconf'); 
+var config = require('nconf');
 config.file({file: './test/lib/config.json'});
 
 var chai = require("chai");
@@ -45,28 +45,28 @@ console.log('Party Hierarchy name: ' + hiername);
 describe("/hierarchy/party-hierarchy/tc7-create-root-position-person-org", function() {
   this.timeout(90000);
     var browser;
-    
+
     before(function (done) {
         chaiAsPromised.transferPromiseness = wd.transferPromiseness;
         browser = wd.promiseChainRemote(config.get("remote"));
         common.configBrowser(browser, config.get("environment")).nodeify(done);
     });
-   
+
     after(function (done) {
       browser.quit().nodeify(done);
     });
-   
+
     it("should login", function (done) {
       common.login(browser, url, username, password).nodeify(done);
     });
-		
+
 	it("should load party page", function(done) {
       browser
         .frame('navbar')
         .elementById('Party').click()
         .nodeify(done);
     });
-    
+
 	it('should create person party ', function(done) {
         common.createPersonParty(browser, taxId1, firstName1, lastName1, middleName1, preferredName1, city1, stateName, dtcc1, npn1).nodeify(done);
     });
@@ -74,7 +74,7 @@ describe("/hierarchy/party-hierarchy/tc7-create-root-position-person-org", funct
 	it('should create organization party', function(done) {
         common.createOrganizationParty(browser, taxId2, partyName2, dtcc2, npn2, city2, stateName).nodeify(done);
     });
-	
+
 	it("should load party hierarchy page", function(done) {
 		browser
 			.frame()
@@ -82,11 +82,11 @@ describe("/hierarchy/party-hierarchy/tc7-create-root-position-person-org", funct
 			.elementById('Hierarchy').click()
 			.nodeify(done);
     });
-	
+
 	//FIXME: added new cacheFrameName, enterKey parameters
 	it("should create party hierarchy", function(done) {
 		//common.createPartyHierarchy(browser, hiername).nodeify(done);
-		common.createPartyHierarchy(browser, 'cacheframe0', wd.SPECIAL_KEYS['Enter'], hiername).nodeify(done);		
+		common.createPartyHierarchy(browser, 'cacheframe1', wd.SPECIAL_KEYS['Enter'], hiername).nodeify(done);
     });
 
 	it("should search party hierarchy by name", function(done) {
@@ -96,15 +96,15 @@ describe("/hierarchy/party-hierarchy/tc7-create-root-position-person-org", funct
 			.elementById('Hierarchy').click()
             .frame()
             .frame('container')
-            .frame('cacheframe0')
+            .frame('cacheframe1')
             .frame('subpage')
 			.elementByCss('#Search_HierarchySearch_Main_primaryForm #Field_Hierarchy_Name_Search_Value').type(hiername)
-			.elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])	
+			.elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
 			.elementById('Grid_HierarchySearch_Main').text()
 			.should.eventually.include(hiername)
             .notify(done);
-    });	
-	
+    });
+
 	it("should add person party as root position", function(done) {
 		browser
             .frame()
@@ -112,16 +112,17 @@ describe("/hierarchy/party-hierarchy/tc7-create-root-position-person-org", funct
             .elementById('Tab_HierarchySearch_RootPosition_Main_link').click()
 			.frame()
             .frame('container')
-            .frame('cacheframe0')
-            .frame('subpage')				
+            .frame('cacheframe1')
+            .frame('subpage')
 			.frame('component_iframe')
 			.elementById('Button_AddRootPosition').click()
 			.frame()
             .frame('container')
-            .frame('cacheframe0')
+            .frame('cacheframe1')
             .frame('proppage')
 			.elementById('Name').clear().type(RootPositionForPerson)
 			.elementById('Description').type('DESC ' + RootPositionForPerson)
+			.execute('scrollTo(0, 6000)')
 			.elementById('searchPartySearchPage_search_div').click()
 			.frame('PartySearchPage_search_div_frame')
 			.elementById('Field_Party_Person_FirstName_Search_Value').type(firstName1)
@@ -132,21 +133,21 @@ describe("/hierarchy/party-hierarchy/tc7-create-root-position-person-org", funct
 			.elementById('Button_PartySearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
 			.frame()
             .frame('container')
-            .frame('cacheframe0')
+            .frame('cacheframe1')
             .frame('proppage')
 			.elementByCss('span.picker-field-textParty_GID').text()
-			.should.eventually.include(firstName1 + ' ' + lastName1)			
+			.should.eventually.include(firstName1 + ' ' + lastName1)
 			.elementById('save').click()
 			.frame()
             .frame('container')
-            .frame('cacheframe0')
+            .frame('cacheframe1')
             .frame('subpage')
 			.frame('component_iframe')
 			.elementById('Grid_RootPosition_Main').text()
 			.should.eventually.include(hiername)
 			.should.eventually.include(RootPositionForPerson)
-			.notify(done);							
-    });	
+			.notify(done);
+    });
 
 	it("should add organization party as root position", function(done) {
 		browser
@@ -155,19 +156,20 @@ describe("/hierarchy/party-hierarchy/tc7-create-root-position-person-org", funct
             .elementById('Tab_HierarchySearch_RootPosition_Main_link').click()
             .frame()
             .frame('container')
-            .frame('cacheframe0')
-            .frame('subpage')				
+            .frame('cacheframe1')
+            .frame('subpage')
 			.frame('component_iframe')
 			.elementById('Button_AddRootPosition').click()
 			.frame()
             .frame('container')
-            .frame('cacheframe0')
+            .frame('cacheframe1')
             .frame('proppage')
 			.elementById('Name').clear().type(RootPositionForOrg)
 			.elementById('Description').clear().type('DESC ' + RootPositionForOrg)
+			.execute('scrollTo(0, 6000)')
 			.elementById('searchPartySearchPage_search_div').click()
 			.frame('PartySearchPage_search_div_frame')
-			.elementByCss('#Search_Party_form > div.preset-query-header > label:nth-child(3) > i').click()		
+			.elementByCss('#Search_Party_form > div.preset-query-header > label:nth-child(3) > i').click()
 			.elementById('Field_Party_Organization_NameUpper_Search_Value').type(partyName2)
 			.elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
 			.elementById('Grid_Party').text()
@@ -176,19 +178,19 @@ describe("/hierarchy/party-hierarchy/tc7-create-root-position-person-org", funct
 			.elementById('Button_PartySearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
 			.frame()
             .frame('container')
-            .frame('cacheframe0')
+            .frame('cacheframe1')
             .frame('proppage')
 			.elementByCss('span.picker-field-textParty_GID').text()
-			.should.eventually.include(partyName2)				
+			.should.eventually.include(partyName2)
 			.elementById('save').click()
 			.frame()
             .frame('container')
-            .frame('cacheframe0')
+            .frame('cacheframe1')
             .frame('subpage')
 			.frame('component_iframe')
 			.elementById('Grid_RootPosition_Main').text()
 			.should.eventually.include(hiername)
 			.should.eventually.include(RootPositionForOrg)
-			.notify(done);						
+			.notify(done);
     });
 });

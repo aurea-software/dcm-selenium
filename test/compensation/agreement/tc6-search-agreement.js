@@ -45,8 +45,9 @@ var stateCode = 'AZ';
 var stateName = 'Arizona';
 
 var f = common.rand(3);
-var f1 = common.rand(3);
-var f2 = '' + (parseInt(f1, 10) + 1);
+var c = common.rand(3);
+var f1 = c + '1';
+var f2 = c + '2';
 
 console.log('f: [' + f + ']');
 console.log('f1: [' + f1 + ']');
@@ -279,7 +280,7 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
             .frame('cacheframe3')
             .frame('subpage')
             .elementByLinkText('Effective Before').click()
-            .elementByCss('button[data-id=SortField1_order]').type(wd.SPECIAL_KEYS['Enter'])
+            .elementByCss('button[data-id=SortField1_order]').click()
             .frame()
             .frame('container')
             .frame('cacheframe3')

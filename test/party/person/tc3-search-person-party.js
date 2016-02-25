@@ -19,8 +19,9 @@ var r1 = common.rand(3);
 var r2 = common.rand(3);
 var r = common.rand(5);
 
-var taxId1 = common.rand(5);
-var taxId2 = '' + (parseInt(taxId1, 10) + 1);
+var t = common.rand(4);
+var taxId1 = t + '1';
+var taxId2 = t + '2';
 
 console.log('r1: ' + r1);
 console.log('r2: ' + r2);
@@ -54,16 +55,16 @@ var stateName = 'Arizona';
 describe("/party/person/tc3-search-person-party", function() {
   this.timeout(90000);
     var browser;
-    
+
     before(function (done) {
       browser = wd.promiseChainRemote(config.get("remote"));
       common.configBrowser(browser, config.get("environment")).nodeify(done);
     });
-   
+
     after(function (done) {
       browser.quit().nodeify(done);
     });
-   
+
     it("should login", function (done) {
       common.login(browser, url, username, password).nodeify(done);
     });
@@ -74,7 +75,7 @@ describe("/party/person/tc3-search-person-party", function() {
         .elementById('Party').click()
         .nodeify(done);
     });
-    
+
     it("should load create person page", function(done) {
       browser
         .frame()
@@ -84,15 +85,15 @@ describe("/party/person/tc3-search-person-party", function() {
         .elementById('Button_Person_Main_NewPerson').click()
         .nodeify(done);
     });
-    
+
     it('should create person party 1', function(done) {
         common.createPersonParty(browser, taxId1, firstName1, lastName1, middleName, preferredName, city1, stateName, dtcc1, npn1).nodeify(done);
     });
-    
+
     it('should create person party 2', function(done) {
         common.createPersonParty(browser, taxId2, firstName2, lastName2, middleName, preferredName, city2, stateName, dtcc2, npn2).nodeify(done);
     });
-    
+
     it('should search party 2 by first name and last name', function(done) {
         browser
             .refresh()
@@ -109,7 +110,7 @@ describe("/party/person/tc3-search-person-party", function() {
             .should.eventually.include(taxId2)
             .notify(done);
     });
-    
+
     it('should search party 1 by first name, last name and tax id', function(done) {
         browser
             .refresh()
@@ -127,7 +128,7 @@ describe("/party/person/tc3-search-person-party", function() {
             .should.eventually.include(taxId1)
             .notify(done);
     });
-    
+
     it('should search by first name prefix and last name prefix', function(done) {
         browser
             .refresh()
@@ -148,7 +149,7 @@ describe("/party/person/tc3-search-person-party", function() {
             .should.eventually.include(taxId2)
             .notify(done);
     });
-    
+
     it('should search by DTCC, NPN, City and state', function(done) {
         browser
             .refresh()
@@ -168,7 +169,7 @@ describe("/party/person/tc3-search-person-party", function() {
             .should.eventually.include(taxId1)
             .notify(done);
     });
-    
+
     it('should sort by party id', function(done) {
         var v = browser
             .refresh()
@@ -181,18 +182,18 @@ describe("/party/person/tc3-search-person-party", function() {
             // By default the table is sorted by party id in ascending order. Click
             // once to turn the order to descending.
             .elementByCssSelector('#Field_Person_Main_PartyID_Grid > span.column-text').click();
-            
+
         v.waitForElementByCss('table[name=Grid_Person_Main] tbody tr:nth-child(1) td:nth-child(5)').text()
             // We intentionally create party 1 before party 2. We also setup tax id
             // 2 to be bigger than tax id 1 intentionally.
             // Hence, party ids and tax ids have the same order.
             .should.eventually.become(taxId2);
-        
+
         v.waitForElementByCss('table[name=Grid_Person_Main] tbody tr:nth-child(2) td:nth-child(5)').text()
             .should.eventually.become(taxId1)
             .notify(done);
     });
-    
+
     it('should sort by tax id', function(done) {
         var v = browser
             .refresh()
@@ -205,10 +206,10 @@ describe("/party/person/tc3-search-person-party", function() {
             // Click twice to turn the order to descending.
             .elementByCssSelector('#Field_Person_Main_TaxID_Grid > span.column-text').click()
             .elementByCssSelector('#Field_Person_Main_TaxID_Grid > span.column-text').click();
-            
+
         v.waitForElementByCss('table[name=Grid_Person_Main] tbody tr:nth-child(1) td:nth-child(5)').text()
             .should.eventually.become(taxId2);
-        
+
         v.waitForElementByCss('table[name=Grid_Person_Main] tbody tr:nth-child(2) td:nth-child(5)').text()
             .should.eventually.become(taxId1)
             .notify(done);
