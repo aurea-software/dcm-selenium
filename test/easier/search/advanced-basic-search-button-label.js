@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("search - advanced search button click", function() {
+describe("advanced search - basic search button label", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("search - advanced search button click", function() {
       .nodeify(done);
   });
 
-  it("should open Advanced Search Form", function  (done) {
+  it("should be Basic Search", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -49,9 +49,9 @@ describe("search - advanced search button click", function() {
       .frame('cacheframe0')
       .frame('subpage')
       .elementByCss('.search-container .btn.advanced-link').click().sleep(500) // open advanced form
-      .elementByCss('.search-container .advanced-form').getComputedCss('display')
-      .then(function(display) {
-        display.should.equal("block");
+      .elementByCss('.search-container .btn.advanced-link').text()
+      .then(function(text) {
+        text.should.equal("Basic Search");
       })
       .nodeify(done);
   });
