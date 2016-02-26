@@ -1,7 +1,7 @@
 FROM node:5-onbuild
 MAINTAINER Alexey Melnikov <a.melnikov@clickberry.com> - Aly Saleh <aly.saleh@aurea.com>
 
-ARG REPORTER="mocha-teamcity-reporter"
+ENV REPORTER="mocha-teamcity-reporter"
 
 # mocha
 RUN npm install -g mocha
