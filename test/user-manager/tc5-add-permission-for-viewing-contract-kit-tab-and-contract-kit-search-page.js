@@ -46,10 +46,10 @@ describe("/user-manager/tc5-add-permission-for-viewing-contract-kit-tab-and-cont
 
     it("should load user manager page", function(done) {
         browser
-              .frame()
-              .frame('navbar')
-              .elementById('UserManager').click()
-              .nodeify(done);
+            .frame()
+            .frame('navbar')
+            .elementById('UserManager').click()
+            .nodeify(done);
     });
 
     it("should load group page", function(done) {
@@ -91,11 +91,11 @@ describe("/user-manager/tc5-add-permission-for-viewing-contract-kit-tab-and-cont
     });
 
     it("should select permission 1", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'View', 'Contracts').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'View', 'Contracts').nodeify(done);
     });
 
     it("should select permission 2", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'View', 'Contracts.ContractsSearch').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'View', 'Contracts.ContractsSearch').nodeify(done);
     });
 
     var savePermission1 = function(data) {

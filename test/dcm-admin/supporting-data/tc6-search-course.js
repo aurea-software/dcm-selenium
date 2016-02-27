@@ -41,10 +41,11 @@ describe("/dcm-admin/supporting-data/tc6-search-course", function() {
     });
 
     it("should load dcm admin page", function(done) {
-      browser
-        .frame('navbar')
-        .elementById('DCM Admin').click()
-        .nodeify(done);
+        browser
+            .frame()
+            .frame('navbar')
+            .elementById('DCM Admin').click()
+            .nodeify(done);
     });
 
     it("should load supporting data page", function(done) {

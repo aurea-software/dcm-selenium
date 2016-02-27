@@ -34,18 +34,18 @@ var city = 'CityZ';
 var stateCode = 'AZ';
 var stateName = 'Arizona';
 
-var CKPTaxId = r;
-var CKPName = 'CKP_' + r;
-var CKPPartyId;
+var ckpTaxId = r;
+var ckpName = 'CKP_' + r;
+var ckpPartyId;
 
-var Prod1Name = 'PROD1_' + r;
-var Prod1Desc = 'PROD1_DESC' + r;
+var prod1Name = 'PROD1_' + r;
+var prod1Desc = 'PROD1_DESC' + r;
 
-var Prod2Name = 'PROD2_' + r;
-var Prod2Desc = 'PROD2_DESC' + r;
+var prod2Name = 'PROD2_' + r;
+var prod2Desc = 'PROD2_DESC' + r;
 
-var ProdHierName = 'PRODHIER_' + r;
-var ProdHierDesc = 'PRODHIER_DESC' + r;
+var prodHierName = 'PRODHIER_' + r;
+var prodHierDesc = 'PRODHIER_DESC' + r;
 
 var transaction = 'Trans' + r;
 
@@ -76,39 +76,31 @@ describe("/management-tools/transaction-manager/tc15-cancel-transaction", functi
     // We need to create a person for our test case
 
     it("should load party page", function(done) {
-      browser
-        .frame('navbar')
-        .elementById('Party').click()
-        .nodeify(done);
-    });
-
-    it("should load create person page", function(done) {
-      browser
-        .frame()
-        .frame('container')
-        .frame('cacheframe0')
-        .frame('subpage')
-        .elementById('Button_Person_Main_NewPerson').click()
-        .nodeify(done);
+        browser
+            .frame()
+            .frame('navbar')
+            .elementById('Party').click()
+            .nodeify(done);
     });
 
     it('should create person party', function(done) {
-        common.createPersonParty(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
+        common.createPersonParty(browser, 'cacheframe0', taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
     });
 
-    var CKPId1 = function(ckpid) {
-        CKPPartyId = ckpid;
+    var storeCkpId = function(ckpId) {
+        ckpPartyId = ckpId;
     };
 
     it('should create contract kit provider', function(done) {
-        common.createContractKitProvider(browser, 'cacheframe0', CKPName, CKPTaxId)
+        common.createContractKitProvider(browser, 'cacheframe0', ckpName, ckpTaxId)
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
-                CKPId1(data);
-                })
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
+            .then(function(data) {
+                storeCkpId(data);
+            })
             .nodeify(done);
     });
 
@@ -121,7 +113,7 @@ describe("/management-tools/transaction-manager/tc15-cancel-transaction", functi
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+       common.createProductHierarchy(browser, 'cacheframe2', prodHierName, prodHierDesc).nodeify(done);
     });
 
     it("should load product page", function(done) {
@@ -140,17 +132,17 @@ describe("/management-tools/transaction-manager/tc15-cancel-transaction", functi
     });
 
     it("should create product 1", function(done) {
-        common.createProduct(browser, 'cacheframe2', Prod1Name, Prod1Desc).nodeify(done);
+        common.createProduct(browser, 'cacheframe2', prod1Name, prod1Desc).nodeify(done);
     });
 
     it("should create product 2", function(done) {
-        common.createProduct(browser, 'cacheframe2', Prod2Name, Prod2Desc).nodeify(done);
+        common.createProduct(browser, 'cacheframe2', prod2Name, prod2Desc).nodeify(done);
     });
 
     // We need to create a contract kit in production status for our test case
 
     it("should load compensation setup page", function(done) {
-        browser.refresh().frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
     it("should load contract kit page", function(done) {
@@ -162,7 +154,7 @@ describe("/management-tools/transaction-manager/tc15-cancel-transaction", functi
     });
 
     it("should create contract kit in production status", function(done) {
-        common.createContractKitWithHierAndCKPInProductionStatus(browser, 'cacheframe2', contractName, contractDesc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
+        common.createContractKitInProductionStatus(browser, 'cacheframe4', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     // We need to create an agreement for our test case
@@ -176,7 +168,7 @@ describe("/management-tools/transaction-manager/tc15-cancel-transaction", functi
     });
 
     it('should create agreement with person', function(done) {
-        common.createAgreementWithPerson(browser, wd.SPECIAL_KEYS['Enter'], 'cacheframe3', agreementName, agreementDesc, contractName, '01/01/2010', '01/01/2100', firstName).nodeify(done);
+        common.createAgreementWithPerson(browser, 'cacheframe5', agreementName, agreementDesc, contractName, '01/01/2010', '01/01/2100', firstName).nodeify(done);
     });
 
     it("should load management tools page", function(done) {
@@ -200,46 +192,50 @@ describe("/management-tools/transaction-manager/tc15-cancel-transaction", functi
     // Next cancellation is to cancel the other 2 (2nd product).
 
     it("should create transaction 1", function(done) {
-        common.createTransaction(browser, 'cacheframe5', transaction, firstName, Prod1Name, CKPName).nodeify(done);
+        common.createTransaction(browser, 'cacheframe7', transaction, firstName, prod1Name, ckpName).nodeify(done);
     });
 
     it("should create transaction 2", function(done) {
-        common.createTransaction(browser, 'cacheframe5', transaction, firstName, Prod2Name, CKPName).nodeify(done);
+        common.createTransaction(browser, 'cacheframe7', transaction, firstName, prod2Name, ckpName).nodeify(done);
     });
 
     it("should create transaction 3", function(done) {
-        common.createTransaction(browser, 'cacheframe5', transaction, firstName, Prod2Name, CKPName).nodeify(done);
+        common.createTransaction(browser, 'cacheframe7', transaction, firstName, prod2Name, ckpName).nodeify(done);
     });
 
     it("should cancel 1 transaction", function(done) {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe7')
             .frame('subpage')
-            .elementById('TMTransactionTopGridProduct_Search_Value').type(Prod1Name)
+            .elementById('TMTransactionTopGridProduct_Search_Value').type(prod1Name)
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe7')
             .frame('subpage')
             .elementById('TMTransactionTopGridCancelButton').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe7')
+            .frame('subpage')
             .elementByCss('#alertDialog button').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe7')
             .frame('subpage')
             .elementById('alertDialog').text()
             .should.eventually.include('1 Transaction(s) Cancelled Sucessfully. Please click on the Search button to view updated transaction statuses')
             .elementById('alertDialog').type(wd.SPECIAL_KEYS['Escape'])
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe7')
             .frame('subpage')
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe7')
             .frame('subpage')
             .elementByCss('table[name=TMTransactionTopGrid] tbody tr:nth-child(1) td:nth-child(4)').text()
             .should.eventually.become('CANCELLATION PENDING')
@@ -250,34 +246,38 @@ describe("/management-tools/transaction-manager/tc15-cancel-transaction", functi
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe7')
             .frame('subpage')
-            .elementById('TMTransactionTopGridProduct_Search_Value').clear().type(Prod2Name)
+            .elementById('TMTransactionTopGridProduct_Search_Value').clear().type(prod2Name)
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe7')
             .frame('subpage')
             // Select All
             .elementByCss('#TMTransactionTopGrid_SelectAllAcrossPages ~ i').click()
             // Cancel all
             .elementById('TMTransactionTopGridBatchCancelButton').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe7')
+            .frame('subpage')
             .elementByCss('#alertDialog button').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe7')
             .frame('subpage')
             .elementById('alertDialog').text()
             .should.eventually.include('2 Transaction(s) Cancelled Sucessfully. Please click on the Search button to view updated transaction statuses')
             .elementById('alertDialog').type(wd.SPECIAL_KEYS['Escape'])
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe7')
             .frame('subpage')
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe7')
             .frame('subpage')
             .elementByCss('table[name=TMTransactionTopGrid] tbody tr:nth-child(1) td:nth-child(4)').text()
             .should.eventually.become('CANCELLATION PENDING')

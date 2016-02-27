@@ -46,10 +46,10 @@ describe("/user-manager/tc11-create-user-and-add-agreement-group", function() {
 
     it("should load user manager page", function(done) {
         browser
-              .frame()
-              .frame('navbar')
-              .elementById('UserManager').click()
-              .nodeify(done);
+            .frame()
+            .frame('navbar')
+            .elementById('UserManager').click()
+            .nodeify(done);
     });
 
     it("should load group page", function(done) {
@@ -93,15 +93,15 @@ describe("/user-manager/tc11-create-user-and-add-agreement-group", function() {
     // Add all permissions related to the Agreement group (see previous test suites)
 
     it("should select permission 1", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'NewAgreement').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'NewAgreement').nodeify(done);
     });
 
     it("should select permission 2", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'View', 'Agreement').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'View', 'Agreement').nodeify(done);
     });
 
     it("should select permission 3", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'View', 'Agreement.AgreementSearch').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'View', 'Agreement.AgreementSearch').nodeify(done);
     });
 
     it("should save permissions", function(done) {

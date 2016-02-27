@@ -18,12 +18,12 @@ var common = require('../../lib/common');
 var r1 = common.rand(6);
 console.log('r1: ' + r1);
 
-var CKPTaxId = r1;
-var CKPName = 'CKP_' + r1;
-var CKPPartyId;
+var ckpTaxId = r1;
+var ckpName = 'CKP_' + r1;
+var ckpPartyId;
 
-var ProdHierName = 'PRODHIER_' + r1;
-var ProdHierDesc = 'PRODHIER_DESC' + r1;
+var prodHierName = 'PH_' + r1;
+var prodHierDesc = prodHierName + 'DESC';
 
 var personR = common.rand(3);
 var organizationR = common.rand(3);
@@ -87,62 +87,69 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
     // We need to create a person for our test case
 
     it("should load party page", function(done) {
-      browser
-        .frame('navbar')
-        .elementById('Party').click()
-        .nodeify(done);
-    });
-
-    it("should load create person page", function(done) {
-      browser
-        .frame()
-        .frame('container')
-        .frame('cacheframe0')
-        .frame('subpage')
-        .elementById('Button_Person_Main_NewPerson').click()
-        .nodeify(done);
+        browser
+            .frame()
+            .frame('navbar')
+            .elementById('Party').click()
+            .nodeify(done);
     });
 
     it('should create person party', function(done) {
-        common.createPersonParty(browser, personTaxId, personFirstName, personLastName, personMiddleName, personPreferredName, city, stateName, personDtcc, personNpn).nodeify(done);
+        common.createPersonParty(browser, 'cacheframe0', personTaxId, personFirstName, personLastName, personMiddleName, personPreferredName, city, stateName, personDtcc, personNpn).nodeify(done);
     });
 
     // We need to create an organization for our test case
 
-    it('should create organization party', function(done) {
-        common.createOrganizationParty(browser, organizationTaxId, organizationPartyName, organizationDtcc, organizationNpn, city, stateName).nodeify(done);
-    });
-
-    var CKPId1 = function(ckpid) {
-        CKPPartyId = ckpid;
-    };
-
-    it('should create contract kit provider', function(done) {
-        common.createContractKitProviderDirectly(browser, 'cacheframe0', CKPName, CKPTaxId)
+    it("should load organization party page", function(done) {
+        browser
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
-                CKPId1(data);
-                })
+            .elementByCss('#Search_Person_Main_primary_display_div button').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByLinkText('Search Organization').click()
+            .nodeify(done);
+    });
+
+    it('should create organization party', function(done) {
+        common.createOrganizationParty(browser, 'cacheframe0', organizationTaxId, organizationPartyName, organizationDtcc, organizationNpn, city, stateName).nodeify(done);
+    });
+
+    var storeCkpId = function(ckpId) {
+        ckpPartyId = ckpId;
+    };
+
+    it('should create contract kit provider', function(done) {
+        common.createContractKitProviderDirectly(browser, 'cacheframe0', ckpName, ckpTaxId)
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
+            .then(function(data) {
+                storeCkpId(data);
+            })
             .nodeify(done);
     });
 
     it("should load hierarchy tab", function(done) {
-       browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
     });
 
     it("should load product hierarchy page", function(done) {
-       browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
+        browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+        common.createProductHierarchy(browser, 'cacheframe2', prodHierName, prodHierDesc).nodeify(done);
     });
 
     it("should load compensation setup page", function(done) {
-        browser.refresh().frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
     // We need to create a contract kit in production status for our test case
@@ -156,7 +163,7 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
     });
 
     it("should create contract kit in production status", function(done) {
-        common.createContractKitWithHierAndCKPInProductionStatus(browser, 'cacheframe2', contractName, contractDesc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
+        common.createContractKitInProductionStatus(browser, 'cacheframe4', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     it("should load agreement page", function(done) {
@@ -171,12 +178,12 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementById('Button_Agreement_Main_NewAgreement').click()
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('proppage')
             .elementById('Name').type('AG' + uniqueString1)
             .elementById('Description').type('AGDesc' + uniqueString1)
@@ -184,7 +191,7 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
             .elementById('searchPartySearchPage_search_div').click()
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('proppage')
             .frame('PartySearchPage_search_div_frame')
             // Organization
@@ -196,21 +203,21 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
             .elementById('Button_PartySearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('proppage')
             .elementById('SelectedObjTextDiv_AgreementParty_link').text()
             .should.eventually.include(organizationPartyName)
             .elementByCss('button[data-id=ContractKit]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('proppage')
             .elementByLinkText(contractName).click()
             .elementById('validate').click()
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become('AG' + uniqueString1)
@@ -221,12 +228,12 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementById('Button_Agreement_Main_NewAgreement').click()
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('proppage')
             .elementById('Name').type('AG' + uniqueString2)
             .elementById('Description').type('AGDesc' + uniqueString2)
@@ -234,7 +241,7 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
             .elementById('searchPartySearchPage_search_div').click()
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('proppage')
             .frame('PartySearchPage_search_div_frame')
             .elementById('Field_Party_Person_FirstName_Search_Value').type(personFirstName)
@@ -244,21 +251,21 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
             .elementById('Button_PartySearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('proppage')
             .elementById('SelectedObjTextDiv_AgreementParty_link').text()
             .should.eventually.include(personFirstName)
             .elementByCss('button[data-id=ContractKit]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('proppage')
             .elementByLinkText(contractName).click()
             .elementById('validate').click()
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become('AG' + uniqueString2)

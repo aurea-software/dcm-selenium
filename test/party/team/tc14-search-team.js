@@ -49,7 +49,7 @@ describe("/party/team/tc14-search-team", function() {
     });
 
     it("should load party page", function(done) {
-        browser
+        browser.frame()
             .frame('navbar')
             .elementById('Party').click()
             .nodeify(done);
@@ -124,7 +124,8 @@ describe("/party/team/tc14-search-team", function() {
     });
 
     it('should clear search fields', function(done) {
-        browser.elementByLinkText('Clear').click()
+        browser
+            .elementByLinkText('Clear').click()
             .elementByCss('#Search_Team_Main_form #Field_Team_Main_Name_Search_Value').getAttribute('value')
             .should.eventually.become('')
             .elementByCss('#Search_Team_Main_form #Field_Team_Main_DTCCID_Search_Value').getAttribute('value')

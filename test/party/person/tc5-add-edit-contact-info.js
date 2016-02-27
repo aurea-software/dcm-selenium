@@ -64,13 +64,14 @@ describe("/party/person/tc5-add-edit-contact-info", function() {
 
     it("should load party page", function(done) {
         browser
+            .frame()
             .frame('navbar')
             .elementById('Party').click()
             .nodeify(done);
     });
 
     it("should create person party", function(done) {
-        common.createPersonParty(browser, taxId, 'FN' + taxId, 'LN' + taxId, 'MN' + taxId, 'PN' + taxId, 'C' + taxId, 'California', taxId, taxId)
+        common.createPersonParty(browser, 'cacheframe0', taxId, 'FN' + taxId, 'LN' + taxId, 'MN' + taxId, 'PN' + taxId, 'C' + taxId, 'California', taxId, taxId)
             .nodeify(done);
     });
 
@@ -148,7 +149,8 @@ describe("/party/person/tc5-add-edit-contact-info", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('proppage')
-            .elementByCssSelector('button[data-id=AllContactPointsCreate_ContactType_0]').text().then(function(data) {
+            .elementByCssSelector('button[data-id=AllContactPointsCreate_ContactType_0]').text()
+            .then(function(data) {
                 onData(data);
             }).nodeify(done);
     });

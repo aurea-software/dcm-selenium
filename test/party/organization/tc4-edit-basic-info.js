@@ -46,19 +46,14 @@ describe("/party/organization/tc4-edit-basic-info", function() {
     });
 
     it("should load party page", function(done) {
-        browser
+        browser.frame()
             .frame('navbar')
             .elementById('Party').click()
             .nodeify(done);
     });
 
-    it('should create organization party', function(done) {
-        common.createOrganizationParty(browser, taxId, partyName, dtcc, dtcc, 'C' + taxId, 'Arizona').nodeify(done);
-    });
-
-    var prepareForOrganizationSearch = function() {
-        return browser
-            .refresh()
+    it("should load organization party page", function(done) {
+        browser
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -69,14 +64,19 @@ describe("/party/organization/tc4-edit-basic-info", function() {
             .frame('cacheframe0')
             .frame('subpage')
             .elementByLinkText('Search Organization').click()
+            .nodeify(done);
+    });
+
+    it('should create organization party', function(done) {
+        common.createOrganizationParty(browser, 'cacheframe0', taxId, partyName, dtcc, dtcc, 'C' + taxId, 'Arizona').nodeify(done);
+    });
+
+    it('should search party by name', function(done) {
+        browser
             .frame()
             .frame('container')
             .frame('cacheframe0')
-            .frame('subpage');
-    };
-
-    it('should search party by name', function(done) {
-        prepareForOrganizationSearch()
+            .frame('subpage')
             .elementById('Field_Org_Main_NameUpper_Search_Value').clear().type(partyName)
             .elementByLinkText('Search').click()
             .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
@@ -117,7 +117,8 @@ describe("/party/organization/tc4-edit-basic-info", function() {
     });
 
     it('should not edit dtcc', function(done) {
-        browser.elementById('Button_Org_Main_BasicInfo_Edit').type(wd.SPECIAL_KEYS['Enter'])
+        browser
+            .elementById('Button_Org_Main_BasicInfo_Edit').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -132,7 +133,8 @@ describe("/party/organization/tc4-edit-basic-info", function() {
     });
 
     it('should open add comment page', function(done) {
-        browser.elementById('cancel').click()
+        browser
+            .elementById('cancel').click()
             .frame()
             .frame('sidebar')
             .elementById('Tab_Org_Main_BasicInfo_link').click()
@@ -161,7 +163,8 @@ describe("/party/organization/tc4-edit-basic-info", function() {
     });
 
     it('should validate comment', function(done) {
-        browser.elementByLinkText('(00) - New').click()
+        browser
+            .elementByLinkText('(00) - New').click()
             .elementById('Comment').clear().type('this is a new comment')
             .elementById('validate').click()
             .waitForElementByCss("#ppMessage", asserters.isDisplayed , 10000)
@@ -171,8 +174,8 @@ describe("/party/organization/tc4-edit-basic-info", function() {
     });
 
     it('should add comment', function(done) {
-        //var todayInString = common.currentDateInString();
-        browser.elementById('save').click()
+        browser
+            .elementById('save').click()
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -182,15 +185,16 @@ describe("/party/organization/tc4-edit-basic-info", function() {
             // Test case desc require to validate against the current system date
             // while the actual comment date is the server's system date.
             // Skip it for now.
-            //.should.eventually.include(todayInString)
             .should.eventually.include(username.toUpperCase())
             .should.eventually.include('THIS IS A NEW COMMENT')
             .notify(done);
     });
 
     it('should open status page', function(done) {
-        browser.frame()
+        browser
+            .frame()
             .frame('sidebar')
+            .elementById('Tab_Org_Main_BasicInfo_link').click()
             .elementById('Tab_Org_Main_BasicInfo_Status_link').click()
             .frame()
             .frame('container')
@@ -202,6 +206,7 @@ describe("/party/organization/tc4-edit-basic-info", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('proppage')
+            .execute('scrollTo(0, 6000)')
             .elementByCss('button[data-id=NewStatus\\.StatusCode]').click()
             .frame()
             .frame('container')
@@ -215,7 +220,8 @@ describe("/party/organization/tc4-edit-basic-info", function() {
     });
 
     it('should update status', function(done) {
-        browser.elementByLinkText('Not Recontractable').click()
+        browser
+            .elementByLinkText('Not Recontractable').click()
             .elementById('NewStatus.StartDate').clear().type('01/01/2015')
             .elementById('validate').click()
             .elementById('ppError_div').text()

@@ -27,12 +27,12 @@ console.log('r: ' + r);
 // This is the login id, name, password, confirmed password and email id
 var user = 'u' + r;
 
-var CKPTaxId = r;
-var CKPName = 'CKP_' + r;
-var CKPPartyId;
+var ckpTaxId = r;
+var ckpName = 'CKP_' + r;
+var ckpPartyId;
 
-var ProdHierName = 'PRODHIER_' + r;
-var ProdHierDesc = 'PRODHIER_DESC' + r;
+var prodHierName = 'PRODHIER_' + r;
+var prodHierDesc = 'PRODHIER_DESC' + r;
 
 var contractName = 'CK Name' + r;
 var contractDesc = 'CK Desc' + r;
@@ -110,27 +110,27 @@ describe("/user-manager/tc17-checkout-contract-kit-and-create-allocation-rule", 
     // Add all permissions related to the Contract Kit group (see previous test suites)
 
     it("should select permission 1 for contract kit group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitPropertyPage').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'ContractKitPropertyPage').nodeify(done);
     });
 
     it("should select permission 2 for contract kit group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'View', 'Contracts').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'View', 'Contracts').nodeify(done);
     });
 
     it("should select permission 3 for contract kit group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'View', 'Contracts.ContractsSearch').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'View', 'Contracts.ContractsSearch').nodeify(done);
     });
 
     it("should select permission 4 for contract kit group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'AllocRulePropertyPage').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'AllocRulePropertyPage').nodeify(done);
     });
 
     it("should select permission 5 for contract kit group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckIn').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckIn').nodeify(done);
     });
 
     it("should select permission 6 for contract kit group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckOut').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckOut').nodeify(done);
     });
 
     it("should save permissions for contract kit group", function(done) {
@@ -184,10 +184,7 @@ describe("/user-manager/tc17-checkout-contract-kit-and-create-allocation-rule", 
     // The newly created user doesn't have permission to create party or product hiearchy. Hence we create the data using the default user.
 
     it("should logout", function(done) {
-        common.logout(browser)
-            .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').text()
-            .should.eventually.become('')
-            .notify(done);
+        common.logout(browser).nodeify(done);
     });
 
     it("should login as default user", function (done) {
@@ -198,19 +195,20 @@ describe("/user-manager/tc17-checkout-contract-kit-and-create-allocation-rule", 
         browser.frame().frame('navbar').elementById('Party').click().nodeify(done);
     });
 
-    var CKPId1 = function(ckpid) {
-        CKPPartyId = ckpid;
+    var storeCkpId = function(ckpId) {
+        ckpPartyId = ckpId;
     };
 
     it('should create contract kit provider', function(done) {
-        common.createContractKitProvider(browser, 'cacheframe0', CKPName, CKPTaxId)
+        common.createContractKitProvider(browser, 'cacheframe0', ckpName, ckpTaxId)
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
-                CKPId1(data);
-                })
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
+            .then(function(data) {
+                storeCkpId(data);
+            })
             .nodeify(done);
     });
 
@@ -223,7 +221,7 @@ describe("/user-manager/tc17-checkout-contract-kit-and-create-allocation-rule", 
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+       common.createProductHierarchy(browser, 'cacheframe2', prodHierName, prodHierDesc).nodeify(done);
     });
 
     // Done preparing data
@@ -246,7 +244,7 @@ describe("/user-manager/tc17-checkout-contract-kit-and-create-allocation-rule", 
     // in order to continue.
 
     it("should create contract kit", function(done) {
-        common.createContractKitWithHierAndCKP(browser, 'cacheframe0', contractName, contractDesc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
+        common.createContractKit(browser, 'cacheframe0', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     it("should check in working version", function(done) {

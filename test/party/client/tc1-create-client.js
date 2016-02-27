@@ -33,7 +33,7 @@ var clientId = 'CI' + taxId;
 var clientName = 'CN' + taxId;
 
 describe("/party/client/tc1-create-client", function() {
-  this.timeout(60000);
+    this.timeout(60000);
     var browser;
 
     before(function (done) {
@@ -51,14 +51,15 @@ describe("/party/client/tc1-create-client", function() {
     });
 
     it("should load party page", function(done) {
-      browser
-        .frame('navbar')
-        .elementById('Party').click()
-        .nodeify(done);
+        browser
+            .frame()
+            .frame('navbar')
+            .elementById('Party').click()
+            .nodeify(done);
     });
 
     it("should create person party", function(done) {
-        common.createPersonParty(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
+        common.createPersonParty(browser, 'cacheframe0', taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
     });
 
     it("should load create client page", function(done) {

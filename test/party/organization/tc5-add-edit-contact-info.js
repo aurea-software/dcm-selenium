@@ -44,49 +44,65 @@ describe("/party/organization/tc5-add-edit-contact-info", function() {
 
     it("should load party page", function(done) {
         browser
+            .frame()
             .frame('navbar')
             .elementById('Party').click()
             .nodeify(done);
     });
 
+    it("should load organization party page", function(done) {
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByCss('#Search_Person_Main_primary_display_div button').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByLinkText('Search Organization').click()
+            .nodeify(done);
+    });
+
     it('should create organization party', function(done) {
-        common.createOrganizationParty(browser, taxId, 'PN' + taxId, dtcc, dtcc, 'C' + taxId, 'Arizona').nodeify(done);
+        common.createOrganizationParty(browser, 'cacheframe0', taxId, 'PN' + taxId, dtcc, dtcc, 'C' + taxId, 'Arizona').nodeify(done);
     });
 
     it('should create contact point', function(done) {
-       browser
-           .frame()
-           .frame('sidebar')
-           .elementByLinkText('Contact Information').click()
-           .elementByLinkText('Contact Points').click()
-           .frame()
-           .frame('container')
-           .frame('cacheframe0')
-           .frame('subpage')
-           .frame('component_iframe')
-           .elementById('Button_Org_Main_ContactPoint_Create').type(wd.SPECIAL_KEYS['Enter'])
-           .frame()
-           .frame('container')
-           .frame('cacheframe0')
-           .frame('proppage')
-           .elementByCss('button[data-id=ContactType]').click()
-           .frame()
-           .frame('container')
-           .frame('cacheframe0')
-           .frame('proppage')
-           .elementByLinkText(newAddressType).click()
-           .elementById('Address.Street1').type('Street123')
-           .elementById('Address.City').type('City123')
-           .elementByCss('button[data-id=US_State]').type(wd.SPECIAL_KEYS['Enter'])
-           .frame()
-           .frame('container')
-           .frame('cacheframe0')
-           .frame('proppage')
-           .elementByLinkText('California').click()
-           // Test case desc requires 123. We change to 321 for easy validation.
-           .elementById('ZipCode').type('321')
-           .elementById('save').click()
-           .nodeify(done);
+        browser
+            .frame()
+            .frame('sidebar')
+            .elementByLinkText('Contact Information').click()
+            .elementByLinkText('Contact Points').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .frame('component_iframe')
+            .elementById('Button_Org_Main_ContactPoint_Create').type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('proppage')
+            .elementByCss('button[data-id=ContactType]').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('proppage')
+            .elementByLinkText(newAddressType).click()
+            .elementById('Address.Street1').type('Street123')
+            .elementById('Address.City').type('City123')
+            .elementByCss('button[data-id=US_State]').type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('proppage')
+            .elementByLinkText('California').click()
+            // Test case desc requires 123. We change to 321 for easy validation.
+            .elementById('ZipCode').type('321')
+            .elementById('save').click()
+            .nodeify(done);
     });
 
     var checkWorkAddress = function(data, index) {
@@ -96,14 +112,16 @@ describe("/party/organization/tc5-add-edit-contact-info", function() {
     };
 
     var checkRow = function(rowIndex) {
-        return browser.frame()
-        .frame('container')
-        .frame('cacheframe0')
-        .frame('subpage')
-        .frame('component_iframe')
-        .elementByCss('table[id=Grid_Org_Main_ContactPoints_Main] tbody tr:nth-child(' + rowIndex + ') td:nth-child(1)').text().then(function(data) {
-            checkWorkAddress(data, rowIndex);
-        });
+        return browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .frame('component_iframe')
+            .elementByCss('table[id=Grid_Org_Main_ContactPoints_Main] tbody tr:nth-child(' + rowIndex + ') td:nth-child(1)').text()
+            .then(function(data) {
+                checkWorkAddress(data, rowIndex);
+            });
     }
 
     it('should check first row', function(done) {
@@ -137,7 +155,8 @@ describe("/party/organization/tc5-add-edit-contact-info", function() {
     });
 
     it('should edit contact point', function(done) {
-        browser.elementById('Button_Org_Main_ContactPoint_Edit').type(wd.SPECIAL_KEYS['Enter'])
+        browser
+            .elementById('Button_Org_Main_ContactPoint_Edit').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
             .frame('cacheframe0')

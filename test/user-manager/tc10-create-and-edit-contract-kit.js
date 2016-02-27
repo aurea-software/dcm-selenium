@@ -39,12 +39,12 @@ var city = 'CityZ';
 var stateCode = 'AZ';
 var stateName = 'Arizona';
 
-var CKPTaxId = r;
-var CKPName = 'CKP_' + r;
-var CKPPartyId;
+var ckpTaxId = r;
+var ckpName = 'CKP_' + r;
+var ckpPartyId;
 
-var ProdHierName = 'PRODHIER_' + r;
-var ProdHierDesc = 'PRODHIER_DESC' + r;
+var prodHierName = 'PRODHIER_' + r;
+var prodHierDesc = 'PRODHIER_DESC' + r;
 
 var contractName = 'CK Name' + r;
 var contractDesc = 'CK Desc' + r;
@@ -147,46 +147,37 @@ describe("/user-manager/tc10-create-and-edit-contract-kit", function() {
         browser.frame().frame('navbar').elementById('Party').click().nodeify(done);
     });
 
-    it("should load create person page", function(done) {
-      browser
-        .frame()
-        .frame('container')
-        .frame('cacheframe0')
-        .frame('subpage')
-        .elementById('Button_Person_Main_NewPerson').click()
-        .nodeify(done);
-    });
-
     it('should create person party', function(done) {
-        common.createPersonParty(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
+        common.createPersonParty(browser, 'cacheframe0', taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
     });
 
-    var CKPId1 = function(ckpid) {
-        CKPPartyId = ckpid;
+    var storeCkpId = function(ckpId) {
+        ckpPartyId = ckpId;
     };
 
     it('should create contract kit provider', function(done) {
-        common.createContractKitProvider(browser, 'cacheframe0', CKPName, CKPTaxId)
+        common.createContractKitProvider(browser, 'cacheframe0', ckpName, ckpTaxId)
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
-                CKPId1(data);
-                })
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
+            .then(function(data) {
+                storeCkpId(data);
+            })
             .nodeify(done);
     });
 
     it("should load hierarchy tab", function(done) {
-       browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
     });
 
     it("should load product hierarchy page", function(done) {
-       browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
+        browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+        common.createProductHierarchy(browser, 'cacheframe2', prodHierName, prodHierDesc).nodeify(done);
     });
 
     // Done preparing data
@@ -212,7 +203,7 @@ describe("/user-manager/tc10-create-and-edit-contract-kit", function() {
     });
 
     it("should create contract kit", function(done) {
-        common.createContractKitWithHierAndCKP(browser, 'cacheframe0', contractName, contractDesc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId)
+        common.createContractKit(browser, 'cacheframe0', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId)
             .frame()
             .frame('container')
             .frame('cacheframe0')

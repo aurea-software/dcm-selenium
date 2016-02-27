@@ -67,7 +67,7 @@ describe("/compensation/agreement/tc12-create-commission-direct-payment", functi
     });
 
     it("should load party page", function(done) {
-        browser.frame('navbar').elementById('Party').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Party').click().nodeify(done);
     });
 
     var CKPId1 = function(ckpid) {
@@ -95,7 +95,7 @@ describe("/compensation/agreement/tc12-create-commission-direct-payment", functi
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+       common.createProductHierarchy(browser, 'cacheframe2', ProdHierName, ProdHierDesc).nodeify(done);
     });
 
     it("should load compensation setup page", function(done) {
@@ -111,7 +111,7 @@ describe("/compensation/agreement/tc12-create-commission-direct-payment", functi
     });
 
     it("should create contract kit", function(done) {
-        common.createContractKitWithHierAndCKP(browser, 'cacheframe4', name, desc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
+        common.createContractKit(browser, 'cacheframe4', name, desc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
     });
 
     // Skipping step 3 - 4 in the test case (create working version) as our contract kit is 100% new
@@ -123,7 +123,7 @@ describe("/compensation/agreement/tc12-create-commission-direct-payment", functi
     });
 
     it('should create component', function(done) {
-        common.createComponent(browser, wd.SPECIAL_KEYS['Enter'], 'cacheframe4', componentName, componentDesc, componentLabel, quotaName).nodeify(done);
+        common.createComponent(browser, 'cacheframe4', componentName, componentDesc, componentLabel, quotaName).nodeify(done);
     });
 
     it('should create commission', function(done) {

@@ -22,13 +22,14 @@ console.log('1st Party Hierarchy: ' + name1);
 var name2 = 'ABCD' + chunk;
 console.log('2nd Party Hierarchy: ' + name2);
 
-describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
-  this.timeout(90000);
+describe("/hierarchy/party_hierarchy/tc5-search-party-hierarchy", function() {
+    this.timeout(90000);
     var browser;
 
     before(function (done) {
-      browser = wd.promiseChainRemote(config.get("remote"));
-      common.configBrowser(browser, config.get("environment")).nodeify(done);
+        chaiAsPromised.transferPromiseness = wd.transferPromiseness;
+        browser = wd.promiseChainRemote(config.get("remote"));
+        common.configBrowser(browser, config.get("environment")).nodeify(done);
     });
 
     after(function (done) {
@@ -36,25 +37,23 @@ describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
     });
 
     it("should login", function (done) {
-      common.login(browser, url, username, password).nodeify(done);
+        common.login(browser, url, username, password).nodeify(done);
     });
 
 	it("should load party hierarchy page", function(done) {
-      browser
-        .frame('navbar')
-        .elementById('Hierarchy').click()
-        .nodeify(done);
+	    browser
+            .frame()
+            .frame('navbar')
+            .elementById('Hierarchy').click()
+            .nodeify(done);
     });
 
-	//FIXED: Modified method parameters: added cacheFrameName, enterKey
 	it("should create 1st party hierarchy", function(done) {
-      //common.createPartyHierarchy(browser, name1).nodeify(done);
-      common.createPartyHierarchy(browser, 'cacheframe0', wd.SPECIAL_KEYS['Enter'], name1).nodeify(done);
+	    common.createPartyHierarchy(browser, 'cacheframe0', name1, name1 + ' Description').nodeify(done);
     });
 
 	it("should create 2nd party hierarchy", function(done) {
-      //common.createPartyHierarchy(browser, name2).nodeify(done);
-      common.createPartyHierarchy(browser, 'cacheframe0', wd.SPECIAL_KEYS['Enter'], name2).nodeify(done);
+	    common.createPartyHierarchy(browser, 'cacheframe0', name2, name2 + ' Description').nodeify(done);
     });
 
 	it("should search 1st party hierarchy by name with wildcard", function(done) {
@@ -84,7 +83,6 @@ describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
 
 	it("should perform advanced search based on Hierarchy Type and 2nd Hierarchy Name", function(done) {
 		browser
-			.refresh()
 			.frame()
             .frame('container')
             .frame('cacheframe0')
@@ -122,7 +120,7 @@ describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
     });
 
 	it("should sort both hierarchies created in descending order", function(done) {
-		var v = browser
+		browser
 			.elementByCss('#Search_HierarchySearch_Main_form #Field_Hierarchy_Name_Search_Value').type('*' + chunk + '*')
 			.frame()
             .frame('container')
@@ -135,13 +133,16 @@ describe("/hierarchy/party-hierarchy/tc5-search-party-hierarchy", function() {
             .frame('subpage')
             .elementByLinkText('Descending').click()
             .elementByCss('#Search_HierarchySearch_Main_form #Field_Hierarchy_Name_Search_Value')
-			.type(wd.SPECIAL_KEYS['Enter']);
-
-			v.waitForElementByCss('table[name=Grid_HierarchySearch_Main] tbody tr:nth-child(0) td:nth-child(3)').text()
-				.should.eventually.become(name2)
-            v.waitForElementByCss('table[name=Grid_HierarchySearch_Main] tbody tr:nth-child(1) td:nth-child(3)').text()
-				.should.eventually.become(name1)
-				.notify(done);
+			.type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+			.elementByCss('table[name=Grid_HierarchySearch_Main] tbody tr:nth-child(1) td:nth-child(3)').text()
+			.should.eventually.become(name1)
+			.elementByCss('table[name=Grid_HierarchySearch_Main] tbody tr:nth-child(2) td:nth-child(3)').text()
+			.should.eventually.become(name2)
+			.notify(done);
     });
 
 });

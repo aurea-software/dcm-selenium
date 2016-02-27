@@ -50,13 +50,29 @@ describe("/party/location/tc2-create-location-party", function() {
 
     it("should load party page", function(done) {
         browser
+            .frame()
             .frame('navbar')
             .elementById('Party').click()
             .nodeify(done);
     });
 
+    it("should load organization party page", function(done) {
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByCss('#Search_Person_Main_primary_display_div button').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByLinkText('Search Organization').click()
+            .nodeify(done);
+    });
+
     it('should create organization party', function(done) {
-        common.createOrganizationParty(browser, taxId, partyName, dtcc, dtcc, 'C' + taxId, 'Arizona').nodeify(done);
+        common.createOrganizationParty(browser, 'cacheframe0', taxId, partyName, dtcc, dtcc, 'C' + taxId, 'Arizona').nodeify(done);
     });
 
     it("should load create location page", function(done) {

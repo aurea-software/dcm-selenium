@@ -88,7 +88,7 @@ describe("/user-manager/tc6-add-permission-for-creating-allocation-rule", functi
     });
 
     it("should add permission", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'AllocRulePropertyPage')
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'AllocRulePropertyPage')
             .frame()
             .frame('container')
             .frame('cacheframe1')

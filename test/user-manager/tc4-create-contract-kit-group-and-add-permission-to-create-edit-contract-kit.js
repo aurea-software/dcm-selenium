@@ -43,10 +43,10 @@ describe("/user-manager/tc4-create-contract-kit-group-and-add-permission-to-crea
 
     it("should load user manager page", function(done) {
         browser
-              .frame()
-              .frame('navbar')
-              .elementById('UserManager').click()
-              .nodeify(done);
+            .frame()
+            .frame('navbar')
+            .elementById('UserManager').click()
+            .nodeify(done);
     });
 
     it("should load group page", function(done) {
@@ -95,7 +95,7 @@ describe("/user-manager/tc4-create-contract-kit-group-and-add-permission-to-crea
     });
 
     it("should add permission", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitPropertyPage')
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'ContractKitPropertyPage')
             .frame()
             .frame('container')
             .frame('cacheframe1')

@@ -59,11 +59,11 @@ describe("/hierarchy/product-hierarchy/tc13-search-product-hierarchy", function(
     });
 
     it("should create product hierarchy 1", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe1', wd.SPECIAL_KEYS['Enter'], prodHier1Name, prodHier1Desc).nodeify(done);
+       common.createProductHierarchy(browser, 'cacheframe1', prodHier1Name, prodHier1Desc).nodeify(done);
     });
 
     it("should create product hierarchy 2", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe1', wd.SPECIAL_KEYS['Enter'], prodHier2Name, prodHier2Desc).nodeify(done);
+       common.createProductHierarchy(browser, 'cacheframe1', prodHier2Name, prodHier2Desc).nodeify(done);
     });
 
     it("should do simple search", function(done) {

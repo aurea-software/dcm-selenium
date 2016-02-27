@@ -23,7 +23,7 @@ var desc = name + 'Desc';
 var nameNew = name + 'New';
 
 describe("/party/team/tc13-create-team", function() {
-    this.timeout(60000);
+    this.timeout(90000);
     var browser;
 
     before(function (done) {
@@ -42,6 +42,7 @@ describe("/party/team/tc13-create-team", function() {
 
     it("should load party page", function(done) {
         browser
+            .frame()
             .frame('navbar')
             .elementById('Party').click()
             .nodeify(done);
