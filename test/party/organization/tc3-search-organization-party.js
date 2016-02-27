@@ -19,8 +19,9 @@ var r1 = common.rand(3);
 var r2 = common.rand(3);
 var r = common.rand(5);
 
-var taxId1 = common.rand(5);
-var taxId2 = '' + (parseInt(taxId1, 10) + 1);
+var t = common.rand(4);
+var taxId1 = t + '1';
+var taxId2 = t + '2';
 
 console.log('r1: ' + r1);
 console.log('r2: ' + r2);

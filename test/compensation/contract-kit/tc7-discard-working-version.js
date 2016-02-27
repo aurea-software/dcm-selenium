@@ -27,8 +27,9 @@ var ProdHierDesc = 'PRODHIER_DESC' + r1;
 
 var index = common.rand(3);
 
-var index1 = common.rand(3);
-var index2 = '' + (parseInt(index1, 10) + 1);
+var c = common.rand(3);
+var index1 = c + '1';
+var index2 = c + '2';
 
 console.log('index: ' + index);
 console.log('index1: ' + index1);
