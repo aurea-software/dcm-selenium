@@ -1,5 +1,5 @@
 FROM node:5-onbuild
-MAINTAINER Alexey Melnikov <a.melnikov@clickberry.com>
+MAINTAINER Alexey Melnikov <a.melnikov@clickberry.com> - Aly Saleh <aly.saleh@aurea.com>
 
 # mocha
 RUN npm install -g mocha

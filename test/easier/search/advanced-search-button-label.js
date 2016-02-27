@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("search - dropdown menu font", function() {
+describe("search - advanced search button label", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("search - dropdown menu font", function() {
       .nodeify(done);
   });
 
-  it("should be SourceSansProRegular", function  (done) {
+  it("should be Advanced Search", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,14 +48,9 @@ describe("search - dropdown menu font", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.search-container .bootstrap-select button').click()
-      .elementByCss('.search-container .bootstrap-select .dropdown-menu')
-      .getComputedCss('display').then(function(display) {
-        display.should.equal("block");
-      })
-      .elementByCss('.search-container .bootstrap-select .dropdown-menu > li > a')
-      .getComputedCss('font-family').then(function(font) {
-        font.should.equal("SourceSansProRegular");
+      .elementByCss('.search-container .btn.advanced-link').text()
+      .then(function(text) {
+        text.should.equal("Advanced Search");
       })
       .nodeify(done);
   });

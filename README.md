@@ -14,7 +14,7 @@ DCM_URL | http://192.168.99.100:8081 | DCM application base URL.
 docker run -d --name selenium-chrome -p 4444:4444 selenium/standalone-chrome
 ```
 
-## RUN DCM container
+## Run DCM container
 ```
 docker run --name dcm-selenium -e SELENIUM_URL=http://192.168.99.100:4444/wd/hub -e DCM_URL=http://192.168.99.100:8081 --rm aurea/dcm-selenium
 ```

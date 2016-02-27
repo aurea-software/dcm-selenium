@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("search - dropdown bg color", function() {
+describe("advanced search - dropdown menu paddings", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("search - dropdown bg color", function() {
       .nodeify(done);
   });
 
-  it("should be #1F222D rgba(31, 34, 45, 1)", function  (done) {
+  it("should be 7px 15px", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,14 +48,11 @@ describe("search - dropdown bg color", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.search-container .bootstrap-select button').click()
-      .elementByCss('.search-container .bootstrap-select .dropdown-menu')
-      .getComputedCss('display').then(function(display) {
-        display.should.equal("block");
-      })
-      .elementByCss('.search-container .bootstrap-select .dropdown-menu')
-      .getComputedCss('background-color').then(function(bgcolor) {
-        bgcolor.should.equal("rgba(31, 34, 45, 1)");
+      .elementByCss('.search-container .btn.advanced-link').click().sleep(500) // open advanced form
+      .elementByCss('.search-container .advanced-form .bootstrap-select button').click()
+      .elementByCss('.search-container .advanced-form .bootstrap-select .dropdown-menu > li > a')
+      .getComputedCss('padding').then(function(padding) {
+        padding.should.equal("7px 15px");
       })
       .nodeify(done);
   });
