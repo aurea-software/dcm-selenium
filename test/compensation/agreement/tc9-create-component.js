@@ -18,12 +18,12 @@ var common = require('../../lib/common');
 var r1 = common.rand(6);
 console.log('r1: ' + r1);
 
-var CKPTaxId = r1;
-var CKPName = 'CKP_' + r1;
-var CKPPartyId;
+var ckpTaxId = r1;
+var ckpName = 'CKP_' + r1;
+var ckpPartyId;
 
-var ProdHierName = 'PRODHIER_' + r1;
-var ProdHierDesc = 'PRODHIER_DESC' + r1;
+var prodHierName = 'PRODHIER_' + r1;
+var prodHierDesc = 'PRODHIER_DESC' + r1;
 
 // Test case desc requires fixed input values. We add some dynamic factor
 // to make sure that the test data is really ours.
@@ -60,22 +60,23 @@ describe("/compensation/agreement/tc9-create-component", function() {
     });
 
     it("should load party page", function(done) {
-        browser.frame('navbar').elementById('Party').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Party').click().nodeify(done);
     });
 
-    var CKPId1 = function(ckpid) {
-        CKPPartyId = ckpid;
+    var storeCkpId = function(ckpId) {
+        ckpPartyId = ckpId;
     };
 
     it('should create contract kit provider', function(done) {
-        common.createContractKitProvider(browser, 'cacheframe0', CKPName, CKPTaxId)
+        common.createContractKitProvider(browser, 'cacheframe0', ckpName, ckpTaxId)
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
-                CKPId1(data);
-                })
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
+            .then(function(data) {
+                storeCkpId(data);
+            })
             .nodeify(done);
     });
 
@@ -88,7 +89,7 @@ describe("/compensation/agreement/tc9-create-component", function() {
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+       common.createProductHierarchy(browser, 'cacheframe2', prodHierName, prodHierDesc).nodeify(done);
     });
 
     it("should load compensation setup page", function(done) {
@@ -104,7 +105,7 @@ describe("/compensation/agreement/tc9-create-component", function() {
     });
 
     it("should create contract kit", function(done) {
-        common.createContractKitWithHierAndCKP(browser, 'cacheframe4', name, desc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
+        common.createContractKit(browser, 'cacheframe4', name, desc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     it("should create quota", function(done) {

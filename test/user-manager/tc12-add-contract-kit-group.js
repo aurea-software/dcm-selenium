@@ -93,27 +93,27 @@ describe("/user-manager/tc12-add-contract-kit-group", function() {
     // Add all permissions related to the Contract Kit group (see previous test suites)
 
     it("should select permission 1", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitPropertyPage').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'ContractKitPropertyPage').nodeify(done);
     });
 
     it("should select permission 2", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'View', 'Contracts').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'View', 'Contracts').nodeify(done);
     });
 
     it("should select permission 3", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'View', 'Contracts.ContractsSearch').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'View', 'Contracts.ContractsSearch').nodeify(done);
     });
 
     it("should select permission 4", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'AllocRulePropertyPage').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'AllocRulePropertyPage').nodeify(done);
     });
 
     it("should select permission 5", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckIn').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckIn').nodeify(done);
     });
 
     it("should select permission 6", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckOut').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckOut').nodeify(done);
     });
 
     it("should save permissions", function(done) {
@@ -170,13 +170,7 @@ describe("/user-manager/tc12-add-contract-kit-group", function() {
     });
 
     it("should logout", function(done) {
-        browser
-            .frame()
-            .frame('navbar')
-            // The 'Logout' link is hidden. User needs to hoover the cursor to show the link.
-            // We change the CSS to make sure that the element is visible to click.
-            .execute('document.querySelector(\'#session > div:nth-child(2)\').style.left = \'0%\';')
-            .elementByCss('#session > div:nth-child(2) > a').type(wd.SPECIAL_KEYS['Enter'])
+        common.logout(browser)
             .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').text()
             .should.eventually.become('')
             .notify(done);

@@ -51,7 +51,7 @@ describe("/hierarchy/product-hierarchy/tc3-create-root-position", function() {
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe1', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+       common.createProductHierarchy(browser, 'cacheframe1', ProdHierName, ProdHierDesc).nodeify(done);
     });
 
     it("should load product page", function(done) {

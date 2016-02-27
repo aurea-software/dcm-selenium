@@ -44,10 +44,10 @@ describe("/user-manager/tc5-add-permission-to-view-contract-kit-tab", function()
 
     it("should load user manager page", function(done) {
         browser
-              .frame()
-              .frame('navbar')
-              .elementById('UserManager').click()
-              .nodeify(done);
+            .frame()
+            .frame('navbar')
+            .elementById('UserManager').click()
+            .nodeify(done);
     });
 
     it("should create user", function(done) {

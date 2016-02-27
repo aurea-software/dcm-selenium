@@ -18,12 +18,12 @@ var common = require('../../lib/common');
 var r1 = common.rand(6);
 console.log('r1: ' + r1);
 
-var CKPTaxId = r1;
-var CKPName = 'CKP_' + r1;
-var CKPPartyId;
+var ckpTaxId = r1;
+var ckpName = 'CKP_' + r1;
+var ckpPartyId;
 
-var ProdHierName = 'PRODHIER_' + r1;
-var ProdHierDesc = 'PRODHIER_DESC' + r1;
+var prodHierName = 'PRODHIER_' + r1;
+var prodHierDesc = 'PRODHIER_DESC' + r1;
 
 var index = common.rand(3);
 
@@ -62,35 +62,36 @@ describe("/compensation/contract-kit/tc6-search-contract-kit", function() {
     });
 
     it("should load party page", function(done) {
-        browser.frame('navbar').elementById('Party').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Party').click().nodeify(done);
     });
 
-    var CKPId1 = function(ckpid) {
-        CKPPartyId = ckpid;
+    var storeCkpId = function(ckpId) {
+        ckpPartyId = ckpId;
     };
 
     it('should create contract kit provider', function(done) {
-        common.createContractKitProvider(browser, 'cacheframe0', CKPName, CKPTaxId)
+        common.createContractKitProvider(browser, 'cacheframe0', ckpName, ckpTaxId)
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
-                CKPId1(data);
-                })
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
+            .then(function(data) {
+                storeCkpId(data);
+            })
             .nodeify(done);
     });
 
     it("should load hierarchy tab", function(done) {
-       browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
     });
 
     it("should load product hierarchy page", function(done) {
-       browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
+        browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+        common.createProductHierarchy(browser, 'cacheframe2', prodHierName, prodHierDesc).nodeify(done);
     });
 
     it("should load compensation setup page", function(done) {
@@ -106,11 +107,11 @@ describe("/compensation/contract-kit/tc6-search-contract-kit", function() {
     });
 
     it("should create contract kit 1", function(done) {
-        common.createContractKitWithHierAndCKP(browser, 'cacheframe4', name1, desc1, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
+        common.createContractKit(browser, 'cacheframe4', name1, desc1, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     it("should create contract kit 2", function(done) {
-        common.createContractKitWithHierAndCKP(browser, 'cacheframe4', name2, desc2, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
+        common.createContractKit(browser, 'cacheframe4', name2, desc2, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     it("should search by name1", function(done) {
@@ -137,7 +138,8 @@ describe("/compensation/contract-kit/tc6-search-contract-kit", function() {
     };
 
     it('should extract start date', function(done) {
-        browser.elementByCss('table[name=Grid_Contracts_Main] tbody tr:nth-child(1) td:nth-child(2)').text().then(function(data) {
+        browser.elementByCss('table[name=Grid_Contracts_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
+        .then(function(data) {
             storeStartDate(data);
         }).nodeify(done);
     });

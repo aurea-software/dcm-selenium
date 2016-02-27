@@ -45,12 +45,12 @@ var stateName = 'Arizona';
 var agreementName = 'AG' + r;
 var agreementDesc = 'AGDesc' + r;
 
-var CKPTaxId = r;
-var CKPName = 'CKP_' + r;
-var CKPPartyId;
+var ckpTaxId = r;
+var ckpName = 'CKP_' + r;
+var ckpPartyId;
 
-var ProdHierName = 'PRODHIER_' + r;
-var ProdHierDesc = 'PRODHIER_DESC' + r;
+var prodHierName = 'PRODHIER_' + r;
+var prodHierDesc = 'PRODHIER_DESC' + r;
 
 var contractName = 'CK Name' + r;
 var contractDesc = 'CK Desc' + r;
@@ -125,15 +125,15 @@ describe("/user-manager/tc16-create-contract-kit-and-agreement-and-checkin-contr
     // Add all permissions related to the Agreement group (see previous test suites)
 
     it("should select permission 1 for agreement group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'NewAgreement').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'NewAgreement').nodeify(done);
     });
 
     it("should select permission 2 for agreement group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'View', 'Agreement').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'View', 'Agreement').nodeify(done);
     });
 
     it("should select permission 3 for agreement group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'View', 'Agreement.AgreementSearch').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'View', 'Agreement.AgreementSearch').nodeify(done);
     });
 
     it("should save permissions for agreement group", function(done) {
@@ -172,27 +172,27 @@ describe("/user-manager/tc16-create-contract-kit-and-agreement-and-checkin-contr
     // Add all permissions related to the Contract Kit group (see previous test suites)
 
     it("should select permission 1 for contract kit group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitPropertyPage').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'ContractKitPropertyPage').nodeify(done);
     });
 
     it("should select permission 2 for contract kit group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'View', 'Contracts').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'View', 'Contracts').nodeify(done);
     });
 
     it("should select permission 3 for contract kit group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'View', 'Contracts.ContractsSearch').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'View', 'Contracts.ContractsSearch').nodeify(done);
     });
 
     it("should select permission 4 for contract kit group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'AllocRulePropertyPage').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'AllocRulePropertyPage').nodeify(done);
     });
 
     it("should select permission 5 for contract kit group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckIn').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckIn').nodeify(done);
     });
 
     it("should select permission 6 for contract kit group", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckOut').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckOut').nodeify(done);
     });
 
     it("should save permissions for contract kit group", function(done) {
@@ -261,10 +261,7 @@ describe("/user-manager/tc16-create-contract-kit-and-agreement-and-checkin-contr
     // The newly created user doesn't have permission to create party or product hiearchy. Hence we create the data using the default user.
 
     it("should logout", function(done) {
-        common.logout(browser)
-            .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').text()
-            .should.eventually.become('')
-            .notify(done);
+        common.logout(browser).nodeify(done);
     });
 
     it("should login as default user", function (done) {
@@ -275,58 +272,43 @@ describe("/user-manager/tc16-create-contract-kit-and-agreement-and-checkin-contr
         browser.frame().frame('navbar').elementById('Party').click().nodeify(done);
     });
 
-    it("should load create person page", function(done) {
-      browser
-        .frame()
-        .frame('container')
-        .frame('cacheframe0')
-        .frame('subpage')
-        .elementById('Button_Person_Main_NewPerson').click()
-        .nodeify(done);
-    });
-
     it('should create person party', function(done) {
-        common.createPersonParty(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
+        common.createPersonParty(browser, 'cacheframe0', taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
     });
 
-    var CKPId1 = function(ckpid) {
-        CKPPartyId = ckpid;
+    var storeCkpId = function(ckpId) {
+        ckpPartyId = ckpId;
     };
 
     it('should create contract kit provider', function(done) {
-        common.createContractKitProvider(browser, 'cacheframe0', CKPName, CKPTaxId)
+        common.createContractKitProvider(browser, 'cacheframe0', ckpName, ckpTaxId)
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
-                CKPId1(data);
-                })
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
+            .then(function(data) {
+                storeCkpId(data);
+            })
             .nodeify(done);
     });
 
     it("should load hierarchy tab", function(done) {
-       browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
     });
 
     it("should load product hierarchy page", function(done) {
-       browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
+        browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+        common.createProductHierarchy(browser, 'cacheframe2', prodHierName, prodHierDesc).nodeify(done);
     });
 
     // Done preparing data
 
     it("should logout", function(done) {
-        browser
-            .frame()
-            .frame('navbar')
-            .elementByCss('#session > div:nth-child(2) > a').type(wd.SPECIAL_KEYS['Enter'])
-            .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').text()
-            .should.eventually.become('')
-            .notify(done);
+        common.logout(browser).nodeify(done);
     });
 
     it("should login as newly created user", function (done) {
@@ -346,7 +328,7 @@ describe("/user-manager/tc16-create-contract-kit-and-agreement-and-checkin-contr
     });
 
     it("should create contract kit", function(done) {
-        common.createContractKitWithHierAndCKP(browser, 'cacheframe0', contractName, contractDesc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
+        common.createContractKit(browser, 'cacheframe0', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     it("should check in working version", function(done) {
@@ -382,7 +364,7 @@ describe("/user-manager/tc16-create-contract-kit-and-agreement-and-checkin-contr
     });
 
     it('should create agreement with person', function(done) {
-        common.createAgreementWithPerson(browser, wd.SPECIAL_KEYS['Enter'], 'cacheframe1', agreementName, agreementDesc, contractName, '01/01/2010', '01/01/2100', firstName).nodeify(done);
+        common.createAgreementWithPerson(browser, 'cacheframe1', agreementName, agreementDesc, contractName, '01/01/2010', '01/01/2100', firstName).nodeify(done);
     });
 
 });

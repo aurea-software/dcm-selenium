@@ -18,12 +18,12 @@ var common = require('../../lib/common');
 var r1 = common.rand(6);
 console.log('r1: ' + r1);
 
-var CKPTaxId = r1;
-var CKPName = 'CKP_' + r1;
-var CKPPartyId;
+var ckpTaxId = r1;
+var ckpName = 'CKP_' + r1;
+var ckpPartyId;
 
-var ProdHierName = 'PRODHIER_' + r1;
-var ProdHierDesc = 'PRODHIER_DESC' + r1;
+var prodHierName = 'PH_' + r1;
+var prodHierDesc = prodHierName + 'DESC';
 
 var r = common.rand(3);
 var taxId = common.rand(5);
@@ -77,58 +77,50 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
     // We need to create a person for our test case
 
     it("should load party page", function(done) {
-      browser
-        .frame('navbar')
-        .elementById('Party').click()
-        .nodeify(done);
-    });
-
-    it("should load create person page", function(done) {
-      browser
-        .frame()
-        .frame('container')
-        .frame('cacheframe0')
-        .frame('subpage')
-        .elementById('Button_Person_Main_NewPerson').click()
-        .nodeify(done);
+        browser
+            .frame()
+            .frame('navbar')
+            .elementById('Party').click()
+            .nodeify(done);
     });
 
     it('should create person party', function(done) {
-        common.createPersonParty(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
+        common.createPersonParty(browser, 'cacheframe0', taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
     });
 
-    var CKPId1 = function(ckpid) {
-        CKPPartyId = ckpid;
+    var storeCkpId = function(ckpId) {
+        ckpPartyId = ckpId;
     };
 
     it('should create contract kit provider', function(done) {
-        common.createContractKitProvider(browser, 'cacheframe0', CKPName, CKPTaxId)
+        common.createContractKitProvider(browser, 'cacheframe0', ckpName, ckpTaxId)
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
-                CKPId1(data);
-                })
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
+            .then(function(data) {
+                storeCkpId(data);
+            })
             .nodeify(done);
     });
 
     it("should load hierarchy tab", function(done) {
-       browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
     });
 
     it("should load product hierarchy page", function(done) {
-       browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
+        browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+        common.createProductHierarchy(browser, 'cacheframe2', prodHierName, prodHierDesc).nodeify(done);
     });
 
     // We need to create a contract kit in production status for our test case
 
     it("should load compensation setup page", function(done) {
-        browser.refresh().frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
     it("should load contract kit page", function(done) {
@@ -140,7 +132,7 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
     });
 
     it("should create contract kit in production status", function(done) {
-        common.createContractKitWithHierAndCKPInProductionStatus(browser, 'cacheframe2', contractName, contractDesc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
+        common.createContractKitInProductionStatus(browser, 'cacheframe4', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     // We need to create an agreement for our test case
@@ -154,21 +146,21 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
     });
 
     it('should create agreement with person', function(done) {
-        common.createAgreementWithPerson(browser, wd.SPECIAL_KEYS['Enter'], 'cacheframe3', agreementName, agreementDesc, contractName, '01/01/2010', '01/01/2100', firstName).nodeify(done);
+        common.createAgreementWithPerson(browser, 'cacheframe5', agreementName, agreementDesc, contractName, '01/01/2010', '01/01/2100', firstName).nodeify(done);
     });
 
     it('should search agreement', function(done) {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByLinkText('Advanced Search').click()
             .elementByCss('#Search_Agreement_Main_form #Field_Agreement_Main_NameUpper_Search_Value').type(agreementName)
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become(agreementName.toUpperCase())
@@ -180,7 +172,7 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
             .elementById('Button_Agreement_Main_EditAgreement').click()
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('proppage')
             .elementById('Name').clear().type(agreementName + 'New')
             .elementById('Description').clear().type(agreementDesc + 'New')
@@ -189,7 +181,7 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Inspector_Agreement_Main_BasicInfo_div_out').text()

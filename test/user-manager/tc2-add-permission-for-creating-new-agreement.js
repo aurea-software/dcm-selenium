@@ -41,10 +41,10 @@ describe("/user-manager/tc2-add-permission-for-creating-new-agreement", function
 
     it("should load user manager page", function(done) {
         browser
-              .frame()
-              .frame('navbar')
-              .elementById('UserManager').click()
-              .nodeify(done);
+            .frame()
+            .frame('navbar')
+            .elementById('UserManager').click()
+            .nodeify(done);
     });
 
     it("should load group page", function(done) {

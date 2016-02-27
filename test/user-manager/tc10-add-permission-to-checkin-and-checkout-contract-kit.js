@@ -91,11 +91,11 @@ describe("/user-manager/tc10-add-permission-to-checkin-and-checkout-contract-kit
     });
 
     it("should select permission 1", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckIn').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckIn').nodeify(done);
     });
 
     it("should select permission 2", function(done) {
-        common.addPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckOut').nodeify(done);
+        common.addGroupPermission(browser, 'cacheframe1', 'Edit', 'ContractKitCheckOut').nodeify(done);
     });
 
     var savePermission1 = function(data) {

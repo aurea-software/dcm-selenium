@@ -65,22 +65,14 @@ describe("/party/organization/tc3-search-organization-party", function() {
 
     it("should load party page", function(done) {
         browser
+            .frame()
             .frame('navbar')
             .elementById('Party').click()
             .nodeify(done);
     });
 
-    it('should create organization party 1', function(done) {
-        common.createOrganizationParty(browser, taxId1, partyName1, dtcc1, npn1, city1, stateName).nodeify(done);
-    });
-
-    it('should create organization party 2', function(done) {
-        common.createOrganizationParty(browser, taxId2, partyName2, dtcc2, npn2, city2, stateName).nodeify(done);
-    });
-
-    var prepareForOrganizationSearch = function() {
-        return browser
-            .refresh()
+    it("should load organization party page", function(done) {
+        browser
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -91,18 +83,27 @@ describe("/party/organization/tc3-search-organization-party", function() {
             .frame('cacheframe0')
             .frame('subpage')
             .elementByLinkText('Search Organization').click()
+            .nodeify(done);
+    });
+
+    it('should create organization party 1', function(done) {
+        common.createOrganizationParty(browser, 'cacheframe0', taxId1, partyName1, dtcc1, npn1, city1, stateName).nodeify(done);
+    });
+
+    it('should create organization party 2', function(done) {
+        common.createOrganizationParty(browser, 'cacheframe0', taxId2, partyName2, dtcc2, npn2, city2, stateName).nodeify(done);
+    });
+
+    it('should search party 2 by tax id', function(done) {
+        browser
             .frame()
             .frame('container')
             .frame('cacheframe0')
-            .frame('subpage');
-    };
-
-    it('should search party 2 by tax id', function(done) {
-        prepareForOrganizationSearch()
+            .frame('subpage')
             // The test case description requires to search for party 2 by party id.
             // We have no control on the party id value, therefore we search by tax id instead.
             .elementById('Field_Org_Main_TaxID_Search_Value').clear().type(taxId2)
-            .elementByLinkText('Search').click()
+            .type(wd.SPECIAL_KEYS['Enter'])
             .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(4)').text()
             // We intentionally create party 1 before party 2. We also setup tax id
             // 2 to be bigger than tax id 1 intentionally.
@@ -120,17 +121,22 @@ describe("/party/organization/tc3-search-organization-party", function() {
     });
 
     it('should search party 1 by party name and tax id', function(done) {
-        prepareForOrganizationSearch()
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
             .elementById('Field_Org_Main_NameUpper_Search_Value').clear().type(partyName1)
             .elementById('Field_Org_Main_TaxID_Search_Value').clear().type(taxId1)
-            .elementByLinkText('Search').click()
+            .type(wd.SPECIAL_KEYS['Enter'])
             .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(2)').text().should.eventually.become(partyName1)
             .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(4)').text().should.eventually.become(taxId1)
             .notify(done);
     });
 
     it('should clear search fields 2', function(done) {
-        browser.elementByLinkText('Clear').click()
+        browser
+            .elementByLinkText('Clear').click()
             .elementById('Field_Org_Main_NameUpper_Search_Value').getAttribute('value')
             .should.eventually.become('')
             .elementById('Field_Org_Main_TaxID_Search_Value').getAttribute('value')
@@ -139,7 +145,11 @@ describe("/party/organization/tc3-search-organization-party", function() {
     });
 
     it('should search 2 parties by party name prefix', function(done) {
-        prepareForOrganizationSearch()
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
             .elementByLinkText('Advanced Search').click()
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_NameUpper_Search_Value').clear().type(partyNamePrefix + "*")
             .type(wd.SPECIAL_KEYS['Enter'])
@@ -151,8 +161,11 @@ describe("/party/organization/tc3-search-organization-party", function() {
     });
 
     it('should search party 2 by dtcc, npn, city and state', function(done) {
-        prepareForOrganizationSearch()
-            .elementByLinkText('Advanced Search').click()
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_DTCCID_Search_Value').clear().type(dtcc2)
             .elementByCss('#Search_Org_Main_form #Field_Party_Org_NPN_Search_Value').clear().type(npn2)
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_City_Search_Value').clear().type(city2)
@@ -164,7 +177,8 @@ describe("/party/organization/tc3-search-organization-party", function() {
     });
 
     it('should clear search fields 3', function(done) {
-        browser.elementByLinkText('Clear').click()
+        browser
+            .elementByLinkText('Clear').click()
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_DTCCID_Search_Value').getAttribute('value')
             .should.eventually.become('')
             .elementByCss('#Search_Org_Main_form #Field_Party_Org_NPN_Search_Value').getAttribute('value')
@@ -177,8 +191,11 @@ describe("/party/organization/tc3-search-organization-party", function() {
     });
 
     it('should sort by party ids in descending order', function(done) {
-        prepareForOrganizationSearch()
-            .elementByLinkText('Advanced Search').click()
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_NameUpper_Search_Value').clear().type(partyNamePrefix + "*")
             .frame()
             .frame('container')
@@ -190,7 +207,8 @@ describe("/party/organization/tc3-search-organization-party", function() {
             .frame('cacheframe0')
             .frame('subpage')
             .elementByLinkText('Descending').click()
-            .elementByLinkText('Search').click()
+            .elementByCss('#Search_Org_Main_form #Field_Org_Main_NameUpper_Search_Value')
+            .type(wd.SPECIAL_KEYS['Enter'])
             .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(4)').text()
             .should.eventually.become(taxId2)
             .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(2) td:nth-child(4)').text()
@@ -199,8 +217,11 @@ describe("/party/organization/tc3-search-organization-party", function() {
     });
 
     it('should sort by tax ids in ascending order', function(done) {
-        prepareForOrganizationSearch()
-            .elementByLinkText('Advanced Search').click()
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_NameUpper_Search_Value').clear().type(partyNamePrefix + "*")
             .frame()
             .frame('container')
@@ -218,7 +239,8 @@ describe("/party/organization/tc3-search-organization-party", function() {
             .frame('cacheframe0')
             .frame('subpage')
             .elementByLinkText('Ascending').click()
-            .elementByLinkText('Search').click()
+            .elementByCss('#Search_Org_Main_form #Field_Org_Main_NameUpper_Search_Value')
+            .type(wd.SPECIAL_KEYS['Enter'])
             .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(4)').text()
             .should.eventually.become(taxId1)
             .waitForElementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(2) td:nth-child(4)').text()
@@ -227,7 +249,8 @@ describe("/party/organization/tc3-search-organization-party", function() {
     });
 
     it('should clear search fields 4', function(done) {
-        browser.elementByLinkText('Clear').click()
+        browser
+            .elementByLinkText('Clear').click()
             .elementByCss('#Search_Org_Main_form #Field_Org_Main_NameUpper_Search_Value').getAttribute('value')
             .should.eventually.become('')
             .notify(done);

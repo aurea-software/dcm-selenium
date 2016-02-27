@@ -23,6 +23,7 @@ describe("/party/organization/tc2-create-and-edit-organization-party", function(
     var browser;
 
     before(function (done) {
+        chaiAsPromised.transferPromiseness = wd.transferPromiseness;
         browser = wd.promiseChainRemote(config.get("remote"));
         common.configBrowser(browser, config.get("environment")).nodeify(done);
     });
@@ -37,6 +38,7 @@ describe("/party/organization/tc2-create-and-edit-organization-party", function(
 
     it("should load party page", function(done) {
         browser
+            .frame()
             .frame('navbar')
             .elementById('Party').click()
             .nodeify(done);
@@ -103,7 +105,8 @@ describe("/party/organization/tc2-create-and-edit-organization-party", function(
     });
 
     it("should edit organization party", function(done) {
-        browser.frame()
+        browser
+            .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
@@ -123,7 +126,8 @@ describe("/party/organization/tc2-create-and-edit-organization-party", function(
     });
 
     it("should edit organization party", function(done) {
-        browser.frame()
+        browser
+            .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('proppage')

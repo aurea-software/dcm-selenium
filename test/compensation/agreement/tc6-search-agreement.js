@@ -18,12 +18,12 @@ var common = require('../../lib/common');
 var r1 = common.rand(6);
 console.log('r1: ' + r1);
 
-var CKPTaxId = r1;
-var CKPName = 'CKP_' + r1;
-var CKPPartyId;
+var ckpTaxId = r1;
+var ckpName = 'CKP_' + r1;
+var ckpPartyId;
 
-var ProdHierName = 'PRODHIER_' + r1;
-var ProdHierDesc = 'PRODHIER_DESC' + r1;
+var prodHierName = 'PRODHIER_' + r1;
+var prodHierDesc = 'PRODHIER_DESC' + r1;
 
 var r = common.rand(3);
 var taxId = common.rand(5);
@@ -95,39 +95,31 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
     // We need to create a person for our test case
 
     it("should load party page", function(done) {
-      browser
-        .frame('navbar')
-        .elementById('Party').click()
-        .nodeify(done);
-    });
-
-    it("should load create person page", function(done) {
-      browser
-        .frame()
-        .frame('container')
-        .frame('cacheframe0')
-        .frame('subpage')
-        .elementById('Button_Person_Main_NewPerson').click()
-        .nodeify(done);
+        browser
+            .frame()
+            .frame('navbar')
+            .elementById('Party').click()
+            .nodeify(done);
     });
 
     it('should create person party', function(done) {
-        common.createPersonParty(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
+        common.createPersonParty(browser, 'cacheframe0', taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
     });
 
-    var CKPId1 = function(ckpid) {
-        CKPPartyId = ckpid;
+    var storeCkpId = function(ckpId) {
+        ckpPartyId = ckpId;
     };
 
     it('should create contract kit provider', function(done) {
-        common.createContractKitProvider(browser, 'cacheframe0', CKPName, CKPTaxId)
+        common.createContractKitProvider(browser, 'cacheframe0', ckpName, ckpTaxId)
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
-                CKPId1(data);
-                })
+            .elementByCss('table[name=Grid_Org_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
+            .then(function(data) {
+                storeCkpId(data);
+            })
             .nodeify(done);
     });
 
@@ -140,13 +132,13 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe2', wd.SPECIAL_KEYS['Enter'], ProdHierName, ProdHierDesc).nodeify(done);
+       common.createProductHierarchy(browser, 'cacheframe2', prodHierName, prodHierDesc).nodeify(done);
     });
 
     // We need to create a contract kit in production status for our test case
 
     it("should load compensation setup page", function(done) {
-        browser.refresh().frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
     it("should load contract kit page", function(done) {
@@ -158,7 +150,7 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
     });
 
     it("should create contract kit in production status", function(done) {
-        common.createContractKitWithHierAndCKPInProductionStatus(browser, 'cacheframe2', contractName, contractDesc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
+        common.createContractKitInProductionStatus(browser, 'cacheframe4', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     // We need to create two agreements for our test case
@@ -176,10 +168,10 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
     };
 
     it('should create agreement 1 with person', function(done) {
-        common.createAgreementWithPerson(browser, wd.SPECIAL_KEYS['Enter'], 'cacheframe3', agreementName1, agreementDesc1, contractName, startDate1, endDate1, firstName)
+        common.createAgreementWithPerson(browser, 'cacheframe5', agreementName1, agreementDesc1, contractName, startDate1, endDate1, firstName)
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
                 storeAgreementId1(data);
@@ -188,20 +180,20 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
     });
 
     it('should create agreement 2 with person', function(done) {
-        common.createAgreementWithPerson(browser, wd.SPECIAL_KEYS['Enter'], 'cacheframe3', agreementName2, agreementDesc2, contractName, startDate2, endDate2, firstName).nodeify(done);
+        common.createAgreementWithPerson(browser, 'cacheframe5', agreementName2, agreementDesc2, contractName, startDate2, endDate2, firstName).nodeify(done);
     });
 
     it('should search agreement 1 by id', function(done) {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByCss('#Search_Agreement_Main_primaryForm #Field_Agreement_Main_Unid_Search_Value').type(agreementId1)
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become(agreementName1.toUpperCase())
@@ -220,14 +212,14 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByLinkText('Advanced Search').click()
             .elementByCss('#Search_Agreement_Main_form #Field_Agreement_Main_NameUpper_Search_Value').type(agreementNamePrefix + "*")
             .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become(agreementName1.toUpperCase())
@@ -252,7 +244,7 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become(agreementName1.toUpperCase())
@@ -277,19 +269,19 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
             .elementByCss('button[data-id=SortField1]').click()
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByLinkText('Effective Before').click()
             .elementByCss('button[data-id=SortField1_order]').click()
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByLinkText('Descending').click()
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe3')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become(agreementName2.toUpperCase())

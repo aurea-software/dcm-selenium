@@ -55,22 +55,23 @@ describe("/dcm-admin/supporting-data/tc14-create-party-template", function() {
     });
 
     it("should load party page", function(done) {
-      browser
-        .frame('navbar')
-        .elementById('Party').click()
-        .nodeify(done);
+        browser
+          .frame()
+          .frame('navbar')
+          .elementById('Party').click()
+          .nodeify(done);
     });
-    
+
     it("should create person party", function(done) {
-        common.createPersonParty(browser, taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
+        common.createPersonParty(browser, 'cacheframe0', taxId, firstName, lastName, middleName, preferredName, city, stateName, dtcc, npn).nodeify(done);
     });
-    
+
     it("should load dcm admin page", function(done) {
-      browser
-      	.frame()
-        .frame('navbar')
-        .elementById('DCM Admin').click()
-        .nodeify(done);
+        browser
+          	.frame()
+            .frame('navbar')
+            .elementById('DCM Admin').click()
+            .nodeify(done);
     });
 
     it("should load supporting data page", function(done) {
@@ -80,7 +81,7 @@ describe("/dcm-admin/supporting-data/tc14-create-party-template", function() {
             .elementById('SupportingData_sub').click()
             .nodeify(done);
     });
-    
+
     it("should load search template page", function(done) {
     	browser
 			.frame()
@@ -95,7 +96,7 @@ describe("/dcm-admin/supporting-data/tc14-create-party-template", function() {
 			.elementByLinkText('Search Party Template').click()
 			.nodeify(done);
     });
-    
+
     it("should create new template", function(done) {
       	browser
 	        .frame()
@@ -136,7 +137,7 @@ describe("/dcm-admin/supporting-data/tc14-create-party-template", function() {
 	        .should.eventually.become(templateDesc.toUpperCase())
 	        .nodeify(done);
     });
-    
+
     it("should edit template", function(done) {
       	browser
 	        .frame()

@@ -53,7 +53,7 @@ describe("/hierarchy/product-hierarchy/tc1-create-edit-product-hierarchy", funct
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe1', wd.SPECIAL_KEYS['Enter'], prodHierName, prodHierDesc)
+       common.createProductHierarchy(browser, 'cacheframe1', prodHierName, prodHierDesc)
            .frame()
            .frame('container')
            .frame('cacheframe1')
