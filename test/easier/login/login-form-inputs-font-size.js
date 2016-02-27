@@ -55,7 +55,7 @@ describe("login - form inputs font size", function() {
       .then(function(font) {
         font.should.equal("14px");
       })
-      .elementByCss('form[name=LoginForm]').getComputedCss('font-size') // forget password link
+      .elementByCss('form[name=LoginForm] #fgButton').getComputedCss('font-size') // forget password link
       .then(function(font) {
         font.should.equal("14px");
       })
