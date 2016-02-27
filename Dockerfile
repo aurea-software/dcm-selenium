@@ -9,4 +9,4 @@ RUN chmod +x ./docker-entrypoint.sh
 ENTRYPOINT ["./docker-entrypoint.sh", "--reporter"]
 
 # default mocha command
-CMD ["min", "--recursive"]
+CMD ["mocha-teamcity-reporter", "--recursive"]
