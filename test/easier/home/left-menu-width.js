@@ -40,13 +40,13 @@ describe("home - left menu width", function() {
       .nodeify(done);
   });
 
-  it("should be 280px", function  (done) {
+  it("should be 250px", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
       .frame().frame('sidebar')
       .elementByCss('body').getComputedCss('width').then(function(width) {
-        width.should.equal("280px");
+        width.should.equal("250px");
       })
       .nodeify(done);
   });
