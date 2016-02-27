@@ -8,7 +8,7 @@ RUN npm install -g mocha
 
 # prepare env vars and run mocha
 RUN chmod +x ./docker-entrypoint.sh
-ENTRYPOINT ["./docker-entrypoint.sh", "--reporter", "${REPORTER}"]
+ENTRYPOINT ["./docker-entrypoint.sh", "--reporter", $REPORTER]
 
 # default mocha command
 CMD ["--recursive"]
