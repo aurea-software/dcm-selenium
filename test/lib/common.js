@@ -22,6 +22,10 @@ define(function() {
                 console.log(' > ' + meth, path, data || '');
             });
 
+            browser.setImplicitWaitTimeout(30000);
+            browser.setAsyncScriptTimeout(30000);
+            browser.setPageLoadTimeout(30000);
+
             return browser.init(environment);
         },
 
