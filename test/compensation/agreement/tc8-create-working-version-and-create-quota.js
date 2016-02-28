@@ -86,35 +86,27 @@ describe("/compensation/agreement/tc8-create-working-version-and-create-quota", 
         browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
-    it("should load contract kit page", function(done) {
-        browser
-            .frame()
-            .frame('sidebar')
-            .elementById('Contracts_sub').click()
-            .nodeify(done);
-    });
-
     it("should create contract kit", function(done) {
-        common.createContractKit(browser, 'cacheframe4', name, desc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
+        common.createContractKit(browser, 'cacheframe3', name, desc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     it("should check in working version", function(done) {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .elementById('Button_Contracts_Main_ContractKitCheckIn').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('Description').type('Promotion comment 1')
             .elementById('validate').click()
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Inspector_Contracts_Main_BasicInfo_div_out').text()
@@ -126,7 +118,7 @@ describe("/compensation/agreement/tc8-create-working-version-and-create-quota", 
         browser.elementById('Button_Contracts_Main_BasicInfo_EditContractKit').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .elementByCss('#alertDialog .modal-body').text()
             .should.eventually.include('This contract kit and its contents cannot be modified because the contract kit is not checked out')
@@ -137,24 +129,24 @@ describe("/compensation/agreement/tc8-create-working-version-and-create-quota", 
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .elementByCss('#alertDialog button').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .elementById('Button_Contracts_Main_ContractKitCheckOut').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('Description').type('Editing Kit')
             .elementById('validate').click()
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Inspector_Contracts_Main_BasicInfo_div_out').text()
@@ -169,13 +161,13 @@ describe("/compensation/agreement/tc8-create-working-version-and-create-quota", 
             .elementById('Tab_Contracts_Main_Quotas_link').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Button_Contracts_Main_Quotas_NewQuota').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('Name').type('Quota1' + uniqueString)
             .elementById('Description').type('Quota Desc ' + uniqueString)
@@ -183,7 +175,7 @@ describe("/compensation/agreement/tc8-create-working-version-and-create-quota", 
             .elementByCss('button[data-id=MeasureFormulaString]').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementByLinkText('allocation.getWeight()').click()
             .elementById('MeasureDescription').type('Alloc Get Weight')
@@ -191,7 +183,7 @@ describe("/compensation/agreement/tc8-create-working-version-and-create-quota", 
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Grid_Contracts_Main_Quotas').text()

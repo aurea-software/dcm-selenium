@@ -98,24 +98,24 @@ describe("/compensation/agreement/tc11-create-bonus", function() {
         browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
-    it("should load contract kit page", function(done) {
-        browser
-            .frame()
-            .frame('sidebar')
-            .elementById('Contracts_sub').click()
-            .nodeify(done);
-    });
-
     it("should create contract kit", function(done) {
-        common.createContractKit(browser, 'cacheframe4', name, desc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
+        common.createContractKit(browser, 'cacheframe3', name, desc, '01/01/2000', '01/01/2300', ProdHierName, CKPName, CKPPartyId).nodeify(done);
     });
 
     // Skipping step 3 - 4 in the test case (create working version) as our contract kit is 100% new
     // and the test case's logic has been covered in
     // /compensation/contract-kit/tc5-create-working-version-checkin-export-contract-kit
 
+    it("should load quota page", function(done) {
+        browser
+            .frame()
+            .frame('sidebar')
+            .elementById('Tab_Contracts_Main_Quotas_link').click()
+            .nodeify(done);
+    });
+
     it("should create quota", function(done) {
-        common.createQuota(browser, 'cacheframe4', quotaName, quotaDesc).nodeify(done);
+        common.createQuota(browser, 'cacheframe3', quotaName, quotaDesc).nodeify(done);
     });
 
     it('should load component page', function(done) {
@@ -127,7 +127,7 @@ describe("/compensation/agreement/tc11-create-bonus", function() {
     })
 
     it('should create component', function(done) {
-        common.createComponent(browser, 'cacheframe4', componentName, componentDesc, componentLabel, quotaName).nodeify(done);
+        common.createComponent(browser, 'cacheframe3', componentName, componentDesc, componentLabel, quotaName).nodeify(done);
     });
 
     it('should create bonus', function(done) {
@@ -137,13 +137,13 @@ describe("/compensation/agreement/tc11-create-bonus", function() {
             .elementById('Tab_Contracts_Main_Components_Bonuses_link').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Button_Contracts_Main_Components_Bonuses_NewBonus').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('Name').type(bonusName)
             .elementById('Description').type(bonusDesc)
@@ -151,7 +151,7 @@ describe("/compensation/agreement/tc11-create-bonus", function() {
             .elementById('searchQuotasSearch_search_div').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .frame('QuotasSearch_search_div_frame')
             .elementById('Field_Quotas_Search_Name_Search_Value').type(quotaName)
@@ -160,7 +160,7 @@ describe("/compensation/agreement/tc11-create-bonus", function() {
             .elementById('QuotasSearchButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('SelectedObjTextDiv_Quota_link').text()
             .should.eventually.include(quotaName)
@@ -168,7 +168,7 @@ describe("/compensation/agreement/tc11-create-bonus", function() {
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementByCss('table[name=Grid_Contracts_Main_Components_Bonuses] tbody tr:nth-child(1) td:nth-child(1)').text()

@@ -83,30 +83,22 @@ describe("/compensation/contract-kit/tc4-create-contract-kit", function() {
         browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
-    it("should load contract kit page", function(done) {
-        browser
-            .frame()
-            .frame('sidebar')
-            .elementById('Contracts_sub').click()
-            .nodeify(done);
-    });
-
     it("should create contract kit", function(done) {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .elementById('Button_Contracts_Main_NewContractKit').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('Name').type('LifeContractKit' + uniqueString)
             .elementById('Description').type('Contract kit' + uniqueString)
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementByCss('form[name=spartacus] button[data-id=Products]').type(wd.SPECIAL_KEYS['Enter'])
             .sleep(500)
@@ -118,7 +110,7 @@ describe("/compensation/contract-kit/tc4-create-contract-kit", function() {
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Inspector_Contracts_Main_BasicInfo_div_out').text()
@@ -133,14 +125,14 @@ describe("/compensation/contract-kit/tc4-create-contract-kit", function() {
             .elementById('Button_Contracts_Main_BasicInfo_EditContractKit').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('Description').type('Contract kit for life insurance' + uniqueString)
             .elementById('validate').click()
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Inspector_Contracts_Main_BasicInfo_div_out').text()

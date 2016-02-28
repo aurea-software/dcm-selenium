@@ -88,16 +88,8 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
         browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
-    it("should load contract kit page", function(done) {
-        browser
-            .frame()
-            .frame('sidebar')
-            .elementById('Contracts_sub').click()
-            .nodeify(done);
-    });
-
     it("should create contract kit", function(done) {
-        common.createContractKit(browser, 'cacheframe4', name, desc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
+        common.createContractKit(browser, 'cacheframe3', name, desc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     it("should create quota", function(done) {
@@ -107,13 +99,13 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
             .elementById('Tab_Contracts_Main_Quotas_link').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Button_Contracts_Main_Quotas_NewQuota').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('Name').type('Quota1 ' + uniqueString)
             .elementById('Description').type('Quota Desc ' + uniqueString)
@@ -121,7 +113,7 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
             .elementByCss('button[data-id=MeasureFormulaString]').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementByLinkText('allocation.getWeight()').click()
             .elementById('MeasureDescription').type('Alloc Get Weight')
@@ -129,7 +121,7 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Grid_Contracts_Main_Quotas').text()
@@ -153,13 +145,13 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Button_Contracts_Main_Quotas_EditQuota').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('DurQuantity').clear().type('2')
             .elementById('Periods').clear().type('2')
@@ -167,7 +159,7 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Grid_Contracts_Main_Quotas').text()

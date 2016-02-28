@@ -142,19 +142,19 @@ describe("/hierarchy/comp_hierarchy/tc9_create_root_position", function() {
     });
 
     it("should create contract kit", function(done) {
-        common.createContractKit(browser, 'cacheframe4', ckName, ckDesc, '01/01/2016', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
+        common.createContractKit(browser, 'cacheframe3', ckName, ckDesc, '01/01/2016', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     it("should checkin contract kit", function(done) {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .elementById('Button_Contracts_Main_ContractKitCheckIn').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('save').click()
             .nodeify(done);
@@ -165,7 +165,7 @@ describe("/hierarchy/comp_hierarchy/tc9_create_root_position", function() {
     });
 
     it("should create agreement", function(done) {
-        common.createAgreementWithPerson(browser, 'cacheframe5', agreementName, agreementDesc, ckName, '01/01/2016', '01/01/2300', firstName1).nodeify(done);
+        common.createAgreementWithPerson(browser, 'cacheframe4', agreementName, agreementDesc, ckName, '01/01/2016', '01/01/2300', firstName1).nodeify(done);
     });
 
     it("should load hierarchy tab", function(done) {
@@ -185,7 +185,7 @@ describe("/hierarchy/comp_hierarchy/tc9_create_root_position", function() {
     });
 
     it("should create comp hierarchy", function(done) {
-        common.createCompHierarchy(browser, 'cacheframe6', compHierName , compHierDesc, ckName).nodeify(done);
+        common.createCompHierarchy(browser, 'cacheframe5', compHierName , compHierDesc, ckName).nodeify(done);
     });
 
     it("should add position holder (participant)", function(done) {
@@ -195,13 +195,13 @@ describe("/hierarchy/comp_hierarchy/tc9_create_root_position", function() {
             .elementById('Tab_AgrHierarchySearch_RootPosition_Main_link').click()
             .frame()
             .frame('container')
-            .frame('cacheframe6')
+            .frame('cacheframe5')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Button_AddAgrHierRootPosition').click()
             .frame()
             .frame('container')
-            .frame('cacheframe6')
+            .frame('cacheframe5')
             .frame('proppage')
             .execute('scrollTo(0, 6000)')
             .elementById('searchParticipantSearchPage_search_div').click()
@@ -217,21 +217,21 @@ describe("/hierarchy/comp_hierarchy/tc9_create_root_position", function() {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe6')
+            .frame('cacheframe5')
             .frame('proppage')
             .frame('ParticipantSearchPage_search_div_frame')
             .elementById('Grid_Participant_GridName').click()
             .elementById('Button_ParticipantSearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe6')
+            .frame('cacheframe5')
             .frame('proppage')
             .elementById('Name').clear().type(rootPositionName)
             .elementById('Description').clear().type(rootPositionDesc)
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe6')
+            .frame('cacheframe5')
             .frame('subpage')
             .frame('component_iframe')
             .elementByCss('table[name=Grid_AgrRootPosition_Main] tbody tr:nth-child(1) td:nth-child(2)').text()

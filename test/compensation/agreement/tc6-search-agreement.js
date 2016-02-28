@@ -141,16 +141,8 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
         browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
-    it("should load contract kit page", function(done) {
-        browser
-            .frame()
-            .frame('sidebar')
-            .elementById('Contracts_sub').click()
-            .nodeify(done);
-    });
-
     it("should create contract kit in production status", function(done) {
-        common.createContractKitInProductionStatus(browser, 'cacheframe4', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
+        common.createContractKitInProductionStatus(browser, 'cacheframe3', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     // We need to create two agreements for our test case
@@ -168,10 +160,10 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
     };
 
     it('should create agreement 1 with person', function(done) {
-        common.createAgreementWithPerson(browser, 'cacheframe5', agreementName1, agreementDesc1, contractName, startDate1, endDate1, firstName)
+        common.createAgreementWithPerson(browser, 'cacheframe4', agreementName1, agreementDesc1, contractName, startDate1, endDate1, firstName)
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(1)').text().then(function(data) {
                 storeAgreementId1(data);
@@ -180,20 +172,20 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
     });
 
     it('should create agreement 2 with person', function(done) {
-        common.createAgreementWithPerson(browser, 'cacheframe5', agreementName2, agreementDesc2, contractName, startDate2, endDate2, firstName).nodeify(done);
+        common.createAgreementWithPerson(browser, 'cacheframe4', agreementName2, agreementDesc2, contractName, startDate2, endDate2, firstName).nodeify(done);
     });
 
     it('should search agreement 1 by id', function(done) {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByCss('#Search_Agreement_Main_primaryForm #Field_Agreement_Main_Unid_Search_Value').type(agreementId1)
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become(agreementName1.toUpperCase())
@@ -212,14 +204,14 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByLinkText('Advanced Search').click()
             .elementByCss('#Search_Agreement_Main_form #Field_Agreement_Main_NameUpper_Search_Value').type(agreementNamePrefix + "*")
             .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become(agreementName1.toUpperCase())
@@ -244,7 +236,7 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become(agreementName1.toUpperCase())
@@ -269,19 +261,19 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
             .elementByCss('button[data-id=SortField1]').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByLinkText('Effective Before').click()
             .elementByCss('button[data-id=SortField1_order]').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByLinkText('Descending').click()
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become(agreementName2.toUpperCase())

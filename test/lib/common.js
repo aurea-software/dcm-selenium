@@ -197,9 +197,6 @@ define(function() {
         createQuota: function(browser, cacheFrameName, name, desc) {
             return browser
                 .frame()
-                .frame('sidebar')
-                .elementById('Tab_Contracts_Main_Quotas_link').click()
-                .frame()
                 .frame('container')
                 .frame(cacheFrameName)
                 .frame('subpage')

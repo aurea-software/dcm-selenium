@@ -123,16 +123,8 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
         browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
-    it("should load contract kit page", function(done) {
-        browser
-            .frame()
-            .frame('sidebar')
-            .elementById('Contracts_sub').click()
-            .nodeify(done);
-    });
-
     it("should create contract kit in production status", function(done) {
-        common.createContractKitInProductionStatus(browser, 'cacheframe4', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
+        common.createContractKitInProductionStatus(browser, 'cacheframe3', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     // We need to create an agreement for our test case
@@ -146,21 +138,21 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
     });
 
     it('should create agreement with person', function(done) {
-        common.createAgreementWithPerson(browser, 'cacheframe5', agreementName, agreementDesc, contractName, '01/01/2010', '01/01/2100', firstName).nodeify(done);
+        common.createAgreementWithPerson(browser, 'cacheframe4', agreementName, agreementDesc, contractName, '01/01/2010', '01/01/2100', firstName).nodeify(done);
     });
 
     it('should search agreement', function(done) {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByLinkText('Advanced Search').click()
             .elementByCss('#Search_Agreement_Main_form #Field_Agreement_Main_NameUpper_Search_Value').type(agreementName)
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become(agreementName.toUpperCase())
@@ -172,7 +164,7 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
             .elementById('Button_Agreement_Main_EditAgreement').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementById('Name').clear().type(agreementName + 'New')
             .elementById('Description').clear().type(agreementDesc + 'New')
@@ -181,7 +173,7 @@ describe("/compensation/agreement/tc5-edit-and-view-basic-info", function() {
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Inspector_Agreement_Main_BasicInfo_div_out').text()

@@ -53,7 +53,7 @@ var contractName = 'CK' + r;
 var contractDesc = contractName + 'Desc';
 
 describe("/management-tools/transaction-manager/tc5-new-transaction", function() {
-    this.timeout(60000);
+    this.timeout(90000);
     var browser;
 
     before(function (done) {
@@ -165,7 +165,7 @@ describe("/management-tools/transaction-manager/tc5-new-transaction", function()
     });
 
     it("should create contract kit in production status", function(done) {
-        common.createContractKitInProductionStatus(browser, 'cacheframe4', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
+        common.createContractKitInProductionStatus(browser, 'cacheframe3', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     // We need to create an agreement for our test case
@@ -179,7 +179,7 @@ describe("/management-tools/transaction-manager/tc5-new-transaction", function()
     });
 
     it('should create agreement with person', function(done) {
-        common.createAgreementWithPerson(browser, 'cacheframe5', agreementName, agreementDesc, contractName, '01/01/2010', '01/01/2100', firstName).nodeify(done);
+        common.createAgreementWithPerson(browser, 'cacheframe4', agreementName, agreementDesc, contractName, '01/01/2010', '01/01/2100', firstName).nodeify(done);
     });
 
     it("should load management tools page", function(done) {
@@ -202,12 +202,12 @@ describe("/management-tools/transaction-manager/tc5-new-transaction", function()
       	browser
 	        .frame()
 	        .frame('container')
-	        .frame('cacheframe7')
+	        .frame('cacheframe5')
 	        .frame('subpage')
 	        .elementById('TMTransactionTopGridNewButton').click()
 	        .frame()
 	        .frame('container')
-	        .frame('cacheframe7')
+	        .frame('cacheframe5')
 	        .frame('proppage')
 	        .elementById('TMTransactionPPType').type(transaction)
 
@@ -215,66 +215,66 @@ describe("/management-tools/transaction-manager/tc5-new-transaction", function()
 	        .elementById('searchTMTransactionPPSearchAP_search_div').click()
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('proppage')
             .frame('TMTransactionPPSearchAP_search_div_frame')
             .elementById('Field_Party_Person_FirstName_Search_Value').type(firstName)
             .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('proppage')
             .frame('TMTransactionPPSearchAP_search_div_frame')
             .elementById('TMTransactionPPAPButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
 
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('proppage')
             .execute('scrollTo(0, 3000)')
             .elementById('searchTMTransactionPPSearchPR_search_div').click()
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('proppage')
             .frame('TMTransactionPPSearchPR_search_div_frame')
             .elementById('TMTransactionPPPRName_Search_Value').type(prodName)
             .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('proppage')
             .frame('TMTransactionPPSearchPR_search_div_frame')
             .elementById('TMTransactionPPPRButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
 
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('proppage')
             .execute('scrollTo(0, 3000)')
             .elementById('searchTMTransactionPPSearchCS_search_div').click()
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('proppage')
             .frame('TMTransactionPPSearchCS_search_div_frame')
             .elementById('TMTransactionPPCSNameUpper_Search_Value').type(ckpName)
             .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('proppage')
             .frame('TMTransactionPPSearchCS_search_div_frame')
             .elementById('TMTransactionPPCSButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
 
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('proppage')
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByCss('table[name=TMTransactionTopGrid] tbody tr:nth-child(1) td:nth-child(3)').text()
             .should.eventually.become(transaction.toUpperCase())

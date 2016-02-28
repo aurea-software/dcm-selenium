@@ -163,7 +163,7 @@ describe("/management-tools/transaction-manager/tc14-cancel-comp-event", functio
     });
 
     it("should create contract kit in production status", function(done) {
-        common.createContractKitInProductionStatus(browser, 'cacheframe4', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
+        common.createContractKitInProductionStatus(browser, 'cacheframe3', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     // We need to create an agreement for our test case
@@ -177,7 +177,7 @@ describe("/management-tools/transaction-manager/tc14-cancel-comp-event", functio
     });
 
     it('should create agreement with person', function(done) {
-        common.createAgreementWithPerson(browser, 'cacheframe5', agreementName, agreementDesc, contractName, '01/01/2010', '01/01/2100', firstName).nodeify(done);
+        common.createAgreementWithPerson(browser, 'cacheframe4', agreementName, agreementDesc, contractName, '01/01/2010', '01/01/2100', firstName).nodeify(done);
     });
 
     it("should load management tools page", function(done) {
@@ -200,42 +200,42 @@ describe("/management-tools/transaction-manager/tc14-cancel-comp-event", functio
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByCss('#TMTransactionSearchBox_primary_display_div button').click()
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByLinkText('Search Comp Events').click()
             .nodeify(done);
     });
 
     it("should create comp event", function(done) {
-        common.createCompEvent(browser, 'cacheframe7', '01/01/2015', firstName, prodName).nodeify(done);
+        common.createCompEvent(browser, 'cacheframe5', '01/01/2015', firstName, prodName).nodeify(done);
     });
 
     it("should cancel comp event", function(done) {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementById('CompEventTopGridProduct_Search_Value').type(prodName)
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementById('CompEventTopGridReversalButton').click()
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementByCss('#alertDialog button').click()
             .frame()
             .frame('container')
-            .frame('cacheframe7')
+            .frame('cacheframe5')
             .frame('subpage')
             .elementById('alertDialog').text()
             .should.eventually.include('1 Compensable Event(s) Cancelled Sucessfully. Please click on the Search button to refresh')

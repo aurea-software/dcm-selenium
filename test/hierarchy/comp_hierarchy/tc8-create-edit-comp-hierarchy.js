@@ -92,16 +92,8 @@ describe("/hierarchy/comp_hierarchy/tc8-create-edit-comp-hierarchy", function() 
         browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
-    it("should load contract kit page", function(done) {
-        browser
-            .frame()
-            .frame('sidebar')
-            .elementById('Contracts_sub').click()
-            .nodeify(done);
-    });
-
     it("should create contract kit", function(done) {
-        common.createContractKit(browser, 'cacheframe4', ckName, ckDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
+        common.createContractKit(browser, 'cacheframe3', ckName, ckDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
 	it("should load comp hierarchy tab and create page", function(done) {
@@ -115,12 +107,12 @@ describe("/hierarchy/comp_hierarchy/tc8-create-edit-comp-hierarchy", function() 
     		.execute('scrollTo(0,2000)')
     		.frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
     		.elementById('Button_HierarchySearch_NewAgrHierarchy').type(wd.SPECIAL_KEYS['Enter'])
     		.frame()
     	    .frame('container')
-    	    .frame('cacheframe5')
+    	    .frame('cacheframe4')
     	    .frame('proppage')
             .elementById('Name').type(compHierName)
             .elementById('Description').type(compHierDesc)
@@ -131,7 +123,7 @@ describe("/hierarchy/comp_hierarchy/tc8-create-edit-comp-hierarchy", function() 
 	    browser
     		.frame()
     	    .frame('container')
-    	    .frame('cacheframe5')
+    	    .frame('cacheframe4')
     	    .frame('proppage')
     		.elementById('searchContractKitSearchPage_search_div').click()
     		.frame('ContractKitSearchPage_search_div_frame')
@@ -148,19 +140,19 @@ describe("/hierarchy/comp_hierarchy/tc8-create-edit-comp-hierarchy", function() 
 	    browser
     		.frame()
     	    .frame('container')
-    	    .frame('cacheframe5')
+    	    .frame('cacheframe4')
     	    .frame('proppage')
     		.frame('ContractKitSearchPage_search_div_frame')
     		.elementById('Button_ContractKitSearch_PP_Select').click()
     		.frame()
     	    .frame('container')
-    	    .frame('cacheframe5')
+    	    .frame('cacheframe4')
     	    .frame('proppage')
     		.elementById('validate').click()
     		.elementById('save').click()
     		.frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
     		.elementById('Grid_AgrHierarchySearch_Main').text()
     		.should.eventually.include(compHierName)
@@ -172,19 +164,19 @@ describe("/hierarchy/comp_hierarchy/tc8-create-edit-comp-hierarchy", function() 
 	    browser
     		.frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
     		.elementByLinkText('Edit Hierarchy Details').type(wd.SPECIAL_KEYS['Enter'])
     		.frame()
     	    .frame('container')
-    	    .frame('cacheframe5')
+    	    .frame('cacheframe4')
     	    .frame('proppage')
             .elementById('Name').clear().type(compHierNameNew)
             .elementById('Description').clear().type(compHierDescNew)
     		.elementById('save').click()
     		.frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
     		.elementById('Grid_AgrHierarchySearch_Main').text()
     		.should.eventually.include(compHierNameNew)

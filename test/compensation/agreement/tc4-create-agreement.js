@@ -154,16 +154,8 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
 
     // We need to create a contract kit in production status for our test case
 
-    it("should load contract kit page", function(done) {
-        browser
-            .frame()
-            .frame('sidebar')
-            .elementById('Contracts_sub').click()
-            .nodeify(done);
-    });
-
     it("should create contract kit in production status", function(done) {
-        common.createContractKitInProductionStatus(browser, 'cacheframe4', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
+        common.createContractKitInProductionStatus(browser, 'cacheframe3', contractName, contractDesc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     it("should load agreement page", function(done) {
@@ -178,12 +170,12 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementById('Button_Agreement_Main_NewAgreement').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementById('Name').type('AG' + uniqueString1)
             .elementById('Description').type('AGDesc' + uniqueString1)
@@ -191,7 +183,7 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
             .elementById('searchPartySearchPage_search_div').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('proppage')
             .frame('PartySearchPage_search_div_frame')
             // Organization
@@ -203,21 +195,21 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
             .elementById('Button_PartySearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementById('SelectedObjTextDiv_AgreementParty_link').text()
             .should.eventually.include(organizationPartyName)
             .elementByCss('button[data-id=ContractKit]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementByLinkText(contractName).click()
             .elementById('validate').click()
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become('AG' + uniqueString1)
@@ -228,12 +220,12 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementById('Button_Agreement_Main_NewAgreement').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementById('Name').type('AG' + uniqueString2)
             .elementById('Description').type('AGDesc' + uniqueString2)
@@ -241,7 +233,7 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
             .elementById('searchPartySearchPage_search_div').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('proppage')
             .frame('PartySearchPage_search_div_frame')
             .elementById('Field_Party_Person_FirstName_Search_Value').type(personFirstName)
@@ -251,21 +243,21 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
             .elementById('Button_PartySearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementById('SelectedObjTextDiv_AgreementParty_link').text()
             .should.eventually.include(personFirstName)
             .elementByCss('button[data-id=ContractKit]').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('proppage')
             .elementByLinkText(contractName).click()
             .elementById('validate').click()
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe5')
+            .frame('cacheframe4')
             .frame('subpage')
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
             .should.eventually.become('AG' + uniqueString2)

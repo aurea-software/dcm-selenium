@@ -86,39 +86,31 @@ describe("/compensation/contract-kit/tc5-create-working-version-checkin-export-c
         browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
-    it("should load contract kit page", function(done) {
-        browser
-            .frame()
-            .frame('sidebar')
-            .elementById('Contracts_sub').click()
-            .nodeify(done);
-    });
-
     it("should create contract kit", function(done) {
-        common.createContractKit(browser, 'cacheframe4', name, desc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
+        common.createContractKit(browser, 'cacheframe3', name, desc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
     });
 
     it("should check in working version", function(done) {
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .elementById('Button_Contracts_Main_ContractKitCheckIn').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('Description').type('Promotion comment 1')
             .elementById('validate').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Inspector_Contracts_Main_BasicInfo_div_out').text()
@@ -130,7 +122,7 @@ describe("/compensation/contract-kit/tc5-create-working-version-checkin-export-c
         browser.elementById('Button_Contracts_Main_BasicInfo_EditContractKit').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .elementByCss('#alertDialog .modal-body').text()
             .should.eventually.include('This contract kit and its contents cannot be modified because the contract kit is not checked out')
@@ -141,28 +133,28 @@ describe("/compensation/contract-kit/tc5-create-working-version-checkin-export-c
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .elementByCss('#alertDialog button').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .elementById('Button_Contracts_Main_ContractKitCheckOut').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('Description').type('Editing Kit')
             .elementById('validate').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Inspector_Contracts_Main_BasicInfo_div_out').text()
@@ -174,7 +166,7 @@ describe("/compensation/contract-kit/tc5-create-working-version-checkin-export-c
         browser.elementById('Button_Contracts_Main_BasicInfo_EditContractKit').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('cancel').click()
             .nodeify(done);
@@ -184,7 +176,7 @@ describe("/compensation/contract-kit/tc5-create-working-version-checkin-export-c
         browser
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .elementById('Button_Contracts_Main_ContractKitExport').click()
             .nodeify(done);

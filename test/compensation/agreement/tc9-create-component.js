@@ -96,20 +96,20 @@ describe("/compensation/agreement/tc9-create-component", function() {
         browser.frame().frame('navbar').elementById('Compensation Setup').click().nodeify(done);
     });
 
-    it("should load contract kit page", function(done) {
+    it("should create contract kit", function(done) {
+        common.createContractKit(browser, 'cacheframe3', name, desc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
+    });
+
+    it("should load quota page", function(done) {
         browser
             .frame()
             .frame('sidebar')
-            .elementById('Contracts_sub').click()
+            .elementById('Tab_Contracts_Main_Quotas_link').click()
             .nodeify(done);
     });
 
-    it("should create contract kit", function(done) {
-        common.createContractKit(browser, 'cacheframe4', name, desc, '01/01/2000', '01/01/2300', prodHierName, ckpName, ckpPartyId).nodeify(done);
-    });
-
     it("should create quota", function(done) {
-        common.createQuota(browser, 'cacheframe4', quotaName, quotaDesc).nodeify(done);
+        common.createQuota(browser, 'cacheframe3', quotaName, quotaDesc).nodeify(done);
     });
 
     it('should create component', function(done) {
@@ -119,13 +119,13 @@ describe("/compensation/agreement/tc9-create-component", function() {
             .elementById('Tab_Contracts_Main_Components_link').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementById('Button_Contracts_Main_Components_NewComponent').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('Name').type(componentName)
             .elementById('Description').type(componentDesc)
@@ -138,7 +138,7 @@ describe("/compensation/agreement/tc9-create-component", function() {
             .elementById('complexField_QuotasSearch_search_div').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .frame('QuotasSearch_search_div_frame')
             .elementById('Field_Quotas_Search_Name_Search_Value').type(quotaName)
@@ -147,31 +147,31 @@ describe("/compensation/agreement/tc9-create-component", function() {
             .elementById('QuotasSearchButton_PP_Select').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('validate').click()
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
             .elementByCss('table[name=Grid_Contracts_Main_Components] tbody tr:nth-child(1) td:nth-child(1)').text()
             .should.eventually.become(componentName.toUpperCase())
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .elementById('Button_Contracts_Main_ContractKitCheckIn').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('proppage')
             .elementById('validate').click()
             .elementById('save').click()
             .frame()
             .frame('container')
-            .frame('cacheframe4')
+            .frame('cacheframe3')
             .frame('subpage')
             .elementByCss('table[name=Grid_Contracts_Main] tbody tr:nth-child(1) td:nth-child(5)').text()
             .should.eventually.become('PRODUCTION')
