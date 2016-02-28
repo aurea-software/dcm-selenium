@@ -40,7 +40,7 @@ describe("buttons - paddings", function() {
       .nodeify(done);
   });
 
-  it("should be 6px 12px", function  (done) {
+  it("should be 6px 15px", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -50,7 +50,7 @@ describe("buttons - paddings", function() {
       .frame('subpage')
       .elementByCss('.result-div .btn').getComputedCss('padding')
       .then(function(paddings) {
-        paddings.should.equal("6px 12px");
+        paddings.should.equal("6px 15px");
       })
       .nodeify(done);
   });
