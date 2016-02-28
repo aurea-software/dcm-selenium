@@ -40,7 +40,7 @@ describe("page - bg color", function() {
       .nodeify(done);
   });
 
-  it("should be #E4E9EC rgba(228, 233, 236, 1)", function  (done) {
+  it("should be #f2f4f6 rgba(242, 244, 246, 1)", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -50,7 +50,7 @@ describe("page - bg color", function() {
       .frame('subpage')
       .elementByCss('.content-wrapper').getComputedCss('background-color')
       .then(function(bgcolor) {
-        bgcolor.should.equal("rgba(228, 233, 236, 1)");
+        bgcolor.should.equal("rgba(242, 244, 246, 1)");
       })
       .nodeify(done);
   });
