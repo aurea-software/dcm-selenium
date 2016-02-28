@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("home - top menu text font size", function() {
+describe("menus - left menu level 2 font color", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,11 +40,13 @@ describe("home - top menu text font size", function() {
       .nodeify(done);
   });
 
-  it("should be 16px", function  (done) {
+  it("should be #778086 rgba(119, 128, 134, 1)", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
-      .elementByCss('#navigation li a').getComputedCss('font-size').then(function(font) {
-        font.should.equal("16px");
+      .elementById('Party').click()
+      .frame().frame('sidebar')
+      .elementByCss('.sidebar ul > li > ul > li > a').getComputedCss('color').then(function(color) {
+        color.should.equal("rgba(119, 128, 134, 1)");
       })
       .nodeify(done);
   });

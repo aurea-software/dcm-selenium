@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("home - left menu level 2 font color hover", function() {
+describe("menus - left menu level 3 font size", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,14 +40,13 @@ describe("home - left menu level 2 font color hover", function() {
       .nodeify(done);
   });
 
-  it("should be #ffffff", function  (done) {
+  it("should be 14px", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
       .frame().frame('sidebar')
-      .elementByCss('.sidebar ul > li > ul > li > a').moveTo().sleep(500)
-      .getComputedCss('color').then(function(color) {
-        color.should.equal("rgba(255, 255, 255, 1)");
+      .elementByCss('.sidebar ul > li > ul > li > ul > li > a').getComputedCss('font-size').then(function(font) {
+        font.should.equal("14px");
       })
       .nodeify(done);
   });

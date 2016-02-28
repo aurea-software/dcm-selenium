@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("home - left menu font size", function() {
+describe("menus - top menu text font", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,13 +40,11 @@ describe("home - left menu font size", function() {
       .nodeify(done);
   });
 
-  it("should be 14px", function  (done) {
+  it("should be SourceSansProRegular", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
-      .elementById('Party').click()
-      .frame().frame('sidebar')
-      .elementByCss('.sidebar ul li a').getComputedCss('font-size').then(function(font) {
-        font.should.equal("14px");
+      .elementByCss('#navigation li a').getComputedCss('font-family').then(function(font) {
+        font.should.equal("SourceSansProRegular");
       })
       .nodeify(done);
   });

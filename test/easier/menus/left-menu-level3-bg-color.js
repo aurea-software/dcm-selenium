@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("home - left menu level 3 bg color", function() {
+describe("menus - left menu level 3 bg color", function() {
   this.timeout(30000);
   var browser;
 

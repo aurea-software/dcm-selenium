@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("home - left menu font", function() {
+describe("menus - top menu text hover color", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,13 +40,12 @@ describe("home - left menu font", function() {
       .nodeify(done);
   });
 
-  it("should be SourceSansProRegular", function  (done) {
+  it("should be #ffffff", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
-      .elementById('Party').click()
-      .frame().frame('sidebar')
-      .elementByCss('.sidebar ul li a').getComputedCss('font-family').then(function(font) {
-        font.should.equal("SourceSansProRegular");
+      .elementByCss('#navigation li a').moveTo().sleep(500)
+      .getComputedCss('color').then(function(color) {
+        color.should.equal("rgba(255, 255, 255, 1)");
       })
       .nodeify(done);
   });

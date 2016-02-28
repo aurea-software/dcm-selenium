@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("home - left menu bg color", function() {
+describe("menus - left menu font color hover", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,13 +40,14 @@ describe("home - left menu bg color", function() {
       .nodeify(done);
   });
 
-  it("should be #282C37 rgba(40, 44, 55, 1)", function  (done) {
+  it("should be #ffffff", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
       .frame().frame('sidebar')
-      .elementByCss('body').getComputedCss('background-color').then(function(bgcolor) {
-        bgcolor.should.equal("rgba(40, 44, 55, 1)");
+      .elementByCss('.sidebar ul li a').moveTo().sleep(500)
+      .getComputedCss('color').then(function(color) {
+        color.should.equal("rgba(255, 255, 255, 1)");
       })
       .nodeify(done);
   });

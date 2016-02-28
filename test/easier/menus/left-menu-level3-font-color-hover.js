@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("home - top menu text hover color", function() {
+describe("menus - left menu level 3 font color hover", function() {
   this.timeout(30000);
   var browser;
 
@@ -43,7 +43,10 @@ describe("home - top menu text hover color", function() {
   it("should be #ffffff", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
-      .elementByCss('#navigation li a').moveTo().sleep(500)
+      .elementById('Party').click()
+      .frame().frame('sidebar')
+      .elementByCss('.sidebar ul > li > ul > li > a').click().sleep(500)
+      .elementByCss('.sidebar ul > li > ul > li > ul > li > a').moveTo().sleep(500)
       .getComputedCss('color').then(function(color) {
         color.should.equal("rgba(255, 255, 255, 1)");
       })
