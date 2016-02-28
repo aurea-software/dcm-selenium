@@ -40,7 +40,7 @@ describe("buttons - font size", function() {
       .nodeify(done);
   });
 
-  it("should be 16px", function  (done) {
+  it("should be 14px", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -50,7 +50,7 @@ describe("buttons - font size", function() {
       .frame('subpage')
       .elementByCss('.result-div .btn').getComputedCss('font-size')
       .then(function(font) {
-        font.should.equal("16px");
+        font.should.equal("14px");
       })
       .nodeify(done);
   });
