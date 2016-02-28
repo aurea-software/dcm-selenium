@@ -53,7 +53,7 @@ describe("property page - checkbox item font", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('proppage')
-      .elementByCss('.form-group.checkbox .checkbox-inline').getComputedCss('color')
+      .elementByCss('.form-group.checkbox .checkbox-inline').getComputedCss('font-family')
       .then(function(font) {
         font.should.equal("SourceSansProLight");
       })
