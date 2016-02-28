@@ -48,7 +48,7 @@ describe("buttons - green font color", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.result-div .btn.btn-green').moveTo().sleep(150)
+      .elementByCss('.result-div .btn.btn-green:not(.pass)').moveTo().sleep(150)
       .getComputedCss('color').then(function(font) {
         font.should.equal("rgba(255, 255, 255, 1)");
       })
