@@ -49,8 +49,8 @@ describe("search - datepicker day of month active font color", function() {
       .frame('cacheframe0')
       .frame('subpage')
       .elementByCss('.datepicker.dropdown-menu .datepicker-days .day.active')
-      .getComputedCss('color').then(function(bgcolor) {
-        bgcolor.should.equal("rgba(255, 255, 255, 1)");
+      .getComputedCss('color').then(function(color) {
+        color.should.equal("rgba(255, 255, 255, 1)");
       })
       .nodeify(done);
   });
