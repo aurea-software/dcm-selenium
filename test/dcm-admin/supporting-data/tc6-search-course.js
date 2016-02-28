@@ -57,23 +57,23 @@ describe("/dcm-admin/supporting-data/tc6-search-course", function() {
     });
 
     it("should create new state specific course", function(done) {
-    	common.createCourse(browser, 'cacheframe1', stateSpecificCourseName, 'Yes').nodeify(done);
+        common.createCourse(browser, 'cacheframe1', stateSpecificCourseName, 'Yes').nodeify(done);
     });
 
     it("should create new non state specific course", function(done) {
-    	common.createCourse(browser, 'cacheframe1', nonStateSpecificCourseName, 'No').nodeify(done);
+        common.createCourse(browser, 'cacheframe1', nonStateSpecificCourseName, 'No').nodeify(done);
     });
 
     // Step 1 doesn't specify the search term, which may result in too many courses. We use the
     // course name prefix to limit the result.
     it("should search by course name prefix", function(done) {
-    	browser
-    		.frame()
-    		.frame('container')
-    		.frame('cacheframe1')
-    		.frame('subpage')
-    		.elementById('Field_CourseManagement_Main_CourseName_Search_Value').type(courseNamePrefix + '*')
-    		.elementByLinkText('Search').click()
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            .elementById('Field_CourseManagement_Main_CourseName_Search_Value').type(courseNamePrefix + '*')
+            .elementByLinkText('Search').click()
             .frame()
             .frame('container')
             .frame('cacheframe1')
@@ -87,26 +87,27 @@ describe("/dcm-admin/supporting-data/tc6-search-course", function() {
     });
 
     it("should search by course name prefix and state specific yes", function(done) {
-    	browser
-			.frame()
-			.frame('container')
-			.frame('cacheframe1')
-			.frame('subpage')
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
             .elementById('Field_CourseManagement_Main_CourseName_Search_Value').clear().type(courseNamePrefix + '*')
-			.elementByCss('button[data-id=Field_CourseManagement_Main_StateSpecific_Search_Value]').click()
-			.frame()
-			.frame('container')
-			.frame('cacheframe1')
-			.frame('subpage')
-			.elementByLinkText('Yes').type(wd.SPECIAL_KEYS['Space'])
-			.elementByLinkText('Search').click()
-	        .frame()
-	        .frame('container')
-	        .frame('cacheframe1')
-	        .frame('subpage')
-	        .elementByCss('table[name=Grid_CourseManagement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
-	        .should.eventually.become(stateSpecificCourseName.toUpperCase())
-	        .nodeify(done);
+            .elementByCss('button[data-id=Field_CourseManagement_Main_StateSpecific_Search_Value]').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            .sleep(500)
+            .elementByLinkText('Yes').type(wd.SPECIAL_KEYS['Space'])
+            .elementByLinkText('Search').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            .elementByCss('table[name=Grid_CourseManagement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
+            .should.eventually.become(stateSpecificCourseName.toUpperCase())
+            .nodeify(done);
     });
 
     it("should search by course name prefix and state specific no", function(done) {
@@ -121,6 +122,7 @@ describe("/dcm-admin/supporting-data/tc6-search-course", function() {
             .frame('container')
             .frame('cacheframe1')
             .frame('subpage')
+            .sleep(500)
             .elementByLinkText('No').type(wd.SPECIAL_KEYS['Space'])
             .sleep(2000)
             .elementByLinkText('Search').click()

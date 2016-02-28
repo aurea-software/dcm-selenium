@@ -105,30 +105,30 @@ describe("/management-tools/transaction-manager/tc15-cancel-transaction", functi
     });
 
     it("should load hierarchy tab", function(done) {
-       browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
     });
 
     it("should load product hierarchy page", function(done) {
-       browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
+        browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe2', prodHierName, prodHierDesc).nodeify(done);
+        common.createProductHierarchy(browser, 'cacheframe2', prodHierName, prodHierDesc).nodeify(done);
     });
 
     it("should load product page", function(done) {
-       browser
-           .frame()
-           .frame('container')
-           .frame('cacheframe2')
-           .frame('subpage')
-           .elementByCss('#Search_ProductHierarchySearch_Main_primary_display_div button').click()
-           .frame()
-           .frame('container')
-           .frame('cacheframe2')
-           .frame('subpage')
-           .elementByLinkText('Search Product').click()
-           .nodeify(done);
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe2')
+            .frame('subpage')
+            .elementByCss('#Search_ProductHierarchySearch_Main_primary_display_div button').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe2')
+            .frame('subpage')
+            .elementByLinkText('Search Product').click()
+            .nodeify(done);
     });
 
     it("should create product 1", function(done) {
@@ -172,11 +172,11 @@ describe("/management-tools/transaction-manager/tc15-cancel-transaction", functi
     });
 
     it("should load management tools page", function(done) {
-      browser
-      	.frame()
-        .frame('navbar')
-        .elementById('Management Tools').click()
-        .nodeify(done);
+        browser
+            .frame()
+            .frame('navbar')
+            .elementById('Management Tools').click()
+            .nodeify(done);
     });
 
     it("should load transaction manager page", function(done) {

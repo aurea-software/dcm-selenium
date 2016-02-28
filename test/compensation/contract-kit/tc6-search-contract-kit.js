@@ -156,6 +156,7 @@ describe("/compensation/contract-kit/tc6-search-contract-kit", function() {
             .frame('container')
             .frame('cacheframe3')
             .frame('subpage')
+            .sleep(500)
             .elementByLinkText('Working Version').click()
             .elementByLinkText('Search').click()
             .frame()

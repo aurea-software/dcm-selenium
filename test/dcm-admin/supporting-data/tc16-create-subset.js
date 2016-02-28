@@ -57,7 +57,7 @@ describe("/dcm-admin/supporting-data/tc16-create-subset", function() {
 
     it("should load dcm admin page", function(done) {
         browser
-          	.frame()
+            .frame()
             .frame('navbar')
             .elementById('DCM Admin').click()
             .nodeify(done);
@@ -72,120 +72,122 @@ describe("/dcm-admin/supporting-data/tc16-create-subset", function() {
     });
 
     it("should load search enum page", function(done) {
-    	browser
-			.frame()
-			.frame('container')
-			.frame('cacheframe1')
-			.frame('subpage')
-			.elementByCss("button[title='Search Course']").click()
-			.frame()
-			.frame('container')
-			.frame('cacheframe1')
-			.frame('subpage')
-			.elementByLinkText('Search Enums').click()
-			.nodeify(done);
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            .elementByCss("button[title='Search Course']").click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            .sleep(500)
+            .elementByLinkText('Search Enums').click()
+            .nodeify(done);
     });
 
     it("should create new enum", function(done) {
-      	common.createEnum(browser, 'cacheframe1', enumId, name1, value1, name2, value2, name3, value3).nodeify(done);
+        common.createEnum(browser, 'cacheframe1', enumId, name1, value1, name2, value2, name3, value3).nodeify(done);
     });
 
     it("should search for enum", function(done) {
-    	browser
-    		.frame()
-    		.frame('container')
-    		.frame('cacheframe1')
-    		.frame('subpage')
-    		.elementById('Field_EnumManager_Enums_Main_ID_Search_Value').type(enumId)
-    		.elementByLinkText('Search').click()
-    		.frame()
-    		.frame('container')
-    		.frame('cacheframe1')
-    		.frame('subpage')
-    		.elementByCss('table[name=Grid_EnumManager_Enums_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
-    		.should.eventually.become(enumId.toUpperCase())
-    		.notify(done);
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            .elementById('Field_EnumManager_Enums_Main_ID_Search_Value').type(enumId)
+            .elementByLinkText('Search').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            .elementByCss('table[name=Grid_EnumManager_Enums_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
+            .should.eventually.become(enumId.toUpperCase())
+            .notify(done);
     });
 
     it("should create subset", function(done) {
-    	browser
-    		.frame()
-    		.frame('container')
-    		.frame('cacheframe1')
-    		.frame('subpage')
-    		.elementById('Button_EnumManager_Enums_Main_CreateSubset').click()
-    		.frame()
-    		.frame('container')
-    		.frame('cacheframe1')
-    		.frame('proppage')
-    		.elementById('Id').type(subsetId)
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            .elementById('Button_EnumManager_Enums_Main_CreateSubset').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('proppage')
+            .elementById('Id').type(subsetId)
             .execute('scrollTo(0, 3000)')
-    		// Default to subitem 1
-    		.elementByCss('#DefEntry0 > label.panel-checkbox-label > i').click()
+            // Default to subitem 1
+            .elementByCss('#DefEntry0 > label.panel-checkbox-label > i').click()
             .execute('scrollTo(0, 3000)')
-    		// Include subitem 1
-    		.elementByCss('#IsEnable0 > label.panel-checkbox-label > i').click()
+            // Include subitem 1
+            .elementByCss('#IsEnable0 > label.panel-checkbox-label > i').click()
             // Include subitem 2
             .elementByCss('#IsEnable1 > label.panel-checkbox-label > i').click()
-    		.elementById('validate').click()
-    		.elementById('save').click()
-    		.elementById('save').click()
-    		.nodeify(done);
+            .elementById('validate').click()
+            .elementById('save').click()
+            .elementById('save').click()
+            .nodeify(done);
     });
 
-	// The menu item 'subsets' is not displayed after creating an enum.
-	// The test case desc requires to click this menu item. Skip it for now
-	// as it is not necessary.
+    // The menu item 'subsets' is not displayed after creating an enum.
+    // The test case desc requires to click this menu item. Skip it for now
+    // as it is not necessary.
 
     it("should load search enum subset page", function(done) {
-    	browser
-			.frame()
-			.frame('container')
-			.frame('cacheframe1')
-			.frame('subpage')
-			.elementByCss("button[title='Search Enums']").click()
-			.frame()
-			.frame('container')
-			.frame('cacheframe1')
-			.frame('subpage')
-			.elementByLinkText('Search Enum Subsets').click()
-			.nodeify(done);
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            .elementByCss("button[title='Search Enums']").click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            .sleep(500)
+            .elementByLinkText('Search Enum Subsets').click()
+            .nodeify(done);
     });
 
     it("should search enum subset", function(done) {
-    	browser
-    		.frame()
-    		.frame('container')
-    		.frame('cacheframe1')
-    		.frame('subpage')
-    		.elementById('Field_EnumManager_Enums_Main_Subset_ID_Search_Value').type(subsetId)
-    		.elementByLinkText('Search').click()
-    		.frame()
-    		.frame('container')
-    		.frame('cacheframe1')
-    		.frame('subpage')
-    		// The order is not fixed, so we validate by the prefix only
-    		.elementByCss('table[name=Grid_Enums_Subsets_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
-    		.should.eventually.become(subsetId.toUpperCase())
-    		.elementByCss('table[name=Grid_Enums_Subsets_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
-    		.should.eventually.include(namePrefix.toUpperCase())
-    		.notify(done);
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            .elementById('Field_EnumManager_Enums_Main_Subset_ID_Search_Value').type(subsetId)
+            .elementByLinkText('Search').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            // The order is not fixed, so we validate by the prefix only
+            .elementByCss('table[name=Grid_Enums_Subsets_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
+            .should.eventually.become(subsetId.toUpperCase())
+            .elementByCss('table[name=Grid_Enums_Subsets_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
+            .should.eventually.include(namePrefix.toUpperCase())
+            .notify(done);
     });
 
     it("should display enum subset entries", function(done) {
-    	browser
-    		.frame()
-    		.frame('sidebar')
-    		.elementById('Tab_Enums_Subset_Main_Entries_link').click()
-    		.frame()
-    		.frame('container')
-    		.frame('cacheframe1')
-    		.frame('subpage')
-    		.frame('component_iframe')
-    		.elementByCss('table[name=Grid_Enums_Subset_Entries] tbody tr:nth-child(1) td:nth-child(1)').text()
-    		.should.eventually.include(namePrefix.toUpperCase())
+        browser
+            .frame()
+            .frame('sidebar')
+            .elementById('Tab_Enums_Subset_Main_Entries_link').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe1')
+            .frame('subpage')
+            .frame('component_iframe')
+            .elementByCss('table[name=Grid_Enums_Subset_Entries] tbody tr:nth-child(1) td:nth-child(1)').text()
+            .should.eventually.include(namePrefix.toUpperCase())
             .elementByCss('table[name=Grid_Enums_Subset_Entries] tbody tr:nth-child(2) td:nth-child(1)').text()
             .should.eventually.include(namePrefix.toUpperCase())
-    		.notify(done);
+            .notify(done);
     });
 });

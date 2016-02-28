@@ -60,20 +60,20 @@ describe("/hierarchy/party_hierarchy/tc7-create-root-position-person-org", funct
         common.login(browser, url, username, password).nodeify(done);
     });
 
-	it("should load party page", function(done) {
-	    browser
-    	    .frame()
+    it("should load party page", function(done) {
+        browser
+            .frame()
             .frame('navbar')
             .elementById('Party').click()
             .nodeify(done);
     });
 
-	it('should create person party ', function(done) {
+    it('should create person party ', function(done) {
         common.createPersonParty(browser, 'cacheframe0', taxId1, firstName1, lastName1, middleName1, preferredName1, city1, stateName, dtcc1, npn1).nodeify(done);
     });
 
-	it("should load organization party page", function(done) {
-	    browser
+    it("should load organization party page", function(done) {
+        browser
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -85,126 +85,126 @@ describe("/hierarchy/party_hierarchy/tc7-create-root-position-person-org", funct
             .frame('subpage')
             .elementByLinkText('Search Organization').click()
             .nodeify(done);
-	});
+    });
 
-	it('should create organization party', function(done) {
+    it('should create organization party', function(done) {
         common.createOrganizationParty(browser, 'cacheframe0', taxId2, partyName2, dtcc2, npn2, city2, stateName).nodeify(done);
     });
 
-	it("should load party hierarchy page", function(done) {
-		browser
-			.frame()
-			.frame('navbar')
-			.elementById('Hierarchy').click()
-			.nodeify(done);
+    it("should load party hierarchy page", function(done) {
+        browser
+            .frame()
+            .frame('navbar')
+            .elementById('Hierarchy').click()
+            .nodeify(done);
     });
 
-	it("should create party hierarchy", function(done) {
-		common.createPartyHierarchy(browser, 'cacheframe1', hiername, hiername + ' Description').nodeify(done);
+    it("should create party hierarchy", function(done) {
+        common.createPartyHierarchy(browser, 'cacheframe1', hiername, hiername + ' Description').nodeify(done);
     });
 
-	it("should search party hierarchy by name", function(done) {
-		browser
-			.frame()
-			.frame('navbar')
-			.elementById('Hierarchy').click()
+    it("should search party hierarchy by name", function(done) {
+        browser
+            .frame()
+            .frame('navbar')
+            .elementById('Hierarchy').click()
             .frame()
             .frame('container')
             .frame('cacheframe1')
             .frame('subpage')
-			.elementByCss('#Search_HierarchySearch_Main_primaryForm #Field_Hierarchy_Name_Search_Value').type(hiername)
-			.elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
-			.elementById('Grid_HierarchySearch_Main').text()
-			.should.eventually.include(hiername)
+            .elementByCss('#Search_HierarchySearch_Main_primaryForm #Field_Hierarchy_Name_Search_Value').type(hiername)
+            .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
+            .elementById('Grid_HierarchySearch_Main').text()
+            .should.eventually.include(hiername)
             .notify(done);
     });
 
-	it("should add person party as root position", function(done) {
-		browser
+    it("should add person party as root position", function(done) {
+        browser
             .frame()
             .frame('sidebar')
             .elementById('Tab_HierarchySearch_RootPosition_Main_link').click()
-			.frame()
+            .frame()
             .frame('container')
             .frame('cacheframe1')
             .frame('subpage')
-			.frame('component_iframe')
-			.elementById('Button_AddRootPosition').click()
-			.frame()
+            .frame('component_iframe')
+            .elementById('Button_AddRootPosition').click()
+            .frame()
             .frame('container')
             .frame('cacheframe1')
             .frame('proppage')
-			.elementById('Name').clear().type(rootPositionForPerson)
-			.elementById('Description').type('DESC ' + rootPositionForPerson)
-			.execute('scrollTo(0, 6000)')
-			.elementById('searchPartySearchPage_search_div').click()
-			.frame('PartySearchPage_search_div_frame')
-			.elementById('Field_Party_Person_FirstName_Search_Value').type(firstName1)
-			.elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
-			.elementById('Grid_Party').text()
-			.should.eventually.include(firstName1 + ' ' + lastName1)
-			.elementById('Grid_Party_GridName').click()
-			.elementById('Button_PartySearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
-			.frame()
+            .elementById('Name').clear().type(rootPositionForPerson)
+            .elementById('Description').type('DESC ' + rootPositionForPerson)
+            .execute('scrollTo(0, 6000)')
+            .elementById('searchPartySearchPage_search_div').click()
+            .frame('PartySearchPage_search_div_frame')
+            .elementById('Field_Party_Person_FirstName_Search_Value').type(firstName1)
+            .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
+            .elementById('Grid_Party').text()
+            .should.eventually.include(firstName1 + ' ' + lastName1)
+            .elementById('Grid_Party_GridName').click()
+            .elementById('Button_PartySearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
             .frame('container')
             .frame('cacheframe1')
             .frame('proppage')
-			.elementByCss('span.picker-field-textParty_GID').text()
-			.should.eventually.include(firstName1 + ' ' + lastName1)
-			.elementById('save').click()
-			.frame()
+            .elementByCss('span.picker-field-textParty_GID').text()
+            .should.eventually.include(firstName1 + ' ' + lastName1)
+            .elementById('save').click()
+            .frame()
             .frame('container')
             .frame('cacheframe1')
             .frame('subpage')
-			.frame('component_iframe')
-			.elementById('Grid_RootPosition_Main').text()
-			.should.eventually.include(hiername)
-			.should.eventually.include(rootPositionForPerson)
-			.notify(done);
+            .frame('component_iframe')
+            .elementById('Grid_RootPosition_Main').text()
+            .should.eventually.include(hiername)
+            .should.eventually.include(rootPositionForPerson)
+            .notify(done);
     });
 
-	it("should add organization party as root position", function(done) {
-		browser
-			.frame()
+    it("should add organization party as root position", function(done) {
+        browser
+            .frame()
             .frame('sidebar')
             .elementById('Tab_HierarchySearch_RootPosition_Main_link').click()
             .frame()
             .frame('container')
             .frame('cacheframe1')
             .frame('subpage')
-			.frame('component_iframe')
-			.elementById('Button_AddRootPosition').click()
-			.frame()
+            .frame('component_iframe')
+            .elementById('Button_AddRootPosition').click()
+            .frame()
             .frame('container')
             .frame('cacheframe1')
             .frame('proppage')
-			.elementById('Name').clear().type(rootPositionForOrg)
-			.elementById('Description').clear().type('DESC ' + rootPositionForOrg)
-			.execute('scrollTo(0, 6000)')
-			.elementById('searchPartySearchPage_search_div').click()
-			.frame('PartySearchPage_search_div_frame')
-			.elementByCss('#Search_Party_form > div.preset-query-header > label:nth-child(3) > i').click()
-			.elementById('Field_Party_Organization_NameUpper_Search_Value').type(partyName2)
-			.elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
-			.elementById('Grid_Party').text()
-			.should.eventually.include(partyName2)
-			.elementById('Grid_Party_GridName').click()
-			.elementById('Button_PartySearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
-			.frame()
+            .elementById('Name').clear().type(rootPositionForOrg)
+            .elementById('Description').clear().type('DESC ' + rootPositionForOrg)
+            .execute('scrollTo(0, 6000)')
+            .elementById('searchPartySearchPage_search_div').click()
+            .frame('PartySearchPage_search_div_frame')
+            .elementByCss('#Search_Party_form > div.preset-query-header > label:nth-child(3) > i').click()
+            .elementById('Field_Party_Organization_NameUpper_Search_Value').type(partyName2)
+            .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
+            .elementById('Grid_Party').text()
+            .should.eventually.include(partyName2)
+            .elementById('Grid_Party_GridName').click()
+            .elementById('Button_PartySearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
+            .frame()
             .frame('container')
             .frame('cacheframe1')
             .frame('proppage')
-			.elementByCss('span.picker-field-textParty_GID').text()
-			.should.eventually.include(partyName2)
-			.elementById('save').click()
-			.frame()
+            .elementByCss('span.picker-field-textParty_GID').text()
+            .should.eventually.include(partyName2)
+            .elementById('save').click()
+            .frame()
             .frame('container')
             .frame('cacheframe1')
             .frame('subpage')
-			.frame('component_iframe')
-			.elementById('Grid_RootPosition_Main').text()
-			.should.eventually.include(hiername)
-			.should.eventually.include(rootPositionForOrg)
-			.notify(done);
+            .frame('component_iframe')
+            .elementById('Grid_RootPosition_Main').text()
+            .should.eventually.include(hiername)
+            .should.eventually.include(rootPositionForOrg)
+            .notify(done);
     });
 });

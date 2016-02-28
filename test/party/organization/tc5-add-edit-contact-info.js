@@ -90,6 +90,7 @@ describe("/party/organization/tc5-add-edit-contact-info", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('proppage')
+            .sleep(500)
             .elementByLinkText(newAddressType).click()
             .elementById('Address.Street1').type('Street123')
             .elementById('Address.City').type('City123')
@@ -98,6 +99,7 @@ describe("/party/organization/tc5-add-edit-contact-info", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('proppage')
+            .sleep(500)
             .elementByLinkText('California').click()
             // Test case desc requires 123. We change to 321 for easy validation.
             .elementById('ZipCode').type('321')
@@ -166,6 +168,7 @@ describe("/party/organization/tc5-add-edit-contact-info", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('proppage')
+            .sleep(500)
             .elementByLinkText(newAddressType).click()
             .elementById('Address.Street1').clear().type('abc')
             // Test case desc requires abc. We change to def for easy validation.
@@ -175,6 +178,7 @@ describe("/party/organization/tc5-add-edit-contact-info", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('proppage')
+            .sleep(500)
             .elementByLinkText('Florida').click()
             .elementById('save').click()
             .nodeify(done);

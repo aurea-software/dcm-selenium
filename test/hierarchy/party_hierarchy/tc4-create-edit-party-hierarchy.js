@@ -33,26 +33,26 @@ describe("/hierarchy/party_hierarchy/tc4-create-edit-party-hierarchy", function(
         common.login(browser, url, username, password).nodeify(done);
     });
 
-	it("should load party hierarchy page", function(done) {
-	    browser
+    it("should load party hierarchy page", function(done) {
+        browser
             .frame()
             .frame('navbar')
             .elementById('Hierarchy').click()
             .nodeify(done);
     });
 
-	it("should load create party hierarchy page", function(done) {
-	    browser
+    it("should load create party hierarchy page", function(done) {
+        browser
             .frame()
             .frame('container')
-    		.frame('cacheframe0')
+            .frame('cacheframe0')
             .frame('subpage')
             .elementById('Button_HierarchySearch_NewHierarchy').click()
-    		.nodeify(done);
+            .nodeify(done);
     });
 
-	it("should create party hierarchy", function(done) {
-	    browser
+    it("should create party hierarchy", function(done) {
+        browser
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -60,36 +60,36 @@ describe("/hierarchy/party_hierarchy/tc4-create-edit-party-hierarchy", function(
             .elementById('Name').type('PartyHier' + randNum)
             .elementById('Description').type('Test Org Hierarchy')
             .elementById('validate').click()
-    		.elementById('save').click()
-    		.frame()
+            .elementById('save').click()
+            .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-    		.elementById('Grid_HierarchySearch_Main').text()
+            .elementById('Grid_HierarchySearch_Main').text()
             .should.eventually.include('PARTYHIER' + randNum)
             .notify(done);
     });
 
-	it("should edit party hierarchy", function(done) {
-	    browser
-    		.frame()
+    it("should edit party hierarchy", function(done) {
+        browser
+            .frame()
             .frame('container')
-    		.frame('cacheframe0')
+            .frame('cacheframe0')
             .frame('subpage')
             .elementById('Button_HierarchySearch_EditHierarchy').click()
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('proppage')
-    		.elementById('Description').type('')
+            .elementById('Description').type('')
             .elementById('Description').type('Test Org Hierarchy New')
             .elementById('validate').click()
-    		.elementById('save').click()
-    		.frame()
+            .elementById('save').click()
+            .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-    		.elementById('Grid_HierarchySearch_Main').text()
+            .elementById('Grid_HierarchySearch_Main').text()
             .should.eventually.include('TEST ORG HIERARCHY NEW')
             .notify(done);
     });

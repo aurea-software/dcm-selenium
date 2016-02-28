@@ -184,7 +184,7 @@ describe("/management-tools/transaction-manager/tc5-new-transaction", function()
 
     it("should load management tools page", function(done) {
         browser
-          	.frame()
+            .frame()
             .frame('navbar')
             .elementById('Management Tools').click()
             .nodeify(done);
@@ -199,20 +199,20 @@ describe("/management-tools/transaction-manager/tc5-new-transaction", function()
     });
 
     it("should create transaction", function(done) {
-      	browser
-	        .frame()
-	        .frame('container')
-	        .frame('cacheframe5')
-	        .frame('subpage')
-	        .elementById('TMTransactionTopGridNewButton').click()
-	        .frame()
-	        .frame('container')
-	        .frame('cacheframe5')
-	        .frame('proppage')
-	        .elementById('TMTransactionPPType').type(transaction)
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe5')
+            .frame('subpage')
+            .elementById('TMTransactionTopGridNewButton').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe5')
+            .frame('proppage')
+            .elementById('TMTransactionPPType').type(transaction)
 
-	        .execute('scrollTo(0, 3000)')
-	        .elementById('searchTMTransactionPPSearchAP_search_div').click()
+            .execute('scrollTo(0, 3000)')
+            .elementById('searchTMTransactionPPSearchAP_search_div').click()
             .frame()
             .frame('container')
             .frame('cacheframe5')
@@ -278,7 +278,7 @@ describe("/management-tools/transaction-manager/tc5-new-transaction", function()
             .frame('subpage')
             .elementByCss('table[name=TMTransactionTopGrid] tbody tr:nth-child(1) td:nth-child(3)').text()
             .should.eventually.become(transaction.toUpperCase())
-	        .notify(done);
+            .notify(done);
     });
 
 });

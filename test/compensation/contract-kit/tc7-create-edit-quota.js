@@ -115,6 +115,7 @@ describe("/compensation/contract-kit/tc7-create-edit-quota", function() {
             .frame('container')
             .frame('cacheframe3')
             .frame('proppage')
+            .sleep(500)
             .elementByLinkText('allocation.getWeight()').click()
             .elementById('MeasureDescription').type('Alloc Get Weight')
             .elementById('validate').click()

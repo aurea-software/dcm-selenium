@@ -116,22 +116,22 @@ describe("/party/location/tc12-search-location-party", function() {
     };
 
     it("should create location party 1", function(done) {
-    	common.createLocationParty(browser, 'cacheframe0', locationName1, locationId1, locationDtcc1, locationStreet1, locationCity1, locationZipCode1, 'Subtype 2', partyName)
-	        .frame()
-	        .frame('container')
-	        .frame('cacheframe0')
-	        .frame('subpage')
-	        .elementByCss('table[name=Grid_Location_Main] tbody tr:nth-child(1) td:nth-child(2)').text().then(function(data) {
-	    		// The id in the result table may be DIFFERENT from the id that we key in when creating a location party.
-	    		// Hence, we need to fetch the new id after the party has been created.
-	            storeLocationId1(data);
-	        })
-	        .nodeify(done);
+        common.createLocationParty(browser, 'cacheframe0', locationName1, locationId1, locationDtcc1, locationStreet1, locationCity1, locationZipCode1, 'Subtype 2', partyName)
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByCss('table[name=Grid_Location_Main] tbody tr:nth-child(1) td:nth-child(2)').text().then(function(data) {
+                // The id in the result table may be DIFFERENT from the id that we key in when creating a location party.
+                // Hence, we need to fetch the new id after the party has been created.
+                storeLocationId1(data);
+            })
+            .nodeify(done);
     });
 
     // We need the status of location party 1 to be different
     it("should close location party 1", function(done) {
-    	common.closeLocationParty(browser, 'cacheframe0').nodeify(done);
+        common.closeLocationParty(browser, 'cacheframe0').nodeify(done);
     });
 
     it("should load create location page 2", function(done) {
@@ -145,17 +145,17 @@ describe("/party/location/tc12-search-location-party", function() {
     });
 
     it("should create location party 2", function(done) {
-    	common.createLocationParty(browser, 'cacheframe0', locationName2, locationId2, locationDtcc2, locationStreet2, locationCity2, locationZipCode2, 'Subtype 2', partyName).nodeify(done);
+        common.createLocationParty(browser, 'cacheframe0', locationName2, locationId2, locationDtcc2, locationStreet2, locationCity2, locationZipCode2, 'Subtype 2', partyName).nodeify(done);
     });
 
     it("should search location 2 by name", function(done) {
-    	browser
-	        .frame()
-	        .frame('container')
-	        .frame('cacheframe0')
-	        .frame('subpage')
-	        .elementById('Field_Location_Main_LocationNameUpper_Search_Value').type(locationName2)
-	        .elementByLinkText('Search').click()
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementById('Field_Location_Main_LocationNameUpper_Search_Value').type(locationName2)
+            .elementByLinkText('Search').click()
             .frame()
             .frame('container')
             .frame('cacheframe0')
@@ -174,20 +174,20 @@ describe("/party/location/tc12-search-location-party", function() {
     });
 
     it("should search location 1 by id", function(done) {
-    	browser
-	        .frame()
-	        .frame('container')
-	        .frame('cacheframe0')
-	        .frame('subpage')
-	        .elementById('Field_Location_Main_PartyID_Search_Value').type(locationId1)
-	        .elementByLinkText('Search').click()
-	        .frame()
-	        .frame('container')
-	        .frame('cacheframe0')
-	        .frame('subpage')
-	        .elementByCss('table[name=Grid_Location_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
-	        .should.eventually.become(locationName1.toUpperCase())
-	        .notify(done);
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementById('Field_Location_Main_PartyID_Search_Value').type(locationId1)
+            .elementByLinkText('Search').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByCss('table[name=Grid_Location_Main] tbody tr:nth-child(1) td:nth-child(1)').text()
+            .should.eventually.become(locationName1.toUpperCase())
+            .notify(done);
     });
 
     it('should clear search input 2', function(done) {
@@ -212,12 +212,14 @@ describe("/party/location/tc12-search-location-party", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
+            .sleep(500)
             .elementByLinkText('Subtype 2').click()
             .elementByCss('#Search_Location_Main_form button[data-id=Field_Location_Main_Status_Search_Value]').click()
             .frame()
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
+            .sleep(500)
             .elementByLinkText('New').click()
             .elementById('Field_Location_Main_OwnerName_Search_Value').type(partyName)
             .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
@@ -242,6 +244,7 @@ describe("/party/location/tc12-search-location-party", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
+            .sleep(500)
             .elementByLinkText('Any').click()
             .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
             .sleep(2000)
@@ -259,22 +262,24 @@ describe("/party/location/tc12-search-location-party", function() {
 
     it('should sort locations', function(done) {
         browser
-	        .frame()
-	        .frame('container')
-	        .frame('cacheframe0')
-	        .frame('subpage')
-	        .elementByCss('button[data-id=SortField1]').click()
-	        .frame()
-	        .frame('container')
-	        .frame('cacheframe0')
-	        .frame('subpage')
-	        .elementByLinkText('Name').click()
-	        .elementByCss('button[data-id=SortField1_order]').click()
-	        .frame()
-	        .frame('container')
-	        .frame('cacheframe0')
-	        .frame('subpage')
-	        .elementByLinkText('Descending').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .elementByCss('button[data-id=SortField1]').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .sleep(500)
+            .elementByLinkText('Name').click()
+            .elementByCss('button[data-id=SortField1_order]').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
+            .sleep(500)
+            .elementByLinkText('Descending').click()
             .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
             .sleep(2000)
             .frame()

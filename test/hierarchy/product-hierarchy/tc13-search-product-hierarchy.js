@@ -124,6 +124,7 @@ describe("/hierarchy/product-hierarchy/tc13-search-product-hierarchy", function(
             .frame('container')
             .frame('cacheframe1')
             .frame('subpage')
+            .sleep(500)
             .elementByLinkText('Descending').click()
             .elementByCss('#Search_ProductHierarchySearch_Main_form #Field_ProductHierarchySearch_Main_Name_Search_Value').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
