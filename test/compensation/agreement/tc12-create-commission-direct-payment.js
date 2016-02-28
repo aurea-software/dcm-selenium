@@ -88,15 +88,15 @@ describe("/compensation/agreement/tc12-create-commission-direct-payment", functi
     });
 
     it("should load hierarchy tab", function(done) {
-       browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
+        browser.frame().frame('navbar').elementById('Hierarchy').click().nodeify(done);
     });
 
     it("should load product hierarchy page", function(done) {
-       browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
+        browser.frame().frame('sidebar').elementById('ProductHierarchySearch_sub').click().nodeify(done);
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe2', prodHierName, prodHierDesc).nodeify(done);
+        common.createProductHierarchy(browser, 'cacheframe2', prodHierName, prodHierDesc).nodeify(done);
     });
 
     it("should load compensation setup page", function(done) {
@@ -163,6 +163,7 @@ describe("/compensation/agreement/tc12-create-commission-direct-payment", functi
             .frame('container')
             .frame('cacheframe3')
             .frame('proppage')
+            .sleep(500)
             .elementByLinkText('allocation.getWeight()').click()
             .elementById('validate').click()
             .elementById('save').click()

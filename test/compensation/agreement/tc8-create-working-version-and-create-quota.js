@@ -177,6 +177,7 @@ describe("/compensation/agreement/tc8-create-working-version-and-create-quota", 
             .frame('container')
             .frame('cacheframe3')
             .frame('proppage')
+            .sleep(500)
             .elementByLinkText('allocation.getWeight()').click()
             .elementById('MeasureDescription').type('Alloc Get Weight')
             .elementById('validate').click()

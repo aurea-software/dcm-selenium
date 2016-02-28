@@ -182,7 +182,7 @@ describe("/management-tools/transaction-manager/tc6-new-comp-event", function() 
 
     it("should load management tools page", function(done) {
         browser
-          	.frame()
+            .frame()
             .frame('navbar')
             .elementById('Management Tools').click()
             .nodeify(done);
@@ -212,20 +212,20 @@ describe("/management-tools/transaction-manager/tc6-new-comp-event", function() 
     });
 
     it("should create comp event", function(done) {
-      	browser
-	        .frame()
-	        .frame('container')
-	        .frame('cacheframe5')
-	        .frame('subpage')
-	        .elementById('CompEventTopGridNewButton').click()
-	        .frame()
-	        .frame('container')
-	        .frame('cacheframe5')
-	        .frame('proppage')
-	        .elementById('TMTransactionPPDate').clear().type('01/01/2015')
+        browser
+            .frame()
+            .frame('container')
+            .frame('cacheframe5')
+            .frame('subpage')
+            .elementById('CompEventTopGridNewButton').click()
+            .frame()
+            .frame('container')
+            .frame('cacheframe5')
+            .frame('proppage')
+            .elementById('TMTransactionPPDate').clear().type('01/01/2015')
 
-	        .execute('scrollTo(0, 3000)')
-	        .elementById('searchTMTransactionPPSearchAP_search_div').click()
+            .execute('scrollTo(0, 3000)')
+            .elementById('searchTMTransactionPPSearchAP_search_div').click()
             .frame()
             .frame('container')
             .frame('cacheframe5')
@@ -270,6 +270,7 @@ describe("/management-tools/transaction-manager/tc6-new-comp-event", function() 
             .frame('container')
             .frame('cacheframe5')
             .frame('proppage')
+            .sleep(500)
             .elementByLinkText('Initial Purchase').click()
             .elementById('SplitPercentage').clear().type(50)
             .elementById('Amount').clear().type(1000)
@@ -283,7 +284,7 @@ describe("/management-tools/transaction-manager/tc6-new-comp-event", function() 
             .should.eventually.become(prodName.toUpperCase())
             .elementByCss('table[name=CompEventGrid] tbody tr:nth-child(1) td:nth-child(4)').text()
             .should.eventually.become(firstName.toUpperCase() + ' ' + lastName.toUpperCase())
-	        .notify(done);
+            .notify(done);
     });
 
 });

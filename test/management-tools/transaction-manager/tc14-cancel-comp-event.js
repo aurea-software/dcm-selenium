@@ -182,7 +182,7 @@ describe("/management-tools/transaction-manager/tc14-cancel-comp-event", functio
 
     it("should load management tools page", function(done) {
         browser
-          	.frame()
+            .frame()
             .frame('navbar')
             .elementById('Management Tools').click()
             .nodeify(done);

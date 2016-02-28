@@ -109,6 +109,7 @@ describe("/party/team/tc13-create-team", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('proppage')
+            .sleep(500)
             .elementByLinkText('Terminated').click()
             .elementById('validate').click()
             .elementById('save').click()

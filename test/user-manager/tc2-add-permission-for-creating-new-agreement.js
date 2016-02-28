@@ -97,6 +97,7 @@ describe("/user-manager/tc2-add-permission-for-creating-new-agreement", function
             .frame('container')
             .frame('cacheframe1')
             .frame('proppage')
+            .sleep(500)
             // #PermissionType0 > div > div > ul > li:nth-child(2) > a
             .elementByLinkText('Edit').click()
             .elementById('complexField_Page_ElementSearch_search_div').click()

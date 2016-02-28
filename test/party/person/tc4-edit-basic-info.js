@@ -161,6 +161,7 @@ describe("/party/person/tc4-edit-basic-info", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('proppage')
+            .sleep(500)
             .elementByLinkText('Not Recontractable').click()
             .elementById('NewStatus.StartDate').clear().type('01/01/2015')
             .elementById('validate').click()
