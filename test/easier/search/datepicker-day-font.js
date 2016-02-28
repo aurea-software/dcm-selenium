@@ -48,7 +48,7 @@ describe("search - datepicker day of month font", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.datepicker.dropdown-menu .datepicker-days .dow')
+      .elementByCss('.datepicker.dropdown-menu .datepicker-days .day')
       .getComputedCss('font-family').then(function(font) {
         font.should.equal("SourceSansProLight");
       })
