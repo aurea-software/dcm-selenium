@@ -57,6 +57,7 @@ define(function() {
                 .frame('navbar')
                 // The 'Logout' link is hidden. User needs to hoover the cursor to show the link.
                 // We change the CSS to make sure that the element is visible to click.
+                // FIXME consider using moveTo() instead of modifying the CSS.
                 .execute('document.querySelector(\'#session > div:nth-child(2)\').style.left = \'0%\';')
                 // Wait for the element to slide in
                 .sleep(500)

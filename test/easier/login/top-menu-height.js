@@ -11,11 +11,11 @@ var wd = require('wd');
 var url = config.get("url");
 
 describe("login - top menu height", function() {
-  this.timeout(30000);
+  this.timeout(60000);
   var browser;
- 
+
   before(function (done) {
-    browser = wd.promiseChainRemote(config.get("remote")); 
+    browser = wd.promiseChainRemote(config.get("remote"));
 
     // optional extra logging
     browser.on('status', function(info) {
@@ -29,7 +29,7 @@ describe("login - top menu height", function() {
       .init(config.get("environment"))
       .nodeify(done);  //same as : .then(function() { done(); });
   });
- 
+
   after(function (done) {
     browser
       .quit()

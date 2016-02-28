@@ -15,11 +15,11 @@ var password = config.get("password");
 var common = require('../../lib/common');
 
 describe("advanced search - dropdown menu paddings", function() {
-  this.timeout(30000);
+  this.timeout(60000);
   var browser;
 
   before(function (done) {
-    browser = wd.promiseChainRemote(config.get("remote")); 
+    browser = wd.promiseChainRemote(config.get("remote"));
 
     // optional extra logging
     browser.on('status', function(info) {
@@ -40,7 +40,7 @@ describe("advanced search - dropdown menu paddings", function() {
       .nodeify(done);
   });
 
-  it("should be 7px 15px", function  (done) {
+  it("should be 3px 20px", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -52,7 +52,7 @@ describe("advanced search - dropdown menu paddings", function() {
       .elementByCss('.search-container .advanced-form .bootstrap-select button').click()
       .elementByCss('.search-container .advanced-form .bootstrap-select .dropdown-menu > li > a')
       .getComputedCss('padding').then(function(padding) {
-        padding.should.equal("7px 15px");
+        padding.should.equal("3px 20px");
       })
       .nodeify(done);
   });

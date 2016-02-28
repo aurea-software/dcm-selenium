@@ -15,11 +15,11 @@ var password = config.get("password");
 var common = require('../../lib/common');
 
 describe("search - datepicker day of month font", function() {
-  this.timeout(30000);
+  this.timeout(60000);
   var browser;
 
   before(function (done) {
-    browser = wd.promiseChainRemote(config.get("remote")); 
+    browser = wd.promiseChainRemote(config.get("remote"));
 
     // optional extra logging
     browser.on('status', function(info) {
@@ -40,7 +40,7 @@ describe("search - datepicker day of month font", function() {
       .nodeify(done);
   });
 
-  it("should be SourceSansProLight", function  (done) {
+  it("should be SourceSansProRegular", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('DCM Admin').click()
@@ -50,7 +50,7 @@ describe("search - datepicker day of month font", function() {
       .frame('subpage')
       .elementByCss('.datepicker.dropdown-menu .datepicker-days .day')
       .getComputedCss('font-family').then(function(font) {
-        font.should.equal("SourceSansProLight");
+        font.should.equal("SourceSansProRegular");
       })
       .nodeify(done);
   });

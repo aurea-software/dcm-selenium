@@ -15,11 +15,11 @@ var password = config.get("password");
 var common = require('../../lib/common');
 
 describe("search - clear button label", function() {
-  this.timeout(30000);
+  this.timeout(60000);
   var browser;
 
   before(function (done) {
-    browser = wd.promiseChainRemote(config.get("remote")); 
+    browser = wd.promiseChainRemote(config.get("remote"));
 
     // optional extra logging
     browser.on('status', function(info) {

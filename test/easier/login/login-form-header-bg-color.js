@@ -11,11 +11,11 @@ var wd = require('wd');
 var url = config.get("url");
 
 describe("login - form header bg color", function() {
-  this.timeout(30000);
+  this.timeout(60000);
   var browser;
- 
+
   before(function (done) {
-    browser = wd.promiseChainRemote(config.get("remote")); 
+    browser = wd.promiseChainRemote(config.get("remote"));
 
     // optional extra logging
     browser.on('status', function(info) {
@@ -29,13 +29,13 @@ describe("login - form header bg color", function() {
       .init(config.get("environment"))
       .nodeify(done);  //same as : .then(function() { done(); });
   });
- 
+
   after(function (done) {
     browser
       .quit()
       .nodeify(done);
   });
- 
+
   it("should be #1F222D or rgba(31, 34, 45, 1)", function  (done) {
     browser
       .get(url)

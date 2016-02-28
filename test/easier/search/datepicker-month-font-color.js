@@ -15,11 +15,11 @@ var password = config.get("password");
 var common = require('../../lib/common');
 
 describe("search - datepicker month font color", function() {
-  this.timeout(30000);
+  this.timeout(60000);
   var browser;
 
   before(function (done) {
-    browser = wd.promiseChainRemote(config.get("remote")); 
+    browser = wd.promiseChainRemote(config.get("remote"));
 
     // optional extra logging
     browser.on('status', function(info) {
@@ -40,7 +40,7 @@ describe("search - datepicker month font color", function() {
       .nodeify(done);
   });
 
-  it("should be #EEEEEE rgba(238, 238, 238, 1)", function  (done) {
+  it("should be #FFFFFF rgba(255, 255, 255, 1)", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('DCM Admin').click()
@@ -50,7 +50,7 @@ describe("search - datepicker month font color", function() {
       .frame('subpage')
       .elementByCss('.datepicker.dropdown-menu .datepicker-days .switch')
       .getComputedCss('color').then(function(font) {
-        font.should.equal("rgba(238, 238, 238, 1)");
+        font.should.equal("rgba(255, 255, 255, 1)");
       })
       .nodeify(done);
   });

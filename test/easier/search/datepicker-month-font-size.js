@@ -15,11 +15,11 @@ var password = config.get("password");
 var common = require('../../lib/common');
 
 describe("search - datepicker month font size", function() {
-  this.timeout(30000);
+  this.timeout(60000);
   var browser;
 
   before(function (done) {
-    browser = wd.promiseChainRemote(config.get("remote")); 
+    browser = wd.promiseChainRemote(config.get("remote"));
 
     // optional extra logging
     browser.on('status', function(info) {
@@ -40,7 +40,7 @@ describe("search - datepicker month font size", function() {
       .nodeify(done);
   });
 
-  it("should be 14px", function  (done) {
+  it("should be 12px", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('DCM Admin').click()
@@ -50,7 +50,7 @@ describe("search - datepicker month font size", function() {
       .frame('subpage')
       .elementByCss('.datepicker.dropdown-menu .datepicker-days .switch')
       .getComputedCss('font-size').then(function(font) {
-        font.should.equal("14px");
+        font.should.equal("12px");
       })
       .nodeify(done);
   });
