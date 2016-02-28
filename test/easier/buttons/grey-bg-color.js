@@ -48,7 +48,7 @@ describe("buttons - grey bg color", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.result-div .btn.btn-grey').getComputedCss('background-color')
+      .elementByCss('.result-div .btn.btn-grey:not(.pass)').getComputedCss('background-color')
       .then(function(bgcolor) {
         bgcolor.should.equal("rgba(49, 53, 65, 1)");
       })

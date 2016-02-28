@@ -48,7 +48,7 @@ describe("buttons - green bg rollover color", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.result-div .btn.btn-green').moveTo().sleep(150)
+      .elementByCss('.result-div .btn.btn-green:not(.pass)').moveTo().sleep(150)
       .getComputedCss('background-color').then(function(bgcolor) {
         bgcolor.should.equal("rgba(4, 166, 117, 1)");
       })
