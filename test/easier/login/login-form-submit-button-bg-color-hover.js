@@ -11,11 +11,11 @@ var wd = require('wd');
 var url = config.get("url");
 
 describe("login - form submit button bg hover", function() {
-  this.timeout(60000);
+  this.timeout(30000);
   var browser;
-
+ 
   before(function (done) {
-    browser = wd.promiseChainRemote(config.get("remote"));
+    browser = wd.promiseChainRemote(config.get("remote")); 
 
     // optional extra logging
     browser.on('status', function(info) {
@@ -29,13 +29,13 @@ describe("login - form submit button bg hover", function() {
       .init(config.get("environment"))
       .nodeify(done);  //same as : .then(function() { done(); });
   });
-
+ 
   after(function (done) {
     browser
       .quit()
       .nodeify(done);
   });
-
+ 
   it("should be #04A675 rgba(4, 166, 117, 1)", function  (done) {
     browser
       .get(url)

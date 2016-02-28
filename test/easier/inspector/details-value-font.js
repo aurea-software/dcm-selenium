@@ -15,11 +15,11 @@ var password = config.get("password");
 var common = require('../../lib/common');
 
 describe("details inspector - value font", function() {
-  this.timeout(60000);
+  this.timeout(30000);
   var browser;
 
   before(function (done) {
-    browser = wd.promiseChainRemote(config.get("remote"));
+    browser = wd.promiseChainRemote(config.get("remote")); 
 
     // optional extra logging
     browser.on('status', function(info) {
@@ -40,7 +40,7 @@ describe("details inspector - value font", function() {
       .nodeify(done);
   });
 
-  it("should be SourceSansProLight", function  (done) {
+  it("should be SourceSansProRegular", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -51,7 +51,7 @@ describe("details inspector - value font", function() {
       .frame('component_iframe')
       .elementByCss('.details-tab table.table td strong').getComputedCss('font-family')
       .then(function(font) {
-        font.should.equal("SourceSansProLight");
+        font.should.equal("SourceSansProRegular");
       })
       .nodeify(done);
   });

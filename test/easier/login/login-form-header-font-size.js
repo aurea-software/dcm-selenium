@@ -11,11 +11,11 @@ var wd = require('wd');
 var url = config.get("url");
 
 describe("login - form header font size", function() {
-  this.timeout(60000);
+  this.timeout(30000);
   var browser;
-
+ 
   before(function (done) {
-    browser = wd.promiseChainRemote(config.get("remote"));
+    browser = wd.promiseChainRemote(config.get("remote")); 
 
     // optional extra logging
     browser.on('status', function(info) {
@@ -29,13 +29,13 @@ describe("login - form header font size", function() {
       .init(config.get("environment"))
       .nodeify(done);  //same as : .then(function() { done(); });
   });
-
+ 
   after(function (done) {
     browser
       .quit()
       .nodeify(done);
   });
-
+ 
   it("should be 25px", function  (done) {
     browser
       .get(url)

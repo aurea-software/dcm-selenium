@@ -15,11 +15,11 @@ var password = config.get("password");
 var common = require('../../lib/common');
 
 describe("search - datepicker day of month inactive font color", function() {
-  this.timeout(60000);
+  this.timeout(30000);
   var browser;
 
   before(function (done) {
-    browser = wd.promiseChainRemote(config.get("remote"));
+    browser = wd.promiseChainRemote(config.get("remote")); 
 
     // optional extra logging
     browser.on('status', function(info) {
@@ -40,7 +40,7 @@ describe("search - datepicker day of month inactive font color", function() {
       .nodeify(done);
   });
 
-  it("should be #444444 rgba(68, 68, 68, 1)", function  (done) {
+  it("should be #313541 rgba(49, 53, 65, 1)", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('DCM Admin').click()
@@ -50,11 +50,11 @@ describe("search - datepicker day of month inactive font color", function() {
       .frame('subpage')
       .elementByCss('.datepicker.dropdown-menu .datepicker-days .day.old')
       .getComputedCss('color').then(function(color) {
-        color.should.equal("rgba(68, 68, 68, 1)");
+        color.should.equal("rgba(49, 53, 65, 1)");
       })
       .elementByCss('.datepicker.dropdown-menu .datepicker-days .day.new')
       .getComputedCss('color').then(function(color) {
-        color.should.equal("rgba(68, 68, 68, 1)");
+        color.should.equal("rgba(49, 53, 65, 1)");
       })
       .nodeify(done);
   });

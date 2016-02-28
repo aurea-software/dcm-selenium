@@ -15,11 +15,11 @@ var password = config.get("password");
 var common = require('../../lib/common');
 
 describe("search - clear button font color rollover", function() {
-  this.timeout(60000);
+  this.timeout(30000);
   var browser;
 
   before(function (done) {
-    browser = wd.promiseChainRemote(config.get("remote"));
+    browser = wd.promiseChainRemote(config.get("remote")); 
 
     // optional extra logging
     browser.on('status', function(info) {
@@ -40,7 +40,7 @@ describe("search - clear button font color rollover", function() {
       .nodeify(done);
   });
 
-  it("should be #778086 rgba(119, 128, 134, 1)", function  (done) {
+  it("should be #ffffff rgba(255, 255, 255, 1)", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -50,7 +50,7 @@ describe("search - clear button font color rollover", function() {
       .frame('subpage')
       .elementByCss('.search-container .btn.btn-xs').moveTo().sleep(150)
       .getComputedCss('color').then(function(font) {
-        font.should.equal("rgba(119, 128, 134, 1)");
+        font.should.equal("rgba(255, 255, 255, 1)");
       })
       .nodeify(done);
   });
