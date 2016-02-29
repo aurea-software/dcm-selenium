@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - bg color", function() {
+describe("property page - dropdowns menu rollover background color", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - bg color", function() {
       .nodeify(done);
   });
 
-  it("should be #f2f4f6 rgba(242, 244, 246, 1)", function  (done) {
+  it("should be #313541 rgba(49, 53, 65, 1)", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,17 @@ describe("page - bg color", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.content-wrapper').getComputedCss('background-color')
+      .elementById('Button_Person_Main_NewPerson').click()
+      .frame()
+      .frame('container')
+      .frame('cacheframe0')
+      .frame('proppage')
+      .elementByCss('.bootstrap-select button').click()
+      .elementByCss('.bootstrap-select .dropdown-menu > li > a').moveTo().sleep(150)
+      .elementByCss('.bootstrap-select .dropdown-menu > li > a')
+      .getComputedCss('background-color')
       .then(function(bgcolor) {
-        bgcolor.should.equal("rgba(242, 244, 246, 1)");
+        bgcolor.should.equal("rgba(49, 53, 65, 1)");
       })
       .nodeify(done);
   });

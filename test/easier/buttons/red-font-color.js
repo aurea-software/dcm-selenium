@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - bg color", function() {
+describe("buttons - red font color", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - bg color", function() {
       .nodeify(done);
   });
 
-  it("should be #f2f4f6 rgba(242, 244, 246, 1)", function  (done) {
+  it("should be #FFFFFF rgba(255, 255, 255, 1)", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,15 @@ describe("page - bg color", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.content-wrapper').getComputedCss('background-color')
-      .then(function(bgcolor) {
-        bgcolor.should.equal("rgba(242, 244, 246, 1)");
+      .elementById('Button_Person_Main_NewPerson').click()
+      .frame()
+      .frame('container')
+      .frame('cacheframe0')
+      .frame('proppage')
+      .elementByCss('.bottom-btn-bar .btn.btn-red:not(.pass)').moveTo().sleep(150)
+      .getComputedCss('color')
+      .then(function(color) {
+        color.should.equal("rgba(255, 255, 255, 1)");
       })
       .nodeify(done);
   });

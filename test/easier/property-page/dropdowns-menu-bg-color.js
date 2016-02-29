@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - bg color", function() {
+describe("property page - dropdowns menu background color", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - bg color", function() {
       .nodeify(done);
   });
 
-  it("should be #f2f4f6 rgba(242, 244, 246, 1)", function  (done) {
+  it("should be #1F222D rgba(31, 34, 45, 1)", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,15 @@ describe("page - bg color", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.content-wrapper').getComputedCss('background-color')
+      .elementById('Button_Person_Main_NewPerson').click()
+      .frame()
+      .frame('container')
+      .frame('cacheframe0')
+      .frame('proppage')
+      .elementByCss('.bootstrap-select .dropdown-menu')
+      .getComputedCss('background-color')
       .then(function(bgcolor) {
-        bgcolor.should.equal("rgba(242, 244, 246, 1)");
+        bgcolor.should.equal("rgba(31, 34, 45, 1)");
       })
       .nodeify(done);
   });

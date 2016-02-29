@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("page - bg color", function() {
+describe("property page - inputs label display", function() {
   this.timeout(30000);
   var browser;
 
@@ -40,7 +40,7 @@ describe("page - bg color", function() {
       .nodeify(done);
   });
 
-  it("should be #f2f4f6 rgba(242, 244, 246, 1)", function  (done) {
+  it("should be inline-block", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -48,9 +48,14 @@ describe("page - bg color", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('subpage')
-      .elementByCss('.content-wrapper').getComputedCss('background-color')
-      .then(function(bgcolor) {
-        bgcolor.should.equal("rgba(242, 244, 246, 1)");
+      .elementById('Button_Person_Main_NewPerson').click()
+      .frame()
+      .frame('container')
+      .frame('cacheframe0')
+      .frame('proppage')
+      .elementByCss('.form-group .label-control').getComputedCss('display')
+      .then(function(display) {
+        display.should.equal("inline-block");
       })
       .nodeify(done);
   });
