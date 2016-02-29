@@ -296,6 +296,7 @@ define(function() {
                 .elementById('Name').type(name)
                 .elementById('Description').type(desc)
                 .elementByCss('button[name=Labels_add]').click()
+                .sleep(500)
                 .elementById('Labels_Value_0').type(label)
                 .execute('scrollTo(0, 6000)')
                 .elementByCss('button[name=Quotas_add]').click()

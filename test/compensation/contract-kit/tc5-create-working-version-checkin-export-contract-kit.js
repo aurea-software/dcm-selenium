@@ -140,6 +140,7 @@ describe("/compensation/contract-kit/tc5-create-working-version-checkin-export-c
             .frame('container')
             .frame('cacheframe3')
             .frame('subpage')
+            .sleep(500)
             .elementById('Button_Contracts_Main_ContractKitCheckOut').click()
             .frame()
             .frame('container')

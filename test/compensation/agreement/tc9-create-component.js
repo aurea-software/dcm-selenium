@@ -144,6 +144,7 @@ describe("/compensation/agreement/tc9-create-component", function() {
             .elementById('Field_Quotas_Search_Name_Search_Value').type(quotaName)
             .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
             .execute('scrollTo(0, 6000)')
+            .sleep(500)
             .elementById('QuotasSearchButton_PP_Select').click()
             .frame()
             .frame('container')
