@@ -160,6 +160,7 @@ describe("/compensation/agreement/tc11-create-bonus", function() {
             .elementById('Field_Quotas_Search_Name_Search_Value').type(quotaName)
             .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
             .execute('scrollTo(0, 6000)')
+            .waitForElementById("QuotasGrid", asserters.isDisplayed, 10000)
             .elementById('QuotasSearchButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')

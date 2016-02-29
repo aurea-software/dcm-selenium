@@ -119,6 +119,7 @@ describe("/dcm-admin/supporting-data/tc14-create-party-template", function() {
             .frame('PersonPartySearch_search_div_frame')
             .elementById('Field_Person_FirstName_Search_Value').type(firstName)
             .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
+            .waitForElementById("Grid_Party", asserters.isDisplayed, 10000)
             .elementById('Button_PartySearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')

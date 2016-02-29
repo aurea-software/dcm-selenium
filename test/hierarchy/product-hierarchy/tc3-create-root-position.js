@@ -132,6 +132,7 @@ describe("/hierarchy/product-hierarchy/tc3-create-root-position", function() {
             .frame('cacheframe1')
             .frame('proppage')
             .frame('Page_ProductHierarchyProduct_Picker_search_div_frame')
+            .waitForElementById("Grid_Product_Main", asserters.isDisplayed, 10000)
             .elementById('Button_ProductSearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
             .frame()
             .frame('container')

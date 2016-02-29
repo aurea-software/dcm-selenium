@@ -1,4 +1,6 @@
 var wd = require('wd');
+var asserters = wd.asserters;
+
 if (typeof define !== 'function') {
     var define = require('amdefine')(module);
 }
@@ -188,6 +190,7 @@ define(function() {
                 .frame('PartySearchPage_search_div_frame')
                 .elementById('Field_Party_Person_FirstName_Search_Value').type(personFirstName)
                 .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
+                .waitForElementById("Grid_Party", asserters.isDisplayed, 10000)
                 .elementById('Button_PartySearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
                 .frame()
                 .frame('container')
@@ -272,6 +275,7 @@ define(function() {
                 .frame(cacheFrameName)
                 .frame('proppage')
                 .frame('Page_ProductHierarchyProduct_Picker_search_div_frame')
+                .waitForElementById("Grid_Product_Main", asserters.isDisplayed, 10000)
                 .elementById('Button_ProductSearch_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
                 .frame()
                 .frame('container')
@@ -310,6 +314,7 @@ define(function() {
                 .elementById('Field_Quotas_Search_Name_Search_Value').type(quotaName)
                 .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
                 .execute('scrollTo(0, 6000)')
+                .waitForElementById("QuotasGrid", asserters.isDisplayed, 10000)
                 .elementById('QuotasSearchButton_PP_Select').click()
                 .frame()
                 .frame('container')
@@ -382,7 +387,7 @@ define(function() {
     			.elementById('save').click()
         },
 
-    	createCompHierarchy : function(browser, cacheFrameName, hiername, hierdesc, CKname) {
+    	createCompHierarchy : function(browser, cacheFrameName, hiername, hierdesc, ckName) {
     		return browser
     			.frame()
     			.frame('container')
@@ -398,10 +403,10 @@ define(function() {
     			.elementById('Description').type(hierdesc)
     			.elementById('searchContractKitSearchPage_search_div').click()
     			.frame('ContractKitSearchPage_search_div_frame')
-    			.elementById('Field_ContractKit_Name_Search_Value').type(CKname)
+    			.elementById('Field_ContractKit_Name_Search_Value').type(ckName)
     			.elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
     			.execute('scrollTo(0,2000)')
-    			.sleep(1000)
+                .waitForElementById("Grid_ContractKit", asserters.isDisplayed, 10000)
     			.elementById('Button_ContractKitSearch_PP_Select').click()
     			.frame()
     			.frame('container')
@@ -696,6 +701,7 @@ define(function() {
                 .elementById('Field_Party_NameUpper_Search_Value').type(orgPartyName)
                 .elementByLinkText('Search').click()
                 .execute('scrollTo(0, 10000)')
+                .waitForElementById("Grid_Party", asserters.isDisplayed, 10000)
                 .elementById('Button_PartySearch_PP_Select').click()
                 .frame()
                 .frame('container')
@@ -919,6 +925,7 @@ define(function() {
                 .frame(cacheFrameName)
                 .frame('proppage')
                 .frame('TMTransactionPPSearchAP_search_div_frame')
+                .waitForElementById("TMTransactionPPAPGrid", asserters.isDisplayed, 10000)
                 .elementById('TMTransactionPPAPButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
 
                 .frame()
@@ -939,6 +946,7 @@ define(function() {
                 .frame(cacheFrameName)
                 .frame('proppage')
                 .frame('TMTransactionPPSearchPR_search_div_frame')
+                .waitForElementById("TMTransactionPPPRGrid", asserters.isDisplayed, 10000)
                 .elementById('TMTransactionPPPRButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
 
                 .frame()
@@ -959,6 +967,7 @@ define(function() {
                 .frame(cacheFrameName)
                 .frame('proppage')
                 .frame('TMTransactionPPSearchCS_search_div_frame')
+                .waitForElementById("TMTransactionPPCSGrid", asserters.isDisplayed, 10000)
                 .elementById('TMTransactionPPCSButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
 
                 .frame()
@@ -995,6 +1004,7 @@ define(function() {
                 .frame(cacheFrameName)
                 .frame('proppage')
                 .frame('TMTransactionPPSearchAP_search_div_frame')
+                .waitForElementById("TMTransactionPPAPGrid", asserters.isDisplayed, 10000)
                 .elementById('TMTransactionPPAPButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
 
                 .frame()
@@ -1015,6 +1025,7 @@ define(function() {
                 .frame(cacheFrameName)
                 .frame('proppage')
                 .frame('TMTransactionPPSearchPR_search_div_frame')
+                .waitForElementById("TMTransactionPPPRGrid", asserters.isDisplayed, 10000)
                 .elementById('TMTransactionPPPRButton_PP_Select').type(wd.SPECIAL_KEYS['Enter'])
 
                 .frame()

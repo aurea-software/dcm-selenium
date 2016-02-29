@@ -147,6 +147,7 @@ describe("/party/location/tc2-create-location-party", function() {
             .elementById('Field_Party_NameUpper_Search_Value').type(partyName)
             .elementByLinkText('Search').click()
             .execute('scrollTo(0, 3000)')
+            .waitForElementById("Grid_Party", asserters.isDisplayed, 10000)
             .elementById('Button_PartySearch_PP_Select').click()
             .frame()
             .frame('container')
