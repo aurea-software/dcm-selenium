@@ -143,7 +143,7 @@ describe("/compensation/agreement/tc9-create-component", function() {
             .frame('QuotasSearch_search_div_frame')
             .elementById('Field_Quotas_Search_Name_Search_Value').type(quotaName)
             .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
-            .execute('scrollTo(0, 6000)')
+            .execute('scrollTo(0, 7000)')
             .waitForElementById("QuotasGrid", asserters.isDisplayed, 10000)
             .elementById('QuotasSearchButton_PP_Select').click()
             .frame()

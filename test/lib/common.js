@@ -133,7 +133,7 @@ define(function() {
                 .elementByLinkText('No').click()
                 .elementById('DTCCID').type(dtcc)
                 .elementById('Party.NPN').type(npn)
-    			.execute('scrollTo(0, 6000)')
+                .execute('scrollTo(0, 6000)')
                 .elementByCss('input[id=RoleAPPOINTINGCOMPANY] ~ i').click()
                 .elementByCss('input[id=RoleEMPLOYER] ~ i').click()
                 .elementByCss('input[id=RoleDISTRIBUTOR] ~ i').click()
@@ -151,20 +151,20 @@ define(function() {
                 .elementById('save').click();
         },
 
-    	createPartyHierarchy : function(browser, cacheFrameName, name, desc) {
-    		return browser
-    			.frame()
-    			.frame('container')
-    			.frame(cacheFrameName)
-    			.frame('subpage')
-    			.elementById('Button_HierarchySearch_NewHierarchy').type(wd.SPECIAL_KEYS['Enter'])
-    			.frame()
-    			.frame('container')
-    			.frame(cacheFrameName)
-    			.frame('proppage')
-    			.elementById('Name').type(name)
-    			.elementById('Description').type('Description ' + desc)
-    			.elementById('save').click()
+        createPartyHierarchy : function(browser, cacheFrameName, name, desc) {
+            return browser
+                .frame()
+                .frame('container')
+                .frame(cacheFrameName)
+                .frame('subpage')
+                .elementById('Button_HierarchySearch_NewHierarchy').type(wd.SPECIAL_KEYS['Enter'])
+                .frame()
+                .frame('container')
+                .frame(cacheFrameName)
+                .frame('proppage')
+                .elementById('Name').type(name)
+                .elementById('Description').type('Description ' + desc)
+                .elementById('save').click()
         },
 
         createAgreementWithPerson : function(browser, cacheFrameName, agreementName, agreementDesc, contractName, startDate, endDate, personFirstName) {
@@ -305,7 +305,7 @@ define(function() {
                 .execute('scrollTo(0, 6000)')
                 .elementByCss('button[name=Quotas_add]').click()
                 .execute('scrollTo(0, 3000)')
-                .elementById('complexField_QuotasSearch_search_div').click()
+                .waitForElementById("complexField_QuotasSearch_search_div", asserters.isDisplayed, 10000).click()
                 .frame()
                 .frame('container')
                 .frame(cacheFrameName)
@@ -313,7 +313,7 @@ define(function() {
                 .frame('QuotasSearch_search_div_frame')
                 .elementById('Field_Quotas_Search_Name_Search_Value').type(quotaName)
                 .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
-                .execute('scrollTo(0, 6000)')
+                .execute('scrollTo(0, 7000)')
                 .waitForElementById("QuotasGrid", asserters.isDisplayed, 10000)
                 .elementById('QuotasSearchButton_PP_Select').click()
                 .frame()
@@ -361,59 +361,59 @@ define(function() {
                 .elementById('save').click();
         },
 
-    	createProductHierarchy : function(browser, cacheFrameName, name, desc) {
-    		return browser
-    			.frame()
-    			.frame('container')
-    			.frame(cacheFrameName)
-    			.frame('subpage')
-    			.execute('scrollTo(0,2000)')
-    			.elementById('Button_ProductHierarchySearch_ProductHierarchy_NewProductHierarchy').type(wd.SPECIAL_KEYS['Enter'])
-    			.frame()
-    			.frame('container')
-    			.frame(cacheFrameName)
-    			.frame('proppage')
-    			.elementById('Name').type(name)
-    			.elementById('Description').type(desc)
-    			.frame()
-    			.frame('container')
-    			.frame(cacheFrameName)
-    			.frame('proppage')
-    			.elementById('validate').click()
+        createProductHierarchy : function(browser, cacheFrameName, name, desc) {
+            return browser
+                .frame()
+                .frame('container')
+                .frame(cacheFrameName)
+                .frame('subpage')
+                .execute('scrollTo(0,2000)')
+                .elementById('Button_ProductHierarchySearch_ProductHierarchy_NewProductHierarchy').type(wd.SPECIAL_KEYS['Enter'])
                 .frame()
                 .frame('container')
                 .frame(cacheFrameName)
                 .frame('proppage')
-    			.elementById('save').click()
+                .elementById('Name').type(name)
+                .elementById('Description').type(desc)
+                .frame()
+                .frame('container')
+                .frame(cacheFrameName)
+                .frame('proppage')
+                .elementById('validate').click()
+                .frame()
+                .frame('container')
+                .frame(cacheFrameName)
+                .frame('proppage')
+                .elementById('save').click()
         },
 
-    	createCompHierarchy : function(browser, cacheFrameName, hiername, hierdesc, ckName) {
-    		return browser
-    			.frame()
-    			.frame('container')
-    			.frame(cacheFrameName)
-    			.frame('subpage')
-    			.execute('scrollTo(0,2000)')
-    			.elementById('Button_HierarchySearch_NewAgrHierarchy').type(wd.SPECIAL_KEYS['Enter'])
-    			.frame()
-    			.frame('container')
-    			.frame(cacheFrameName)
-    			.frame('proppage')
-    			.elementById('Name').type(hiername)
-    			.elementById('Description').type(hierdesc)
-    			.elementById('searchContractKitSearchPage_search_div').click()
-    			.frame('ContractKitSearchPage_search_div_frame')
-    			.elementById('Field_ContractKit_Name_Search_Value').type(ckName)
-    			.elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
-    			.execute('scrollTo(0,2000)')
+        createCompHierarchy : function(browser, cacheFrameName, hiername, hierdesc, ckName) {
+            return browser
+                .frame()
+                .frame('container')
+                .frame(cacheFrameName)
+                .frame('subpage')
+                .execute('scrollTo(0,2000)')
+                .elementById('Button_HierarchySearch_NewAgrHierarchy').type(wd.SPECIAL_KEYS['Enter'])
+                .frame()
+                .frame('container')
+                .frame(cacheFrameName)
+                .frame('proppage')
+                .elementById('Name').type(hiername)
+                .elementById('Description').type(hierdesc)
+                .elementById('searchContractKitSearchPage_search_div').click()
+                .frame('ContractKitSearchPage_search_div_frame')
+                .elementById('Field_ContractKit_Name_Search_Value').type(ckName)
+                .elementByLinkText('Search').type(wd.SPECIAL_KEYS['Enter'])
+                .execute('scrollTo(0, 3000)')
                 .waitForElementById("Grid_ContractKit", asserters.isDisplayed, 10000)
-    			.elementById('Button_ContractKitSearch_PP_Select').click()
-    			.frame()
-    			.frame('container')
-    			.frame(cacheFrameName)
-    			.frame('proppage')
-    			.elementById('validate').click()
-    			.elementById('save').click()
+                .elementById('Button_ContractKitSearch_PP_Select').click()
+                .frame()
+                .frame('container')
+                .frame(cacheFrameName)
+                .frame('proppage')
+                .elementById('validate').click()
+                .elementById('save').click()
         },
 
         createContractKit : function(browser, cacheFrameName, name, description, startDate, endDate, prodHier, contractKitProvider, contractKitProviderId) {
@@ -431,21 +431,21 @@ define(function() {
                 .elementById('Description').type(description)
                 .elementById('StartDate').clear().type(startDate)
                 .elementById('EndDate').clear().type(endDate)
-    			.frame()
+                .frame()
                 .frame('container')
                 .frame(cacheFrameName)
                 .frame('proppage')
-    			.elementByCss('form[name=spartacus] button[data-id=Products]').type(wd.SPECIAL_KEYS['Enter'])
-    			.sleep(500)
-    			.elementByLinkText(prodHier).click()
-    			.elementByCss('form[name=spartacus] button[data-id=Party]').type(wd.SPECIAL_KEYS['Enter'])
-    			.sleep(500)
-    			.elementByLinkText(contractKitProvider + ' [Party ID: ' + contractKitProviderId + ']').click()
+                .elementByCss('form[name=spartacus] button[data-id=Products]').type(wd.SPECIAL_KEYS['Enter'])
+                .sleep(500)
+                .elementByLinkText(prodHier).click()
+                .elementByCss('form[name=spartacus] button[data-id=Party]').type(wd.SPECIAL_KEYS['Enter'])
+                .sleep(500)
+                .elementByLinkText(contractKitProvider + ' [Party ID: ' + contractKitProviderId + ']').click()
                 .elementById('validate').click()
                 .elementById('save').click();
-    	},
+        },
 
-    	createContractKitInProductionStatus : function(browser, cacheFrameName, name, description, startDate, endDate, prodHier, contractKitProvider, contractKitProviderId) {
+        createContractKitInProductionStatus : function(browser, cacheFrameName, name, description, startDate, endDate, prodHier, contractKitProvider, contractKitProviderId) {
             return this.createContractKit(browser, cacheFrameName, name, description, startDate, endDate, prodHier, contractKitProvider, contractKitProviderId)
                 .frame()
                 .frame('container')
@@ -492,7 +492,7 @@ define(function() {
                 .elementById('save').click();
         },
 
-    	createContractKitProvider : function(browser, cacheFrameName, name, taxId) {
+        createContractKitProvider : function(browser, cacheFrameName, name, taxId) {
             return browser
                 .frame()
                 .frame('container')
@@ -534,10 +534,10 @@ define(function() {
                 .elementById('ZipCode').type('4444')
                 .elementById('validate').click()
                 .elementById('save').click();
-    	},
+        },
 
-    	// Check in contract kit a.k.a check in working version
-    	checkinContractKit : function(browser, cacheFrameName, checkinComment) {
+        // Check in contract kit a.k.a check in working version
+        checkinContractKit : function(browser, cacheFrameName, checkinComment) {
             return browser
                 .frame()
                 .frame('container')
@@ -551,10 +551,10 @@ define(function() {
                 .elementById('Description').type(checkinComment)
                 .elementById('validate').click()
                 .elementById('save').click();
-    	},
+        },
 
-    	// Checkout contract kit a.k.a create working version
-    	checkoutContractKit : function(browser, cacheFrameName, checkoutComment) {
+        // Checkout contract kit a.k.a create working version
+        checkoutContractKit : function(browser, cacheFrameName, checkoutComment) {
             return browser
                 .frame()
                 .frame('container')
@@ -568,9 +568,9 @@ define(function() {
                 .elementById('Description').type(checkoutComment)
                 .elementById('validate').click()
                 .elementById('save').click();
-    	},
+        },
 
-    	createAllocationRule : function(browser, cacheFrameName, name, desc, agreementHierarchy, recipientFormula) {
+        createAllocationRule : function(browser, cacheFrameName, name, desc, agreementHierarchy, recipientFormula) {
             return browser
                 .frame()
                 .frame('container')
@@ -602,7 +602,7 @@ define(function() {
                 .elementById('RecipientFormula.FormulaString').type(recipientFormula)
                 .elementById('validate').click()
                 .elementById('save').click();
-    	},
+        },
 
         createEnum : function(browser, cacheFrameName, enumId, name1, value1, name2, value2, name3, value3) {
             return browser
