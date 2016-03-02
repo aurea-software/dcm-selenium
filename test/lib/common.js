@@ -24,9 +24,9 @@ define(function() {
                 console.log(' > ' + meth, path, data || '');
             });
 
-            browser.setImplicitWaitTimeout(30000);
-            browser.setAsyncScriptTimeout(30000);
-            browser.setPageLoadTimeout(30000);
+            // browser.setImplicitWaitTimeout(30000);
+            // browser.setAsyncScriptTimeout(30000);
+            // browser.setPageLoadTimeout(30000);
 
             return browser.init(environment);
         },
@@ -503,6 +503,7 @@ define(function() {
                 .frame('container')
                 .frame(cacheFrameName)
                 .frame('subpage')
+                .sleep(500)
                 .elementByLinkText('Search Organization').click()
                 .frame()
                 .frame('container')
