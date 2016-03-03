@@ -702,6 +702,7 @@ define(function() {
                 .frame(cacheFrameName)
                 .frame('proppage')
                 .frame('OrgPartySearch_search_div_frame')
+                .sleep(1000)
                 .elementById('Field_Party_NameUpper_Search_Value').type(orgPartyName)
                 .elementByLinkText('Search').click()
                 .execute('scrollTo(0, 10000)')
