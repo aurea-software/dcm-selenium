@@ -141,7 +141,7 @@ describe("/compensation/agreement/tc11-create-bonus", function() {
             .frame('cacheframe3')
             .frame('subpage')
             .frame('component_iframe')
-            .sleep(500)
+            .sleep(1000)
             .elementById('Button_Contracts_Main_Components_Bonuses_NewBonus').click()
             .frame()
             .frame('container')

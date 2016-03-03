@@ -267,6 +267,7 @@ describe("/party/person/tc5-add-edit-contact-info", function() {
             .frame('cacheframe0')
             .frame('subpage')
             .frame('component_iframe')
+            .sleep(1000)
             .elementById('Button_Person_Main_ContactPoint_ViewMultipleContactPoints').click()
             .frame()
             .frame('container')

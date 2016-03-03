@@ -102,7 +102,7 @@ describe("/party/location/tc12-search-location-party", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-            .sleep(500)
+            .sleep(1000)
             .elementByLinkText('Search Location').click()
             .frame()
             .frame('container')
@@ -141,6 +141,7 @@ describe("/party/location/tc12-search-location-party", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
+            .sleep(1000)
             .elementById('Button_Location_Main_NewLocation').click()
             .nodeify(done);
     });
@@ -155,6 +156,7 @@ describe("/party/location/tc12-search-location-party", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
+            .sleep(1000)
             .elementById('Field_Location_Main_LocationNameUpper_Search_Value').type(locationName2)
             .elementByLinkText('Search').click()
             .frame()
