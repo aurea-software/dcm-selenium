@@ -102,6 +102,7 @@ describe("/party/location/tc12-search-location-party", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
+            .sleep(500)
             .elementByLinkText('Search Location').click()
             .frame()
             .frame('container')
