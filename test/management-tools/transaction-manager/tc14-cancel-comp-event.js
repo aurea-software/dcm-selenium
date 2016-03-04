@@ -122,6 +122,7 @@ describe("/management-tools/transaction-manager/tc14-cancel-comp-event", functio
             .frame('container')
             .frame('cacheframe2')
             .frame('subpage')
+            .sleep(1000)
             .elementByLinkText('Search Product').click()
             .nodeify(done);
     });

@@ -348,6 +348,7 @@ describe("/party/person/tc5-add-edit-contact-info", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('proppage')
+            .sleep(1000)
             .elementByLinkText('Settlement').click()
             .nodeify(done);
     });

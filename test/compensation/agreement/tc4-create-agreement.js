@@ -111,6 +111,7 @@ describe("/compensation/agreement/tc4-create-agreement", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
+            .sleep(1000)
             .elementByLinkText('Search Organization').click()
             .nodeify(done);
     });
