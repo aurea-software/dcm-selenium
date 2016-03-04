@@ -65,6 +65,7 @@ describe("/hierarchy/product-hierarchy/tc8-edit-product-position", function() {
            .frame('container')
            .frame('cacheframe1')
            .frame('subpage')
+           .sleep(1000)
            .elementByLinkText('Search Product').click()
            .nodeify(done);
     });
