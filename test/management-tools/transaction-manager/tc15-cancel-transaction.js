@@ -280,6 +280,7 @@ describe("/management-tools/transaction-manager/tc15-cancel-transaction", functi
             .frame('container')
             .frame('cacheframe5')
             .frame('subpage')
+            .sleep(1000)
             .elementByLinkText('Search').click()
             .frame()
             .frame('container')
