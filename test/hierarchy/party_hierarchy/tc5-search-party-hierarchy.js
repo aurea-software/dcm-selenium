@@ -62,6 +62,7 @@ describe("/hierarchy/party_hierarchy/tc5-search-party-hierarchy", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
+            .sleep(1000)
             .elementByCss('#Search_HierarchySearch_Main_primaryForm #Field_Hierarchy_Name_Search_Value').type('WXYZ' + chunk + '*')
             .type(wd.SPECIAL_KEYS['Enter'])
             .elementById('Grid_HierarchySearch_Main').text()
