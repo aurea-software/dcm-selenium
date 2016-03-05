@@ -36,12 +36,12 @@ describe("login - form submit button font", function() {
       .nodeify(done);
   });
  
-  it("should be Source Sans Pro Regular", function  (done) {
+  it("should be SourceSansProSemibold", function  (done) {
     browser
       .get(url)
       .elementByCss('form[name=LoginForm] button[type=submit]').getComputedCss('font-family')
       .then(function(font) {
-        font.should.equal("SourceSansProRegular");
+        font.should.equal("SourceSansProSemibold");
       })
       .nodeify(done);
   });
