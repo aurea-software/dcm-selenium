@@ -198,6 +198,7 @@ describe("/hierarchy/comp_hierarchy/tc9_create_root_position", function() {
             .frame('cacheframe5')
             .frame('subpage')
             .frame('component_iframe')
+            .sleep(1000)
             .elementById('Button_AddAgrHierRootPosition').click()
             .frame()
             .frame('container')

@@ -194,6 +194,7 @@ describe("/party/person/tc3-search-person-party", function() {
             .frame('cacheframe0')
             .frame('subpage')
             .elementByLinkText('Clear').click()
+            .sleep(1000)
             .elementByCss('#Search_Person_Main_primaryForm #Field_Person_Main_FirstName_Search_Value').clear().type(firstNamePrefix + '*')
             .type(wd.SPECIAL_KEYS['Enter'])
             // By default the table is sorted by party id in ascending order. Click

@@ -18,11 +18,11 @@ var common = require('../../lib/common');
 var r = common.rand(3);
 console.log('r: ' + r);
 
-var ProdName = 'PROD1_' + r;
-var ProdDesc = 'PROD1_DESC' + r;
+var prodName = 'PROD1_' + r;
+var prodDesc = 'PROD1_DESC' + r;
 
-var ProdHierName = 'PRODHIER_' + r;
-var ProdHierDesc = 'PRODHIER_DESC' + r;
+var prodHierName = 'PRODHIER_' + r;
+var prodHierDesc = 'PRODHIER_DESC' + r;
 
 describe("/hierarchy/product-hierarchy/tc8-edit-product-position", function() {
     this.timeout(120000);
@@ -51,7 +51,7 @@ describe("/hierarchy/product-hierarchy/tc8-edit-product-position", function() {
     });
 
     it("should create product hierarchy", function(done) {
-       common.createProductHierarchy(browser, 'cacheframe1', ProdHierName, ProdHierDesc).nodeify(done);
+       common.createProductHierarchy(browser, 'cacheframe1', prodHierName, prodHierDesc).nodeify(done);
     });
 
     it("should load product page", function(done) {
@@ -65,12 +65,13 @@ describe("/hierarchy/product-hierarchy/tc8-edit-product-position", function() {
            .frame('container')
            .frame('cacheframe1')
            .frame('subpage')
+           .sleep(1000)
            .elementByLinkText('Search Product').click()
            .nodeify(done);
     });
 
     it("should create product", function(done) {
-        common.createProduct(browser, 'cacheframe1', ProdName, ProdDesc).nodeify(done);
+        common.createProduct(browser, 'cacheframe1', prodName, prodDesc).nodeify(done);
     });
 
     it("should load product hierarchy page", function(done) {
@@ -94,7 +95,7 @@ describe("/hierarchy/product-hierarchy/tc8-edit-product-position", function() {
             .frame('container')
             .frame('cacheframe1')
             .frame('subpage')
-            .elementById('Field_ProductHierarchySearch_Main_Name_Search_Value').type(ProdHierName)
+            .elementById('Field_ProductHierarchySearch_Main_Name_Search_Value').type(prodHierName)
             .elementByLinkText('Search').click()
             .nodeify(done);
     });
@@ -114,7 +115,7 @@ describe("/hierarchy/product-hierarchy/tc8-edit-product-position", function() {
     });
 
     it("should add root position", function(done) {
-        common.addRootPosition(browser, 'cacheframe1', ProdName).nodeify(done);
+        common.addRootPosition(browser, 'cacheframe1', prodName).nodeify(done);
     });
 
     it("should load product search page (again)", function(done) {
@@ -138,7 +139,7 @@ describe("/hierarchy/product-hierarchy/tc8-edit-product-position", function() {
             .frame('container')
             .frame('cacheframe1')
             .frame('subpage')
-            .elementById('Field_SCCMProductSearch_Main_Name_Search_Value').type(ProdName)
+            .elementById('Field_SCCMProductSearch_Main_Name_Search_Value').type(prodName)
             .elementByLinkText('Search').click()
             .nodeify(done);
     });

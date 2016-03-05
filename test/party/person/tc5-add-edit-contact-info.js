@@ -152,6 +152,7 @@ describe("/party/person/tc5-add-edit-contact-info", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('proppage')
+            .sleep(1000)
             .elementByCssSelector('button[data-id=AllContactPointsCreate_ContactType_0]').text()
             .then(function(data) {
                 onData(data);
@@ -267,6 +268,7 @@ describe("/party/person/tc5-add-edit-contact-info", function() {
             .frame('cacheframe0')
             .frame('subpage')
             .frame('component_iframe')
+            .sleep(1000)
             .elementById('Button_Person_Main_ContactPoint_ViewMultipleContactPoints').click()
             .frame()
             .frame('container')
@@ -346,6 +348,7 @@ describe("/party/person/tc5-add-edit-contact-info", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('proppage')
+            .sleep(1000)
             .elementByLinkText('Settlement').click()
             .nodeify(done);
     });

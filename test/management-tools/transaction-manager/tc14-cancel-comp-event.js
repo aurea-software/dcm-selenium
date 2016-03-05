@@ -122,6 +122,7 @@ describe("/management-tools/transaction-manager/tc14-cancel-comp-event", functio
             .frame('container')
             .frame('cacheframe2')
             .frame('subpage')
+            .sleep(1000)
             .elementByLinkText('Search Product').click()
             .nodeify(done);
     });
@@ -237,6 +238,7 @@ describe("/management-tools/transaction-manager/tc14-cancel-comp-event", functio
             .frame('container')
             .frame('cacheframe5')
             .frame('subpage')
+            .sleep(1000)
             .elementById('alertDialog').text()
             .should.eventually.include('1 Compensable Event(s) Cancelled Sucessfully. Please click on the Search button to refresh')
             .elementByCss('#alertDialog button').click()

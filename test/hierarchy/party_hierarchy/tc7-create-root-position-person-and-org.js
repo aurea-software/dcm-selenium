@@ -42,7 +42,7 @@ console.log('Person party: Tax Id: ' + taxId1 + ', First Name: ' + firstName1  +
 console.log('Organization party: Tax Id: ' + taxId2 + ', Organization Name: ' + partyName2);
 console.log('Party Hierarchy name: ' + hiername);
 
-describe("/hierarchy/party_hierarchy/tc7-create-root-position-person-org", function() {
+describe("/hierarchy/party_hierarchy/tc7-create-root-position-person-and-org", function() {
     this.timeout(90000);
     var browser;
 
@@ -83,6 +83,7 @@ describe("/hierarchy/party_hierarchy/tc7-create-root-position-person-org", funct
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
+            .sleep(500)
             .elementByLinkText('Search Organization').click()
             .nodeify(done);
     });

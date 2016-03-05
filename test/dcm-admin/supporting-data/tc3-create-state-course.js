@@ -86,6 +86,7 @@ describe("/dcm-admin/supporting-data/tc3-create-state-course", function() {
             .frame('cacheframe1')
             .frame('proppage')
             .execute('scrollTo(0, 6000)')
+            .sleep(1000)
             .elementByCss('button[data-id=CourseSources_Source_0]').click()
             .frame()
             .frame('container')

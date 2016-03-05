@@ -216,6 +216,7 @@ describe("/user-manager/tc16-create-contract-kit-and-agreement-and-checkin-contr
             .frame('container')
             .frame('cacheframe1')
             .frame('subpage')
+            .sleep(1000)
             .elementByLinkText('Search Users').click()
             .nodeify(done);
     });

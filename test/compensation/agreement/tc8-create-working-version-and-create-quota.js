@@ -136,7 +136,7 @@ describe("/compensation/agreement/tc8-create-working-version-and-create-quota", 
             .frame('container')
             .frame('cacheframe3')
             .frame('subpage')
-            .elementById('Button_Contracts_Main_ContractKitCheckOut').click()
+            .waitForElementById("Button_Contracts_Main_ContractKitCheckOut", asserters.isDisplayed, 10000).click()
             .frame()
             .frame('container')
             .frame('cacheframe3')
