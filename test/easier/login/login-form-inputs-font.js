@@ -36,24 +36,24 @@ describe("login - form inputs font", function() {
       .nodeify(done);
   });
  
-  it("should be SourceSansProRegular", function  (done) {
+  it("should be SourceSansProLight", function  (done) {
     browser
       .get(url)
       .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').getComputedCss('font-family')
       .then(function(font) {
-        font.should.equal("SourceSansProRegular");
+        font.should.equal("SourceSansProLight");
       })
       .elementByCss('form[name=LoginForm] input[name=PASSWORD]').getComputedCss('font-family')
       .then(function(font) {
-        font.should.equal("SourceSansProRegular");
+        font.should.equal("SourceSansProLight");
       })
       .elementByCss('.bootstrap-select button').getComputedCss('font-family')
       .then(function(font) {
-        font.should.equal("SourceSansProRegular");
+        font.should.equal("SourceSansProLight");
       })      
       .elementByCss('form[name=LoginForm] .checkbox label').getComputedCss('font-family')
       .then(function(font) {
-        font.should.equal("SourceSansProRegular");
+        font.should.equal("SourceSansProLight");
       })
       .nodeify(done);
   });

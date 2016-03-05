@@ -14,7 +14,7 @@ var password = config.get("password");
 
 var common = require('../../lib/common');
 
-describe("buttons - grey bg color", function() {
+describe("buttons - grey bg rollover color", function() {
   this.timeout(30000);
   var browser;
 
