@@ -74,7 +74,7 @@ describe("/hierarchy/product-hierarchy/tc8-edit-product-position", function() {
         common.createProduct(browser, 'cacheframe1', prodName, prodDesc).nodeify(done);
     });
 
-    it("should load product hierarchy page", function(done) {
+    it("should load product hierarchy page again", function(done) {
        browser
            .frame()
            .frame('container')
@@ -85,6 +85,7 @@ describe("/hierarchy/product-hierarchy/tc8-edit-product-position", function() {
            .frame('container')
            .frame('cacheframe1')
            .frame('subpage')
+           .sleep(1000)
            .elementByLinkText('Search Prod Hierarchy').click()
            .nodeify(done);
     });

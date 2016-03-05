@@ -200,6 +200,11 @@ describe("/party/person/tc3-search-person-party", function() {
             // By default the table is sorted by party id in ascending order. Click
             // once to turn the order to descending.
             .elementByCssSelector('#Field_Person_Main_PartyID_Grid > span.column-text').click()
+            .sleep(2000)
+            .frame()
+            .frame('container')
+            .frame('cacheframe0')
+            .frame('subpage')
             .waitForElementByCss('table[name=Grid_Person_Main] tbody tr:nth-child(1) td:nth-child(5)').text()
             // We intentionally create party 1 before party 2. We also setup tax id
             // 2 to be bigger than tax id 1 intentionally.
