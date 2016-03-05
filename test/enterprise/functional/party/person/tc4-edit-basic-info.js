@@ -132,7 +132,7 @@ describe("/party/person/tc4-edit-basic-info", function() {
             .elementByLinkText('(00) - New').click()
             .elementById('Comment').clear().type('this is a new comment')
             .elementById('validate').click()
-            .waitForElementByCss("#ppMessage", asserters.isDisplayed , 10000)
+            .sleep(2000)
             .elementById('ppMessage').text()
             .should.eventually.include("VALIDATING...SUCCESSFUL")
             .elementById('save').click()
