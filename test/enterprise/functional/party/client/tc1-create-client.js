@@ -73,6 +73,7 @@ describe("/party/client/tc1-create-client", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
+            .sleep(1000)
             .elementByLinkText('Search Client').click()
             .frame()
             .frame('container')

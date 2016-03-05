@@ -81,6 +81,7 @@ describe("/hierarchy/comp_hierarchy/tc9_create_root_position", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
+            .sleep(1000)
             .elementByLinkText('Search Organization').click()
             .frame()
             .frame('container')

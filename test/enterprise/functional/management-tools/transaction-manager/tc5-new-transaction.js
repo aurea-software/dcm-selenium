@@ -124,6 +124,7 @@ describe("/management-tools/transaction-manager/tc5-new-transaction", function()
             .frame('container')
             .frame('cacheframe2')
             .frame('subpage')
+            .sleep(1000)
             .elementByLinkText('Search Product').click()
             .nodeify(done);
     });
