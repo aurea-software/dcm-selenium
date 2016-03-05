@@ -53,7 +53,7 @@ describe("property page - radio item font", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('proppage')
-      .elementByCss('.form-group.radio .radio-inline').getComputedCss('font-family')
+      .elementByCss('.form-group.radio .radio-inline span').getComputedCss('font-family')
       .then(function(font) {
         font.should.equal("SourceSansProLight");
       })

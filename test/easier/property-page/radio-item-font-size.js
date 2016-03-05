@@ -53,7 +53,7 @@ describe("property page - radio item font size", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('proppage')
-      .elementByCss('.form-group.radio .radio-inline').getComputedCss('font-size')
+      .elementByCss('.form-group.radio .radio-inline span').getComputedCss('font-size')
       .then(function(font) {
         font.should.equal("15px");
       })

@@ -40,7 +40,7 @@ describe("property page - dropdowns menu font", function() {
       .nodeify(done);
   });
 
-  it("should be SourceSansProRegular", function  (done) {
+  it("should be SourceSansProLight", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -55,7 +55,7 @@ describe("property page - dropdowns menu font", function() {
       .frame('proppage')
       .elementByCss('.bootstrap-select .dropdown-menu > li > a')
       .getComputedCss('font-family').then(function(font) {
-        font.should.equal("SourceSansProRegular");
+        font.should.equal("SourceSansProLight");
       })
       .nodeify(done);
   });

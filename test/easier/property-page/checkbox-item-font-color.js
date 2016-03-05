@@ -53,7 +53,7 @@ describe("property page - checkbox item font color", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('proppage')
-      .elementByCss('.form-group.checkbox .checkbox-inline').getComputedCss('color')
+      .elementByCss('.form-group.checkbox .checkbox-inline span').getComputedCss('color')
       .then(function(font) {
         font.should.equal("rgba(40, 44, 55, 1)");
       })

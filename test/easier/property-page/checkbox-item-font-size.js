@@ -53,7 +53,7 @@ describe("property page - checkbox item font size", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('proppage')
-      .elementByCss('.form-group.checkbox .checkbox-inline').getComputedCss('font-size')
+      .elementByCss('.form-group.checkbox .checkbox-inline span').getComputedCss('font-size')
       .then(function(font) {
         font.should.equal("15px");
       })
