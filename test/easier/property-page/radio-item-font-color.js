@@ -53,7 +53,7 @@ describe("property page - radio item font color", function() {
       .frame('container')
       .frame('cacheframe0')
       .frame('proppage')
-      .elementByCss('.form-group.radio .radio-inline').getComputedCss('color')
+      .elementByCss('.form-group.radio .radio-inline span').getComputedCss('color')
       .then(function(font) {
         font.should.equal("rgba(40, 44, 55, 1)");
       })
