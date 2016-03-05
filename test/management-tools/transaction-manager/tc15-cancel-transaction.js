@@ -227,7 +227,7 @@ describe("/management-tools/transaction-manager/tc15-cancel-transaction", functi
             .frame('container')
             .frame('cacheframe5')
             .frame('subpage')
-            .sleep(500)
+            .sleep(1000)
             .elementById('alertDialog').text()
             .should.eventually.include('1 Transaction(s) Cancelled Sucessfully. Please click on the Search button to view updated transaction statuses')
             .elementById('alertDialog').type(wd.SPECIAL_KEYS['Escape'])
