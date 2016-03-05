@@ -213,10 +213,11 @@ describe("/compensation/agreement/tc6-search-agreement", function() {
             .frame('container')
             .frame('cacheframe4')
             .frame('subpage')
+            // The order might not be fixed. Hence we verify using prefix only.
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(1) td:nth-child(2)').text()
-            .should.eventually.become(agreementName1.toUpperCase())
+            .should.eventually.include(agreementNamePrefix.toUpperCase())
             .elementByCss('table[name=Grid_Agreement_Main] tbody tr:nth-child(2) td:nth-child(2)').text()
-            .should.eventually.become(agreementName2.toUpperCase())
+            .should.eventually.include(agreementNamePrefix.toUpperCase())
             .notify(done);
     });
 
