@@ -6,13 +6,12 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
-
-var common = require('../../../../test/lib/common');
 
 describe("inspector - table summary font transform", function() {
   this.timeout(0);
@@ -41,15 +40,13 @@ describe("inspector - table summary font transform", function() {
   });
 
   it("should be uppercase", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.table-heading').getComputedCss('text-transform')
-      .then(function(transform) {
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectTableSummary()
+      .getComputedCss('text-transform').then(function(transform) {
         transform.should.equal("uppercase");
       })
       .nodeify(done);

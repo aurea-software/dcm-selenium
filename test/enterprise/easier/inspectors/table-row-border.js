@@ -6,13 +6,12 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
-
-var common = require('../../../../test/lib/common');
 
 describe("inspector - table row border", function() {
   this.timeout(0);
@@ -41,15 +40,13 @@ describe("inspector - table row border", function() {
   });
 
   it("should be 1px solid rgb(218, 224, 229)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('table.table td').getComputedCss('border-top')
-      .then(function(border) {
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectTableCell()
+      .getComputedCss('border-top').then(function(border) {
         border.should.equal("1px solid rgb(218, 224, 229)");
       })
       .nodeify(done);

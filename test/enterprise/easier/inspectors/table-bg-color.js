@@ -6,13 +6,12 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
-
-var common = require('../../../../test/lib/common');
 
 describe("inspector - table bg color", function() {
   this.timeout(0);
@@ -41,15 +40,13 @@ describe("inspector - table bg color", function() {
   });
 
   it("should be #ffffff", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('table.table').getComputedCss('background-color')
-      .then(function(bgcolor) {
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectTable()
+      .getComputedCss('background-color').then(function(bgcolor) {
         bgcolor.should.equal("rgba(255, 255, 255, 1)");
       })
       .nodeify(done);

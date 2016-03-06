@@ -90,6 +90,37 @@ module.exports = function (wd) {
       .elementByCss('.btn.btn-red:not(.pass)');
   };
 
+  // selects panel
+  wd.PromiseChainWebdriver.prototype.dcmSelectPanel = function () {
+    return this
+      .elementByCss('.panel');
+  };
+
+  // selects table summary
+  wd.PromiseChainWebdriver.prototype.dcmSelectTableSummary = function (childCss) {
+    var selector = childCss ? '.table-heading ' + childCss : '.table-heading';
+    return this
+      .elementByCss(selector);
+  };
+
+  // selects table
+  wd.PromiseChainWebdriver.prototype.dcmSelectTable = function () {
+    return this
+      .elementByCss('table.table');
+  };
+
+  // selects table header
+  wd.PromiseChainWebdriver.prototype.dcmSelectTableHeader = function () {
+    return this
+      .elementByCss('table.table th');
+  };
+
+  // selects table row
+  wd.PromiseChainWebdriver.prototype.dcmSelectTableRow = function () {
+    return this
+      .elementByCss('table.table tbody tr');
+  };
+
   // selects table cell
   wd.PromiseChainWebdriver.prototype.dcmSelectTableCell = function () {
     return this

@@ -6,13 +6,12 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
-
-var common = require('../../../../test/lib/common');
 
 describe("inspector - table summary font color", function() {
   this.timeout(0);
@@ -41,19 +40,17 @@ describe("inspector - table summary font color", function() {
   });
 
   it("should be #28BD8B rgba(40, 189, 139, 1) and #313541 rgba(49, 53, 65, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.table-heading').getComputedCss('color')
-      .then(function(color) {
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectTableSummary()
+      .getComputedCss('color').then(function(color) {
         color.should.equal("rgba(49, 53, 65, 1)");
       })
-      .elementByCss('.table-heading span').getComputedCss('color')
-      .then(function(color) {
+      .dcmSelectTableSummary('span')
+      .getComputedCss('color').then(function(color) {
         color.should.equal("rgba(40, 189, 139, 1)");
       })
       .nodeify(done);
