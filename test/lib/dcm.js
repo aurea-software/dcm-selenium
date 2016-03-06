@@ -35,6 +35,17 @@ module.exports = function (wd) {
       .frame('subpage');
   };
 
+  // selects Party main frame
+  wd.PromiseChainWebdriver.prototype.dcmNewPersonPartyPage = function () {
+    return this
+      .dcmPersonPartyPage()
+      .elementById('Button_Person_Main_NewPerson').click()
+      .frame()
+      .frame('container')
+      .frame('cacheframe0')
+      .frame('proppage');
+  };
+
   // selects any button
   wd.PromiseChainWebdriver.prototype.dcmSelectButton = function (containerCss) {
     var selector = containerCss ? containerCss + ' .btn' : '.btn';
@@ -64,6 +75,12 @@ module.exports = function (wd) {
   wd.PromiseChainWebdriver.prototype.dcmSelectBlueButton = function () {
     return this
       .elementByCss('.btn.btn-blue:not(.pass)');
+  };
+
+  // selects red button
+  wd.PromiseChainWebdriver.prototype.dcmSelectRedButton = function () {
+    return this
+      .elementByCss('.btn.btn-red:not(.pass)');
   };
 
   return wd;
