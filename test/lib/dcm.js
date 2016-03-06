@@ -42,6 +42,12 @@ module.exports = function (wd) {
       .elementByCss(selector);
   };
 
+  // selects disabled button
+  wd.PromiseChainWebdriver.prototype.dcmSelectDisabledButton = function () {
+    return this
+      .elementByCss('.btn.pass');
+  };
+
   // selects blue button
   wd.PromiseChainWebdriver.prototype.dcmSelectBlueButton = function () {
     return this
