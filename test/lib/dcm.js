@@ -27,7 +27,7 @@ module.exports = function (wd) {
   };
 
   // selects Party main frame
-  wd.PromiseChainWebdriver.prototype.dcmPartyMainFrame = function () {
+  wd.PromiseChainWebdriver.prototype.dcmPersonPartyPage = function () {
     return this
       .frame()
       .frame('container')
