@@ -6,7 +6,8 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 var username = config.get("username");
@@ -41,13 +42,11 @@ describe("buttons - blue bg rollover color", function() {
   });
 
   it("should be #0097CD rgba(0, 151, 205, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
       .elementByCss('.result-div .btn.btn-blue:not(.pass)').moveTo().sleep(150)
       .getComputedCss('background-color')
       .then(function(bgcolor) {

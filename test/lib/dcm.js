@@ -3,7 +3,7 @@
 module.exports = function (wd) {
   var url;
 
-  // configs DCM application
+  // loads DCM application
   wd.PromiseChainWebdriver.prototype.dcm = function (options) {
     url = options.url;
 
@@ -11,7 +11,7 @@ module.exports = function (wd) {
       .get(url);
   };
 
-  // logins to the DCM maint application
+  // logins to the DCM main application
   wd.PromiseChainWebdriver.prototype.dcmLogin = function (username, password) {
     return this
       .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').type(username)
