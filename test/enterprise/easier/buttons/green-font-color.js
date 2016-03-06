@@ -6,7 +6,8 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 var username = config.get("username");
@@ -41,14 +42,12 @@ describe("buttons - green font color", function() {
   });
 
   it("should be #FFFFFF rgba(255, 255, 255, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.result-div .btn.btn-green:not(.pass)').moveTo().sleep(150)
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectGreenButton()
       .getComputedCss('color').then(function(font) {
         font.should.equal("rgba(255, 255, 255, 1)");
       })
