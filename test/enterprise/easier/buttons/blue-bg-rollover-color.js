@@ -47,9 +47,8 @@ describe("buttons - blue bg rollover color", function() {
       .dcmLogin(username, password)
       .dcmPartyTab()
       .dcmPersonPartyPage()
-      .elementByCss('.result-div .btn.btn-blue:not(.pass)').moveTo().sleep(150)
-      .getComputedCss('background-color')
-      .then(function(bgcolor) {
+      .dcmSelectBlueButton().moveTo().sleep(150)
+      .getComputedCss('background-color').then(function(bgcolor) {
         bgcolor.should.equal("rgba(0, 151, 205, 1)");
       })
       .nodeify(done);
