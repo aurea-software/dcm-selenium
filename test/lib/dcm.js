@@ -35,6 +35,13 @@ module.exports = function (wd) {
       .frame('subpage');
   };
 
+  // selects any button
+  wd.PromiseChainWebdriver.prototype.dcmSelectButton = function (containerCss) {
+    var selector = containerCss ? containerCss + ' .btn' : '.btn';
+    return this
+      .elementByCss(selector);
+  };
+
   // selects blue button
   wd.PromiseChainWebdriver.prototype.dcmSelectBlueButton = function () {
     return this
