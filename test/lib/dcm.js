@@ -20,14 +20,14 @@ module.exports = function (wd) {
   };
 
   // goes to the Party tab
-  wd.PromiseChainWebdriver.prototype.dcmGotoPartyTab = function() {
+  wd.PromiseChainWebdriver.prototype.dcmPartyTab = function() {
     return this
       .frame('navbar')
       .elementById('Party').click();
   };
 
   // selects Party main frame
-  wd.PromiseChainWebdriver.prototype.dcmSelectPartyMainFrame = function () {
+  wd.PromiseChainWebdriver.prototype.dcmPartyMainFrame = function () {
     return this
       .frame()
       .frame('container')

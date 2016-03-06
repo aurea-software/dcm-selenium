@@ -45,8 +45,8 @@ describe("buttons - blue bg color", function() {
     browser
       .dcm({url: url})
       .dcmLogin(username, password)
-      .dcmGotoPartyTab()
-      .dcmSelectPartyMainFrame()
+      .dcmPartyTab()
+      .dcmPartyMainFrame()
       .elementByCss('.result-div .btn.btn-blue:not(.pass)').getComputedCss('background-color')
       .then(function(bgcolor) {
         bgcolor.should.equal("rgba(35, 177, 247, 1)");
