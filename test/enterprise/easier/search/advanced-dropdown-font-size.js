@@ -15,7 +15,7 @@ var password = config.get("password");
 var common = require('../../../../test/lib/common');
 
 describe("advanced search - dropdown font size", function() {
-  this.timeout(30000);
+  this.timeout(0);
   var browser;
 
   before(function (done) {

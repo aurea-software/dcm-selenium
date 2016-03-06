@@ -11,7 +11,7 @@ var wd = require('wd');
 var url = config.get("url");
 
 describe("login - form inputs in focus border", function() {
-  this.timeout(30000);
+  this.timeout(0);
   var browser;
  
   before(function (done) {
