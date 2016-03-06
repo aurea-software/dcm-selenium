@@ -35,6 +35,13 @@ module.exports = function (wd) {
       .frame('subpage');
   };
 
+  // selects Party components frame
+  wd.PromiseChainWebdriver.prototype.dcmPersonPartyComponentsPage = function () {
+    return this
+      .dcmPersonPartyPage()
+      .frame('component_iframe');
+  };
+
   // selects Party main frame
   wd.PromiseChainWebdriver.prototype.dcmNewPersonPartyPage = function () {
     return this
@@ -81,6 +88,18 @@ module.exports = function (wd) {
   wd.PromiseChainWebdriver.prototype.dcmSelectRedButton = function () {
     return this
       .elementByCss('.btn.btn-red:not(.pass)');
+  };
+
+  // selects table cell
+  wd.PromiseChainWebdriver.prototype.dcmSelectTableCell = function () {
+    return this
+      .elementByCss('table.table td');
+  };
+
+  // selects table cell bold text
+  wd.PromiseChainWebdriver.prototype.dcmSelectTableCellBold = function () {
+    return this
+      .elementByCss('table.table td strong');
   };
 
   return wd;
