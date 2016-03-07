@@ -6,7 +6,8 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 
@@ -38,8 +39,9 @@ describe("login - form header font", function() {
  
   it("should be SourceSansProRegular", function  (done) {
     browser
-      .get(url)
-      .elementByCss('.modal-title').getComputedCss('font-family').then(function(font) {
+      .dcm({url: url})
+      .dcmSelectLoginForm('.modal-title')
+      .getComputedCss('font-family').then(function(font) {
         font.should.equal("SourceSansProRegular");
       })
       .nodeify(done);

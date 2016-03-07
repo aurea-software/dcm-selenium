@@ -6,7 +6,8 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 
@@ -38,8 +39,9 @@ describe("login - form header bg color", function() {
  
   it("should be #1F222D or rgba(31, 34, 45, 1)", function  (done) {
     browser
-      .get(url)
-      .elementByCss('.modal-header').getComputedCss('background-color').then(function(bgcolor) {
+      .dcm({url: url})
+      .dcmSelectLoginForm('.modal-header')
+      .getComputedCss('background-color').then(function(bgcolor) {
         bgcolor.should.equal("rgba(31, 34, 45, 1)");
       })
       .nodeify(done);

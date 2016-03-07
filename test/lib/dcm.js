@@ -133,5 +133,12 @@ module.exports = function (wd) {
       .elementByCss('table.table td strong');
   };
 
+  // selects login form
+  wd.PromiseChainWebdriver.prototype.dcmSelectLoginForm = function (childCss) {
+    var selector = childCss ? '.login-model ' + childCss : '.login-model';
+    return this
+      .elementByCss(selector);
+  };
+
   return wd;
 };

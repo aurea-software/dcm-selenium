@@ -6,7 +6,8 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 
@@ -38,8 +39,9 @@ describe("login - form header font size", function() {
  
   it("should be 25px", function  (done) {
     browser
-      .get(url)
-      .elementByCss('.modal-title').getComputedCss('font-size').then(function(font) {
+      .dcm({url: url})
+      .dcmSelectLoginForm('.modal-title')
+      .getComputedCss('font-size').then(function(font) {
         font.should.equal("25px");
       })
       .nodeify(done);
