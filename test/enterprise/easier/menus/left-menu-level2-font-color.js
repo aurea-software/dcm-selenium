@@ -15,7 +15,7 @@ var password = config.get("password");
 var common = require('../../../../test/lib/common');
 
 describe("menus - left menu level 2 font color", function() {
-  this.timeout(0);
+  this.timeout(30000);
   var browser;
 
   before(function (done) {

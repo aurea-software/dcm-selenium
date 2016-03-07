@@ -12,7 +12,7 @@ var wd = DCM(require('wd'));
 var url = config.get("url");
 
 describe("login - form header font size", function() {
-  this.timeout(0);
+  this.timeout(30000);
   var browser;
  
   before(function (done) {

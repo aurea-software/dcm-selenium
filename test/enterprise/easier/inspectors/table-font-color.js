@@ -14,7 +14,7 @@ var username = config.get("username");
 var password = config.get("password");
 
 describe("inspector - table font color", function() {
-  this.timeout(0);
+  this.timeout(30000);
   var browser;
 
   before(function (done) {

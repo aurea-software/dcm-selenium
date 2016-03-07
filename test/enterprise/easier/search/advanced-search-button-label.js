@@ -15,7 +15,7 @@ var password = config.get("password");
 var common = require('../../../../test/lib/common');
 
 describe("search - advanced search button label", function() {
-  this.timeout(0);
+  this.timeout(30000);
   var browser;
 
   before(function (done) {
