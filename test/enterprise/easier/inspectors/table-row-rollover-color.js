@@ -6,16 +6,15 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
-describe("inspector - table summary font size", function() {
-  this.timeout(0);
+describe("inspector - table row rollover color", function() {
+  this.timeout(30000);
   var browser;
 
   before(function (done) {
@@ -40,17 +39,15 @@ describe("inspector - table summary font size", function() {
       .nodeify(done);
   });
 
-  it("should be 16px", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.table-heading').getComputedCss('font-size')
-      .then(function(font) {
-        font.should.equal("16px");
+  it("should be #ECF1F3 rgba(236, 241, 243, 1)", function  (done) {
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectTableRow().moveTo().sleep(150)
+      .getComputedCss('background-color').then(function(bgcolor) {
+        bgcolor.should.equal("rgba(236, 241, 243, 1)");
       })
       .nodeify(done);
   });

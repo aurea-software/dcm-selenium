@@ -11,7 +11,7 @@ var wd = require('wd');
 var url = config.get("url");
 
 describe("login - form link color", function() {
-  this.timeout(0);
+  this.timeout(30000);
   var browser;
  
   before(function (done) {

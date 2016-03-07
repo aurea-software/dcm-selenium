@@ -15,7 +15,7 @@ var password = config.get("password");
 var common = require('../../../../test/lib/common');
 
 describe("search - datepicker day of week font size", function() {
-  this.timeout(0);
+  this.timeout(30000);
   var browser;
 
   before(function (done) {

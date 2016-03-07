@@ -13,10 +13,8 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("buttons - blue bg color", function() {
-  this.timeout(0);
+  this.timeout(30000);
   var browser;
 
   before(function (done) {
@@ -47,8 +45,8 @@ describe("buttons - blue bg color", function() {
       .dcmLogin(username, password)
       .dcmPartyTab()
       .dcmPersonPartyPage()
-      .elementByCss('.result-div .btn.btn-blue:not(.pass)').getComputedCss('background-color')
-      .then(function(bgcolor) {
+      .dcmSelectBlueButton()
+      .getComputedCss('background-color').then(function(bgcolor) {
         bgcolor.should.equal("rgba(35, 177, 247, 1)");
       })
       .nodeify(done);

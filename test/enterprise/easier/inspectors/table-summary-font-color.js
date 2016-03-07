@@ -6,16 +6,15 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
-describe("inspector - table row rollover color", function() {
-  this.timeout(0);
+describe("inspector - table summary font color", function() {
+  this.timeout(30000);
   var browser;
 
   before(function (done) {
@@ -40,17 +39,19 @@ describe("inspector - table row rollover color", function() {
       .nodeify(done);
   });
 
-  it("should be #ECF1F3 rgba(236, 241, 243, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('table.table tbody tr').moveTo().sleep(500).getComputedCss('background-color')
-      .then(function(bgcolor) {
-        bgcolor.should.equal("rgba(236, 241, 243, 1)");
+  it("should be #28BD8B rgba(40, 189, 139, 1) and #313541 rgba(49, 53, 65, 1)", function  (done) {
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectTableSummary()
+      .getComputedCss('color').then(function(color) {
+        color.should.equal("rgba(49, 53, 65, 1)");
+      })
+      .dcmSelectTableSummary('span')
+      .getComputedCss('color').then(function(color) {
+        color.should.equal("rgba(40, 189, 139, 1)");
       })
       .nodeify(done);
   });

@@ -6,16 +6,15 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
-describe("inspector - table font size", function() {
-  this.timeout(0);
+describe("inspector - table border", function() {
+  this.timeout(30000);
   var browser;
 
   before(function (done) {
@@ -40,17 +39,15 @@ describe("inspector - table font size", function() {
       .nodeify(done);
   });
 
-  it("should be 15px", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('table.table td').getComputedCss('font-size')
-      .then(function(font) {
-        font.should.equal("15px");
+  it("should be 1px solid #DCE3E5 rgb(220, 227, 229)", function  (done) {
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectPanel()
+      .getComputedCss('border').then(function(border) {
+        border.should.equal("1px solid rgb(220, 227, 229)");
       })
       .nodeify(done);
   });

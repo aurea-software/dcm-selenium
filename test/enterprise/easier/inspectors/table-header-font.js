@@ -6,16 +6,15 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
-describe("details inspector - value font color", function() {
-  this.timeout(0);
+describe("inspector - table header font", function() {
+  this.timeout(30000);
   var browser;
 
   before(function (done) {
@@ -40,18 +39,15 @@ describe("details inspector - value font color", function() {
       .nodeify(done);
   });
 
-  it("should be #161824 rgba(22, 24, 36, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .frame('component_iframe')
-      .elementByCss('.details-tab table.table td strong').getComputedCss('color')
-      .then(function(color) {
-        color.should.equal("rgba(22, 24, 36, 1)");
+  it("should be SourceSansProRegular", function  (done) {
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectTableHeader()
+      .getComputedCss('font-family').then(function(font) {
+        font.should.equal("SourceSansProRegular");
       })
       .nodeify(done);
   });

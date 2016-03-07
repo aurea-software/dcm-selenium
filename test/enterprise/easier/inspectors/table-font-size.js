@@ -6,16 +6,15 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
-describe("inspector - table summary font transform", function() {
-  this.timeout(0);
+describe("inspector - table font size", function() {
+  this.timeout(30000);
   var browser;
 
   before(function (done) {
@@ -40,17 +39,15 @@ describe("inspector - table summary font transform", function() {
       .nodeify(done);
   });
 
-  it("should be uppercase", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.table-heading').getComputedCss('text-transform')
-      .then(function(transform) {
-        transform.should.equal("uppercase");
+  it("should be 15px", function  (done) {
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectTableCell()
+      .getComputedCss('font-size').then(function(font) {
+        font.should.equal("15px");
       })
       .nodeify(done);
   });

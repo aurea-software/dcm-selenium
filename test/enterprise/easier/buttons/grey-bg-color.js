@@ -6,16 +6,15 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("buttons - grey bg color", function() {
-  this.timeout(0);
+  this.timeout(30000);
   var browser;
 
   before(function (done) {
@@ -41,15 +40,13 @@ describe("buttons - grey bg color", function() {
   });
 
   it("should be #313541 rgba(49, 53, 65, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.result-div .btn.btn-grey:not(.pass)').getComputedCss('background-color')
-      .then(function(bgcolor) {
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectGreyButton()
+      .getComputedCss('background-color').then(function(bgcolor) {
         bgcolor.should.equal("rgba(49, 53, 65, 1)");
       })
       .nodeify(done);

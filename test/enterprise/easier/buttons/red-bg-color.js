@@ -6,16 +6,15 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("buttons - red bg color", function() {
-  this.timeout(0);
+  this.timeout(30000);
   var browser;
 
   before(function (done) {
@@ -41,20 +40,13 @@ describe("buttons - red bg color", function() {
   });
 
   it("should be #EA5A5A rgba(234, 90, 90, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementById('Button_Person_Main_NewPerson').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('proppage')
-      .elementByCss('.bottom-btn-bar .btn.btn-red:not(.pass)').getComputedCss('background-color')
-      .then(function(bgcolor) {
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmNewPersonPartyPage()
+      .dcmSelectRedButton()
+      .getComputedCss('background-color').then(function(bgcolor) {
         bgcolor.should.equal("rgba(234, 90, 90, 1)");
       })
       .nodeify(done);
