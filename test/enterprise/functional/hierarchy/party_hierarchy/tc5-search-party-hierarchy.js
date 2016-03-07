@@ -99,7 +99,7 @@ describe("/hierarchy/party_hierarchy/tc5-search-party-hierarchy", function() {
             .frame('container')
             .frame('cacheframe0')
             .frame('subpage')
-            .sleep(5000)
+            .sleep(30000)
             .elementByLinkText('Org Hierarchy').click()
             .frame()
             .frame('container')

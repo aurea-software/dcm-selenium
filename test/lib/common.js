@@ -351,6 +351,7 @@ define(function() {
                 .frame('container')
                 .frame(cacheFrameName)
                 .frame('proppage')
+                .sleep(2000)
                 .elementByCss('button[data-id=CourseSources_Source_0]').click()
                 .frame()
                 .frame('container')
