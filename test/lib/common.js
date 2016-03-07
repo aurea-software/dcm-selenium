@@ -833,7 +833,7 @@ define(function() {
                 .frame('container')
                 .frame(cacheFrameName)
                 .frame('proppage')
-                .sleep(500)
+                .sleep(1000)
                 .elementByLinkText(permissionType).click()
                 .frame()
                 .frame('container')
