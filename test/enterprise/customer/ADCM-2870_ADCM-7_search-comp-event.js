@@ -13,7 +13,7 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../lib/common');
+var common = require('../../lib/common.js');
 
 var r = common.rand(3);
 var taxId = common.rand(5);
@@ -50,7 +50,8 @@ var agreementDesc = agreementName + 'Desc';
 var contractName = 'CK' + r;
 var contractDesc = contractName + 'Desc';
 
-describe("/management-tools/transaction-manager/tc14-cancel-comp-event", function() {
+//Selenium ticket: ADCM-2870, Maint ticket: ADCM-7
+describe("/enterprise/customer/ADCM-2870_ADCM-7_search-comp-event", function() {
     this.timeout(90000);
     var browser;
 
@@ -216,7 +217,7 @@ describe("/management-tools/transaction-manager/tc14-cancel-comp-event", functio
         common.createCompEvent(browser, 'cacheframe5', '01/01/2015', firstName, prodName).nodeify(done);
     });
 
-    it("should cancel comp event", function(done) {
+    it("should search comp event", function(done) {
         browser
             .frame()
             .frame('container')
@@ -228,21 +229,9 @@ describe("/management-tools/transaction-manager/tc14-cancel-comp-event", functio
             .frame('container')
             .frame('cacheframe5')
             .frame('subpage')
-            .elementById('CompEventTopGridReversalButton').click()
-            .frame()
-            .frame('container')
-            .frame('cacheframe5')
-            .frame('subpage')
-            .elementByCss('#alertDialog button').click()
-            .frame()
-            .frame('container')
-            .frame('cacheframe5')
-            .frame('subpage')
-            .sleep(10000)
-            .elementById('alertDialog').text()
-            .should.eventually.include('1 Compensable Event(s) Cancelled Sucessfully. Please click on the Search button to refresh')
-            .elementByCss('#alertDialog button').click()
-            .nodeify(done);
+            .elementByCss('table[name=CompEventGrid] tbody tr:nth-child(1) td:nth-child(3)').text()
+            .should.eventually.become(prodName.toUpperCase())
+            .notify(done);
     });
 
 });
