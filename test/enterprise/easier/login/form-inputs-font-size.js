@@ -47,7 +47,7 @@ describe("login - form inputs font size", function() {
       .then(function(font) {
         font.should.equal("16px");
       })
-      .elementByCss('.bootstrap-select button').getComputedCss('font-size')
+      .elementByCss('form[name="LoginForm"] .bootstrap-select button span').getComputedCss('font-size')
       .then(function(font) {
         font.should.equal("16px");
       })

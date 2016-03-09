@@ -47,7 +47,7 @@ describe("login - form inputs font", function() {
       .then(function(font) {
         font.should.equal("SourceSansProLight");
       })
-      .elementByCss('.bootstrap-select button').getComputedCss('font-family')
+      .elementByCss('form[name="LoginForm"] .bootstrap-select button span').getComputedCss('font-family')
       .then(function(font) {
         font.should.equal("SourceSansProLight");
       })      
