@@ -40,7 +40,7 @@ describe("search - heading font size", function() {
       .nodeify(done);
   });
 
-  it("should be 10px", function  (done) {
+  it("should be 12px", function  (done) {
     common.login(browser, url, username, password)
       .frame('navbar')
       .elementById('Party').click()
@@ -50,7 +50,7 @@ describe("search - heading font size", function() {
       .frame('subpage')
       .elementByCss('.search-container .heading').getComputedCss('font-size')
       .then(function(font) {
-        font.should.equal("10px");
+        font.should.equal("12px");
       })
       .nodeify(done);
   });
