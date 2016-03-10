@@ -19,7 +19,7 @@ describe("login - bg color", function() {
     browser = wd.promiseChainRemote(config.get("remote")); 
     browser
       .dcmInit(config.get("environment"))
-      .nodeify(done);  //same as : .then(function() { done(); });
+      .nodeify(done);
   });
  
   after(function (done) {
