@@ -14,25 +14,27 @@ module.exports = function (wd) {
       console.log(' > ' + meth, path, data || '');
     });
 
+    return this.init(options);
+    
     // trying to init browser
-    var i, max = 10, promise;
-    for (i = max; i >= 0; i--) {
-      try {
-        promise = this.init(options);
-      } catch (e) {
-        console.log('DCM: browser init error - ' + e.message);
-        continue;
-      }
+    // var i, max = 10, promise;
+    // for (i = max; i >= 0; i--) {
+    //   try {
+    //     promise = this.init(options);
+    //   } catch (e) {
+    //     console.log('DCM: browser init error - ' + e.message);
+    //     continue;
+    //   }
 
-      console.log('DCM: browser successfully initialized.');
-      break;
-    }
+    //   console.log('DCM: browser successfully initialized.');
+    //   break;
+    // }
 
-    if (i < 0) {
-      throw new Error("DCM: could not initialize browser, " + max + " attempts were made.");
-    }
+    // if (i < 0) {
+    //   throw new Error("DCM: could not initialize browser, " + max + " attempts were made.");
+    // }
 
-    return promise;
+    // return promise;
   };
 
   // loads DCM application

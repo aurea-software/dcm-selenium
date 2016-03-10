@@ -6,7 +6,8 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var wd = require('wd');
+var DCM = require('../../../../test/lib/dcm');
+var wd = DCM(require('wd'));
 
 var url = config.get("url");
 var username = config.get("username");
@@ -19,18 +20,9 @@ describe("search - heading font weight", function() {
   var browser;
 
   before(function (done) {
-    browser = wd.promiseChainRemote(config.get("remote")); 
-
-    // optional extra logging
-    browser.on('status', function(info) {
-      console.log(info);
-    });
-    browser.on('command', function(meth, path, data) {
-      console.log(' > ' + meth, path, data || '');
-    });
-
+    browser = wd.promiseChainRemote(config.get("remote"));
     browser
-      .init(config.get("environment"))
+      .dcmInit(config.get("environment"))
       .nodeify(done);  //same as : .then(function() { done(); });
   });
 
