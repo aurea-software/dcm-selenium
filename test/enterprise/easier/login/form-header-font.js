@@ -16,18 +16,9 @@ describe("login - form header font", function() {
   var browser;
  
   before(function (done) {
-    browser = wd.promiseChainRemote(config.get("remote")); 
-
-    // optional extra logging
-    browser.on('status', function(info) {
-      console.log(info);
-    });
-    browser.on('command', function(meth, path, data) {
-      console.log(' > ' + meth, path, data || '');
-    });
-
+    browser = wd.promiseChainRemote(config.get("remote"));
     browser
-      .init(config.get("environment"))
+      .dcmLogin(config.get("environment"))
       .nodeify(done);  //same as : .then(function() { done(); });
   });
  

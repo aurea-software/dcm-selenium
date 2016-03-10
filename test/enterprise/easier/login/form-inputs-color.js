@@ -18,7 +18,7 @@ describe("login - form inputs color", function() {
   before(function (done) {
     browser = wd.promiseChainRemote(config.get("remote")); 
     browser
-      .init(config.get("environment"))
+      .dcmInit(config.get("environment"))
       .nodeify(done);
   });
  

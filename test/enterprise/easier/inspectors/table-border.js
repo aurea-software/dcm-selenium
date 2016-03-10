@@ -19,17 +19,8 @@ describe("inspector - table border", function() {
 
   before(function (done) {
     browser = wd.promiseChainRemote(config.get("remote")); 
-
-    // optional extra logging
-    browser.on('status', function(info) {
-      console.log(info);
-    });
-    browser.on('command', function(meth, path, data) {
-      console.log(' > ' + meth, path, data || '');
-    });
-
     browser
-      .init(config.get("environment"))
+      .dcmInit(config.get("environment"))
       .nodeify(done);  //same as : .then(function() { done(); });
   });
 
