@@ -3,6 +3,38 @@
 module.exports = function (wd) {
   var url;
 
+  // inits browser
+  wd.PromiseChainWebdriver.prototype.dcmInit = function (options) {
+    
+    this.on('status', function(info) {
+      console.log(info);
+    });
+
+    this.on('command', function(meth, path, data) {
+      console.log(' > ' + meth, path, data || '');
+    });
+
+    // trying to init browser
+    var i, max = 10, promise;
+    for (i = max; i >= 0; i--) {
+      try {
+        promise = this.init(options);
+      } catch (e) {
+        console.log('DCM: browser init error - ' + e.message);
+        continue;
+      }
+
+      console.log('DCM: browser successfully initialized.');
+      break;
+    }
+
+    if (i < 0) {
+      throw new Error("DCM: could not initialize browser, " + max + " attempts were made.");
+    }
+
+    return promise;
+  };
+
   // loads DCM application
   wd.PromiseChainWebdriver.prototype.dcm = function (options) {
     url = options.url;
