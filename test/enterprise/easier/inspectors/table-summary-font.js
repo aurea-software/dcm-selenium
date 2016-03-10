@@ -20,7 +20,7 @@ describe("inspector - table summary font", function() {
   before(function (done) {
     browser = wd.promiseChainRemote(config.get("remote")); 
     browser
-      .dcmLogin(config.get("environment"))
+      .dcmInit(config.get("environment"))
       .nodeify(done);  //same as : .then(function() { done(); });
   });
 

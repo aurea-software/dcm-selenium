@@ -18,7 +18,7 @@ describe("login - form inputs in focus border", function() {
   before(function (done) {
     browser = wd.promiseChainRemote(config.get("remote"));
     browser
-      .dcmLogin(config.get("environment"))
+      .dcmInit(config.get("environment"))
       .nodeify(done);  //same as : .then(function() { done(); });
   });
  
