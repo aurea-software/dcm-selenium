@@ -28,6 +28,7 @@
     "mocha-teamcity-reporter": "git+https://github.com/aurea-software/mocha-teamcity-reporter.git",
     "moment": ">=2.11.1",
     "nconf": "^0.8.2",
-    "wd": "^0.4.0"
+    "wd": "^0.4.0",
+    "dcm-selenium-common": "git+https://github.com/aurea-software/dcm-selenium-common.git"
   }
 }

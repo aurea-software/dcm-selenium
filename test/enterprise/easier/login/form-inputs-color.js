@@ -6,7 +6,7 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
 
-var DCM = require('../../../../test/lib/dcm');
+var DCM = require('dcm-selenium-common');
 var wd = DCM(require('wd'));
 
 var url = config.get("url");
