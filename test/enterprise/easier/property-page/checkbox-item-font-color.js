@@ -16,14 +16,19 @@ var password = config.get("password");
 var common = require('../../../../test/lib/common');
 
 describe("property page - checkbox item font color", function() {
-  this.timeout(30000);
+  this.timeout(60000);
   var browser;
 
   before(function (done) {
     browser = wd.promiseChainRemote(config.get("remote")); 
     browser
       .dcmInit(config.get("environment"))
-      .nodeify(done);  //same as : .then(function() { done(); });
+      .then(function () {
+        done();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   });
 
   after(function (done) {
