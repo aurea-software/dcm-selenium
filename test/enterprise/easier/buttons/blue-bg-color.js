@@ -20,8 +20,7 @@ describe("buttons - blue bg color", function() {
   before(function (done) {
     browser = wd.promiseChainRemote(config.get("remote"));
     browser
-      .dcmInit(config.get("environment"))
-      .nodeify(done);  //same as : .then(function() { done(); });
+      .dcmInit(config.get("environment"), done);
   });
 
   after(function (done) {
