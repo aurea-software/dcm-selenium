@@ -35,20 +35,20 @@ describe("login - form inputs color", function() {
  
   it("should be #778086 rgba(119, 128, 134, 1)", function  (done) {
     browser
-      .get(url)
-      .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').getComputedCss('color')
+      .dcm({url: url})
+      .dcmSelectLoginForm('input[name=LOGINNAME]').getComputedCss('color')
       .then(function(color) {
         color.should.equal("rgba(119, 128, 134, 1)");
       })
-      .elementByCss('form[name=LoginForm] input[name=PASSWORD]').getComputedCss('color')
+      .dcmSelectLoginForm('input[name=PASSWORD]').getComputedCss('color')
       .then(function(color) {
         color.should.equal("rgba(119, 128, 134, 1)");
       })
-      .elementByCss('form[name="LoginForm"] .bootstrap-select button span').getComputedCss('color')
+      .dcmSelectLoginForm('.bootstrap-select button span').getComputedCss('color')
       .then(function(color) {
         color.should.equal("rgba(119, 128, 134, 1)");
       })
-      .elementByCss('form[name=LoginForm] .checkbox label').getComputedCss('color')
+      .dcmSelectLoginForm('.checkbox label').getComputedCss('color')
       .then(function(color) {
         color.should.equal("rgba(119, 128, 134, 1)");
       })

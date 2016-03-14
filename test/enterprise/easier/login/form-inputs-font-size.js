@@ -35,24 +35,24 @@ describe("login - form inputs font size", function() {
  
   it("should be 16px for main inputs and 14px for checkbox and forget password link", function  (done) {
     browser
-      .get(url)
-      .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').getComputedCss('font-size')
+      .dcm({url: url})
+      .dcmSelectLoginForm('input[name=LOGINNAME]').getComputedCss('font-size')
       .then(function(font) {
         font.should.equal("16px");
       })
-      .elementByCss('form[name=LoginForm] input[name=PASSWORD]').getComputedCss('font-size')
+      .dcmSelectLoginForm('input[name=PASSWORD]').getComputedCss('font-size')
       .then(function(font) {
         font.should.equal("16px");
       })
-      .elementByCss('form[name="LoginForm"] .bootstrap-select button span').getComputedCss('font-size')
+      .dcmSelectLoginForm('.bootstrap-select button span').getComputedCss('font-size')
       .then(function(font) {
         font.should.equal("16px");
       })
-      .elementByCss('form[name=LoginForm] .checkbox label').getComputedCss('font-size')
+      .dcmSelectLoginForm('.checkbox label').getComputedCss('font-size')
       .then(function(font) {
         font.should.equal("14px");
       })
-      .elementByCss('form[name=LoginForm] #fgButton').getComputedCss('font-size') // forget password link
+      .dcmSelectLoginForm('#fgButton').getComputedCss('font-size') // forget password link
       .then(function(font) {
         font.should.equal("14px");
       })

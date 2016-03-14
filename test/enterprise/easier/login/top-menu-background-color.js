@@ -35,8 +35,9 @@ describe("login - top menu bg color", function() {
  
   it("should be #1f222d or rgba(31, 34, 45, 1)", function  (done) {
     browser
-      .get(url)
-      .elementByCss('#header').getComputedCss('background-color').then(function(bgcolor) {
+      .dcm({url: url})
+      .elementByCss('#header')
+      .getComputedCss('background-color').then(function(bgcolor) {
         bgcolor.should.equal("rgba(31, 34, 45, 1)");
       })
       .nodeify(done);

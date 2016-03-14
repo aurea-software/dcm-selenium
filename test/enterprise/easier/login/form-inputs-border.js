@@ -35,17 +35,17 @@ describe("login - form inputs border", function() {
  
   it("should be bottom 1px solid #778086 rgb(119, 128, 134)", function  (done) {
     browser
-      .get(url)
-      .elementByCss('form[name="LoginForm"] .checkbox label').click().sleep(150) // move focus out
-      .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').getComputedCss('border-bottom')
+      .dcm({url: url})
+      .dcmSelectLoginForm('.checkbox label').click().sleep(150) // move focus out
+      .dcmSelectLoginForm('input[name=LOGINNAME]').getComputedCss('border-bottom')
       .then(function(border) {
         border.should.equal("1px solid rgb(119, 128, 134)");
       })
-      .elementByCss('form[name=LoginForm] input[name=PASSWORD]').getComputedCss('border-bottom')
+      .dcmSelectLoginForm('input[name=PASSWORD]').getComputedCss('border-bottom')
       .then(function(border) {
         border.should.equal("1px solid rgb(119, 128, 134)");
       })
-      .elementByCss('.bootstrap-select button').getComputedCss('border-bottom')
+      .dcmSelectLoginForm('.bootstrap-select button').getComputedCss('border-bottom')
       .then(function(border) {
         border.should.equal("1px solid rgb(119, 128, 134)");
       })

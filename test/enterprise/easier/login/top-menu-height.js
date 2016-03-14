@@ -35,8 +35,9 @@ describe("login - top menu height", function() {
 
   it("should be 60px", function  (done) {
     browser
-      .get(url)
-      .elementByCss('#header').getComputedCss('height').then(function(height) {
+      .dcm({url: url})
+      .elementByCss('#header')
+      .getComputedCss('height').then(function(height) {
         height.should.equal("60px");
       })
       .nodeify(done);

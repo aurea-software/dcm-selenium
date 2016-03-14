@@ -35,16 +35,16 @@ describe("login - form inputs in focus border", function() {
  
   it("should be bottom 1px solid #28bd8b rgb(40, 189, 139)", function  (done) {
     browser
-      .get(url)
-      .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').type("").sleep(150) // wait for border color transition
+      .dcm({url: url})
+      .dcmSelectLoginForm('input[name=LOGINNAME]').type("").sleep(150) // wait for border color transition
       .getComputedCss('border-bottom').then(function(border) {
         border.should.equal("1px solid rgb(40, 189, 139)");
       })
-      .elementByCss('form[name=LoginForm] input[name=PASSWORD]').type("").sleep(150) // wait for border color transition
+      .dcmSelectLoginForm('input[name=PASSWORD]').type("").sleep(150) // wait for border color transition
       .getComputedCss('border-bottom').then(function(border) {
         border.should.equal("1px solid rgb(40, 189, 139)");
       })
-      .elementByCss('.bootstrap-select button').click().sleep(150) // wait for border color transition
+      .dcmSelectLoginForm('.bootstrap-select button').click().sleep(150) // wait for border color transition
       .getComputedCss('border-bottom').then(function(border) {
         border.should.equal("1px solid rgb(40, 189, 139)");
       })
