@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("menus - top menu text hover color", function() {
   this.timeout(60000);
   var browser;
@@ -38,8 +36,10 @@ describe("menus - top menu text hover color", function() {
   });
 
   it("should be #ffffff", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmTopnav()
       .elementByCss('#navigation li a').moveTo().sleep(500)
       .getComputedCss('color').then(function(color) {
         color.should.equal("rgba(255, 255, 255, 1)");

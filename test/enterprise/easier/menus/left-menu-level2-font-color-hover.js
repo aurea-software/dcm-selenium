@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("menus - left menu level 2 font color hover", function() {
   this.timeout(60000);
   var browser;
@@ -38,10 +36,11 @@ describe("menus - left menu level 2 font color hover", function() {
   });
 
   it("should be #ffffff", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame().frame('sidebar')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmSidebar()
       .elementByCss('.sidebar ul > li > ul > li > a').moveTo().sleep(500)
       .getComputedCss('color').then(function(color) {
         color.should.equal("rgba(255, 255, 255, 1)");

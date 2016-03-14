@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("menus - left menu font size", function() {
   this.timeout(60000);
   var browser;
@@ -38,10 +36,11 @@ describe("menus - left menu font size", function() {
   });
 
   it("should be 14px", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame().frame('sidebar')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmSidebar()
       .elementByCss('.sidebar ul li a').getComputedCss('font-size').then(function(font) {
         font.should.equal("14px");
       })

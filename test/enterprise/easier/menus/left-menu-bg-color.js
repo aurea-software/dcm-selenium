@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("menus - left menu bg color", function() {
   this.timeout(60000);
   var browser;
@@ -38,10 +36,11 @@ describe("menus - left menu bg color", function() {
   });
 
   it("should be #282C37 rgba(40, 44, 55, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame().frame('sidebar')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmSidebar()
       .elementByCss('body').getComputedCss('background-color').then(function(bgcolor) {
         bgcolor.should.equal("rgba(40, 44, 55, 1)");
       })
