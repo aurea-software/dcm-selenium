@@ -35,8 +35,8 @@ describe("login - form submit button border radius", function() {
  
   it("should be 3px", function  (done) {
     browser
-      .get(url)
-      .elementByCss('form[name=LoginForm] button[type=submit]').getComputedCss('border-radius')
+      .dcm({url: url})
+      .dcmSelectLoginForm('button[type=submit]').getComputedCss('border-radius')
       .then(function(radius) {
         radius.should.equal("3px");
       })

@@ -36,7 +36,7 @@ describe("login - form header font", function() {
   it("should be SourceSansProRegular", function  (done) {
     browser
       .dcm({url: url})
-      .dcmSelectLoginForm('.modal-title')
+      .dcmSelectLoginBox('.modal-title')
       .getComputedCss('font-family').then(function(font) {
         font.should.equal("SourceSansProRegular");
       })

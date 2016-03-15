@@ -35,20 +35,20 @@ describe("login - form inputs font", function() {
  
   it("should be SourceSansProLight", function  (done) {
     browser
-      .get(url)
-      .elementByCss('form[name=LoginForm] input[name=LOGINNAME]').getComputedCss('font-family')
+      .dcm({url: url})
+      .dcmSelectLoginForm('input[name=LOGINNAME]').getComputedCss('font-family')
       .then(function(font) {
         font.should.equal("SourceSansProLight");
       })
-      .elementByCss('form[name=LoginForm] input[name=PASSWORD]').getComputedCss('font-family')
+      .dcmSelectLoginForm('input[name=PASSWORD]').getComputedCss('font-family')
       .then(function(font) {
         font.should.equal("SourceSansProLight");
       })
-      .elementByCss('form[name="LoginForm"] .bootstrap-select button span').getComputedCss('font-family')
+      .dcmSelectLoginForm('.bootstrap-select button span').getComputedCss('font-family')
       .then(function(font) {
         font.should.equal("SourceSansProLight");
       })      
-      .elementByCss('form[name=LoginForm] .checkbox label').getComputedCss('font-family')
+      .dcmSelectLoginForm('.checkbox label').getComputedCss('font-family')
       .then(function(font) {
         font.should.equal("SourceSansProLight");
       })

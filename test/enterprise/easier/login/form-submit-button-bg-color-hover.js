@@ -35,8 +35,8 @@ describe("login - form submit button bg hover", function() {
  
   it("should be #04A675 rgba(4, 166, 117, 1)", function  (done) {
     browser
-      .get(url)
-      .elementByCss('form[name=LoginForm] button[type=submit]').moveTo().sleep(500) // mouse hover
+      .dcm({url: url})
+      .dcmSelectLoginForm('button[type=submit]').moveTo().sleep(500) // mouse hover
       .getComputedCss('background-color')
       .then(function(color) {
         color.should.equal("rgba(4, 166, 117, 1)");

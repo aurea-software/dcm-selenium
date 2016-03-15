@@ -36,11 +36,11 @@ describe("login - form header font color", function() {
   it("should be #23b1f7 rgba(35, 177, 247, 1) and #ffffff rgba(255, 255, 255, 1)", function  (done) {
     browser
       .dcm({url: url})
-      .dcmSelectLoginForm('.modal-title')
+      .dcmSelectLoginBox('.modal-title')
       .getComputedCss('color').then(function(color) {
         color.should.equal("rgba(255, 255, 255, 1)");
       })
-      .dcmSelectLoginForm('.modal-title span')
+      .dcmSelectLoginBox('.modal-title span')
       .getComputedCss('color').then(function(color) {
         color.should.equal("rgba(35, 177, 247, 1)");
       })

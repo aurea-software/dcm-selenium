@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("menus - left menu width", function() {
   this.timeout(60000);
   var browser;
@@ -38,10 +36,11 @@ describe("menus - left menu width", function() {
   });
 
   it("should be 250px", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame().frame('sidebar')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmSidebar()
       .elementByCss('body').getComputedCss('width').then(function(width) {
         width.should.equal("250px");
       })

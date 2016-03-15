@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("menus - top menu text font size", function() {
   this.timeout(60000);
   var browser;
@@ -38,8 +36,10 @@ describe("menus - top menu text font size", function() {
   });
 
   it("should be 16px", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmTopnav()
       .elementByCss('#navigation li a').getComputedCss('font-size').then(function(font) {
         font.should.equal("16px");
       })

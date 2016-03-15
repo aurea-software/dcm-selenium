@@ -35,8 +35,8 @@ describe("login - form submit button font", function() {
  
   it("should be SourceSansProSemibold", function  (done) {
     browser
-      .get(url)
-      .elementByCss('form[name=LoginForm] button[type=submit]').getComputedCss('font-family')
+      .dcm({url: url})
+      .dcmSelectLoginForm('button[type=submit]').getComputedCss('font-family')
       .then(function(font) {
         font.should.equal("SourceSansProSemibold");
       })

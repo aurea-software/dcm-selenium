@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("page - font size", function() {
   this.timeout(60000);
   var browser;
@@ -38,13 +36,11 @@ describe("page - font size", function() {
   });
 
   it("should be 16px", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
       .elementByCss('body').getComputedCss('font-size')
       .then(function(font) {
         font.should.equal("16px");

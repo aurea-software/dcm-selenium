@@ -35,8 +35,8 @@ describe("login - form link color", function() {
  
   it("should be #23B1F7 rgba(35, 177, 247, 1)", function  (done) {
     browser
-      .get(url)
-      .elementByCss('form[name=LoginForm] .checkbox a').getComputedCss('color')
+      .dcm({url: url})
+      .dcmSelectLoginForm('.checkbox a').getComputedCss('color')
       .then(function(color) {
         color.should.equal("rgba(35, 177, 247, 1)");
       })

@@ -36,7 +36,7 @@ describe("login - form header font size", function() {
   it("should be 25px", function  (done) {
     browser
       .dcm({url: url})
-      .dcmSelectLoginForm('.modal-title')
+      .dcmSelectLoginBox('.modal-title')
       .getComputedCss('font-size').then(function(font) {
         font.should.equal("25px");
       })

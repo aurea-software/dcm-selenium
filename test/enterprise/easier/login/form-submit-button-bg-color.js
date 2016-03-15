@@ -35,8 +35,8 @@ describe("login - form submit button bg", function() {
  
   it("should be #28bd8b rgba(40, 189, 139, 1)", function  (done) {
     browser
-      .get(url)
-      .elementByCss('form[name=LoginForm] button[type=submit]').getComputedCss('background-color')
+      .dcm({url: url})
+      .dcmSelectLoginForm('button[type=submit]').getComputedCss('background-color')
       .then(function(color) {
         color.should.equal("rgba(40, 189, 139, 1)");
       })

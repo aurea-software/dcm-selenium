@@ -35,8 +35,8 @@ describe("login - form submit button font size", function() {
  
   it("should be 17px", function  (done) {
     browser
-      .get(url)
-      .elementByCss('form[name=LoginForm] button[type=submit]').getComputedCss('font-size')
+      .dcm({url: url})
+      .dcmSelectLoginForm('button[type=submit]').getComputedCss('font-size')
       .then(function(font) {
         font.should.equal("17px");
       })

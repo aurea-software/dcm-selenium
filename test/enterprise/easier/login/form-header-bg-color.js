@@ -36,7 +36,7 @@ describe("login - form header bg color", function() {
   it("should be #1F222D or rgba(31, 34, 45, 1)", function  (done) {
     browser
       .dcm({url: url})
-      .dcmSelectLoginForm('.modal-header')
+      .dcmSelectLoginBox('.modal-header')
       .getComputedCss('background-color').then(function(bgcolor) {
         bgcolor.should.equal("rgba(31, 34, 45, 1)");
       })
