@@ -166,7 +166,7 @@ describe("/party/person/tc4-edit-basic-info", function() {
             .elementById('NewStatus.StartDate').clear().type('01/01/2015')
             .elementById('validate').click()
             .elementById('ppError_div').text()
-            .should.eventually.include('Warning:The new status completely overlaps one or more existing statuses')
+            .should.eventually.include('Warning: The new status completely overlaps one or more existing statuses')
             // Click twice due to the warning
             .elementById('save').click()
             .elementById('save').click()
