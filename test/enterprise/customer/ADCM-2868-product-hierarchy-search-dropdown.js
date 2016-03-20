@@ -45,11 +45,11 @@ describe("ADCM-2868 product hierarchy search dropdown", function() {
       .dcmSidebar()
       .dcmProductSearchSubmenu()
       .dcmPartyHierarchyPage()
-      .sleep(1000)
       .elementByCss('#Search_ProductHierarchySearch_Main_primary_display_div .bootstrap-select button').click()
-      .elementByCss('#menuSelect > div > div > ul > li.selected > a > span.text').text()
+      .sleep(1000)
+      .elementByCss('#Search_ProductHierarchySearch_Main_primary_display_div .bootstrap-select .dropdown-menu li > a > span.text').text()
       .should.eventually.become('Search Prod Hierarchy')
-      .elementByCss('#menuSelect > div > div > ul > li:nth-child(2) > a > span.text').text()
+      .elementByCss('#Search_ProductHierarchySearch_Main_primary_display_div .bootstrap-select .dropdown-menu li:nth-child(2) > a > span.text').text()
       .should.eventually.become('Search Product')
       .nodeify(done);
   });
