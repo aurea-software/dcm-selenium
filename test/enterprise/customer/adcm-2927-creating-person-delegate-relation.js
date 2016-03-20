@@ -13,8 +13,10 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-describe("ADCM-2926 page left padding", function() {
-  this.timeout(60000);
+var uuid = require('node-uuid');
+
+describe("ADCM-2927 creating person delegate relation", function() {
+  this.timeout(300000);
   var browser;
 
   before(function (done) {
@@ -36,16 +38,31 @@ describe("ADCM-2926 page left padding", function() {
       .nodeify(done);
   });
 
-  it("should be 45px", function(done) {
+  it("should not throw exception and display form", function(done) {
+    var taxId = uuid.v4().substring(0, 32);
+    var party = {
+      firstName: 'DelegatorParty' + taxId,
+      lastName: 'LN',
+      syncWithPdb: false,
+      taxId: taxId,
+      roles: ['distributor'],
+      street: 's1',
+      city: 'c1',
+      zipCode: '90210'
+    };
+
     browser
       .dcm({url: url})
       .dcmLogin(username, password)
+      .dcmCreatePersonParty(party)
       .dcmPartyTab()
-      .dcmNewPersonPartyPage()
-      .elementByCss('.content-wrapper').getComputedCss('padding-left')
-      .should.eventually.become('15px')
-      .elementByCss('.result-div').getComputedCss('margin-left')
-      .should.eventually.become('30px')
+      .dcmPersonPartyPage()
+      .dcmSearchPersonPartyByTaxId(party.taxId)
+      .dcmSidebar()
+      .dcmPersonPartyDelegationSubmenu()
+      .dcmNewPersonPartyDelegatePage()
+      .elementByCss('.bootstrap-select button span').text()
+      .should.eventually.become('Full')
       .nodeify(done);
   });
 });

@@ -13,7 +13,7 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-describe("ADCM-2926 page left padding", function() {
+describe("product hierarchy search dropdown", function() {
   this.timeout(60000);
   var browser;
 
@@ -36,16 +36,20 @@ describe("ADCM-2926 page left padding", function() {
       .nodeify(done);
   });
 
-  it("should be 45px", function(done) {
+  it("should contain 'Search For Product Hierarchy' and 'Search For Product'", function(done) {
     browser
       .dcm({url: url})
       .dcmLogin(username, password)
-      .dcmPartyTab()
-      .dcmNewPersonPartyPage()
-      .elementByCss('.content-wrapper').getComputedCss('padding-left')
-      .should.eventually.become('15px')
-      .elementByCss('.result-div').getComputedCss('margin-left')
-      .should.eventually.become('30px')
+      .dcmHierarchyTab()
+      .dcmSidebar()
+      .dcmProductSearchSubmenu()
+      .dcmPartyHierarchyPage()
+      .sleep(1000)
+      .elementByCss('#Search_ProductHierarchySearch_Main_primary_display_div .bootstrap-select button').click()
+      .elementByCss('#menuSelect > div > div > ul > li.selected > a > span.text').text()
+      .should.eventually.become('Search For Product Hierarchy')
+      .elementByCss('#menuSelect > div > div > ul > li:nth-child(2) > a > span.text').text()
+      .should.eventually.become('Search For Product')
       .nodeify(done);
   });
 });

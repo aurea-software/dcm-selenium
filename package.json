@@ -29,6 +29,7 @@
     "mocha-teamcity-reporter": "git+https://github.com/aurea-software/mocha-teamcity-reporter.git",
     "moment": ">=2.11.1",
     "nconf": "^0.8.2",
+    "node-uuid": "^1.4.7",
     "wd": "^0.4.0"
   }
 }
