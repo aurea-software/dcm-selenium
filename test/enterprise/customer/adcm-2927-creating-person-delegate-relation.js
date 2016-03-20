@@ -16,7 +16,7 @@ var password = config.get("password");
 var uuid = require('node-uuid');
 
 describe("ADCM-2927 creating person delegate relation", function() {
-  this.timeout(300000);
+  this.timeout(60000);
   var browser;
 
   before(function (done) {

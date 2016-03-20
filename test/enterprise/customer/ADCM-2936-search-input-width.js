@@ -13,7 +13,7 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-describe("ADCM-2937 easier splash screen", function() {
+describe("ADCM-2936 search input width", function() {
   this.timeout(60000);
   var browser;
 
@@ -36,23 +36,14 @@ describe("ADCM-2937 easier splash screen", function() {
       .nodeify(done);
   });
 
-  it("should has heading 'Welcome to Aurea Distribution Channel Management(TM)' and sub-headings should not have colons", function(done) {
+  it("should be 200px", function(done) {
     browser
       .dcm({url: url})
       .dcmLogin(username, password)
-      .dcmHomePage()
-      .elementByCss('.welcome-body h2').text()
-      .should.eventually.become('Welcome to Aurea Distribution Channel Management(TM)')
-      .elementByCss('.welcome-body ul li:nth-child(1) span').text()
-      .should.not.eventually.contain(':')
-      .elementByCss('.welcome-body ul li:nth-child(2) span').text()
-      .should.not.eventually.contain(':')
-      .elementByCss('.welcome-body ul li:nth-child(3) span').text()
-      .should.not.eventually.contain(':')
-      .elementByCss('.welcome-body ul li:nth-child(4) span').text()
-      .should.not.eventually.contain(':')
-      .elementByCss('.welcome-body ul li:nth-child(5) span').text()
-      .should.not.eventually.contain(':')
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectPersonPartySearch('.form-group').getComputedCss('width')
+      .should.eventually.become('200px')
       .nodeify(done);
   });
 });
