@@ -43,6 +43,16 @@ describe("ADCM-2937 easier splash screen", function() {
       .dcmHomePage()
       .elementByCss('.welcome-body h2').text()
       .should.eventually.become('Welcome to Aurea Distribution Channel Management(TM)')
+      .elementByCss('.welcome-body ul li:nth-child(1) span').text()
+      .should.not.eventually.contain(':')
+      .elementByCss('.welcome-body ul li:nth-child(2) span').text()
+      .should.not.eventually.contain(':')
+      .elementByCss('.welcome-body ul li:nth-child(3) span').text()
+      .should.not.eventually.contain(':')
+      .elementByCss('.welcome-body ul li:nth-child(4) span').text()
+      .should.not.eventually.contain(':')
+      .elementByCss('.welcome-body ul li:nth-child(5) span').text()
+      .should.not.eventually.contain(':')
       .nodeify(done);
   });
 });
