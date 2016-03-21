@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("search - datepicker click", function() {
   this.timeout(60000);
   var browser;
@@ -38,15 +36,13 @@ describe("search - datepicker click", function() {
   });
 
   it("should make datepicker visible", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('DCM Admin').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.search-container .btn.advanced-link').click().sleep(500) // open advanced form
-      .elementByCss('.search-container .datepicker input').click()
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmAdminTab()
+      .dcmAuditAdminPage()
+      .dcmOpenAdvancedSearch()
+      .dcmSelectSearch('.datepicker input').click()
       .elementByCss('.datepicker.dropdown-menu').getComputedCss('display')
       .then(function(display) {
         display.should.equal("block");

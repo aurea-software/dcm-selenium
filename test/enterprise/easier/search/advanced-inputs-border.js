@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("advanced search - inputs border", function() {
   this.timeout(60000);
   var browser;
@@ -38,14 +36,12 @@ describe("advanced search - inputs border", function() {
   });
 
   it("should be 1px solid rgb(119, 128, 134)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.search-container .advanced-form input.form-control')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectPersonPartyAdvancedSearch('input.form-control')
       .getComputedCss('border-bottom')
       .then(function(border) {
         border.should.equal("1px solid rgb(119, 128, 134)");

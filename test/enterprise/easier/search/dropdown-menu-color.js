@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("search - dropdown menu font color", function() {
   this.timeout(60000);
   var browser;
@@ -38,19 +36,17 @@ describe("search - dropdown menu font color", function() {
   });
 
   it("should be #ffffff rgba(255, 255, 255, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.search-container .bootstrap-select button').click()
-      .elementByCss('.search-container .bootstrap-select .dropdown-menu')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectSearch('.bootstrap-select button').click()
+      .dcmSelectSearch('.bootstrap-select .dropdown-menu')
       .getComputedCss('display').then(function(display) {
         display.should.equal("block");
       })
-      .elementByCss('.search-container .bootstrap-select .dropdown-menu > li > a')
+      .dcmSelectSearch('.bootstrap-select .dropdown-menu > li > a')
       .getComputedCss('color').then(function(color) {
         color.should.equal("rgba(255, 255, 255, 1)");
       })

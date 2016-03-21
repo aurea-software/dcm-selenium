@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("advanced search - dropdown menu bg color", function() {
   this.timeout(60000);
   var browser;
@@ -38,20 +36,18 @@ describe("advanced search - dropdown menu bg color", function() {
   });
 
   it("should be #1F222D rgba(31, 34, 45, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.search-container .btn.advanced-link').click().sleep(500) // open advanced form
-      .elementByCss('.search-container .advanced-form .bootstrap-select button').click()
-      .elementByCss('.search-container .advanced-form .bootstrap-select .dropdown-menu')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmOpenPersonPartyAdvancedSearch()
+      .dcmSelectPersonPartyAdvancedSearch('.bootstrap-select button').click()
+      .dcmSelectPersonPartyAdvancedSearch('.bootstrap-select .dropdown-menu')
       .getComputedCss('display').then(function(display) {
         display.should.equal("block");
       })
-      .elementByCss('.search-container .advanced-form .bootstrap-select .dropdown-menu')
+      .dcmSelectPersonPartyAdvancedSearch('.bootstrap-select .dropdown-menu')
       .getComputedCss('background-color').then(function(bgcolor) {
         bgcolor.should.equal("rgba(31, 34, 45, 1)");
       })

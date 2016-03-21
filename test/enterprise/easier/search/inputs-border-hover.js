@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("search - inputs border focus", function() {
   this.timeout(60000);
   var browser;
@@ -38,15 +36,13 @@ describe("search - inputs border focus", function() {
   });
 
   it("should be 1px solid rgb(40, 189, 139)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.search-container .bootstrap-select button').click().sleep(150) // move focus out
-      .elementByCss('.search-container input.form-control').moveTo().sleep(150).getComputedCss('border-bottom')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectSearch('.bootstrap-select button').click().sleep(150) // move focus out
+      .dcmSelectSearch('input.form-control').moveTo().sleep(150).getComputedCss('border-bottom')
       .then(function(border) {
         border.should.equal("1px solid rgb(40, 189, 139)");
       })

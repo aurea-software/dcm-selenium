@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("search - heading font weight", function() {
   this.timeout(60000);
   var browser;
@@ -38,14 +36,12 @@ describe("search - heading font weight", function() {
   });
 
   it("should be normal", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.search-container .heading').getComputedCss('font-weight')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectSearch('.heading').getComputedCss('font-weight')
       .then(function(font) {
         font.should.equal("normal");
       })

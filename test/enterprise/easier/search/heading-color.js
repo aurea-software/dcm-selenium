@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("search - heading color", function() {
   this.timeout(60000);
   var browser;
@@ -38,14 +36,12 @@ describe("search - heading color", function() {
   });
 
   it("should be #778086 rgba(119, 128, 134, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.search-container .heading').getComputedCss('color')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectSearch('.heading').getComputedCss('color')
       .then(function(color) {
         color.should.equal("rgba(119, 128, 134, 1)");
       })

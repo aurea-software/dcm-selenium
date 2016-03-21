@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("search - dropdown menu paddings", function() {
   this.timeout(60000);
   var browser;
@@ -38,15 +36,13 @@ describe("search - dropdown menu paddings", function() {
   });
 
   it("should be 7px 15px", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.search-container .bootstrap-select button').click()
-      .elementByCss('.search-container .bootstrap-select .dropdown-menu > li > a')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectSearch('.bootstrap-select button').click()
+      .dcmSelectSearch('.bootstrap-select .dropdown-menu > li > a')
       .getComputedCss('padding').then(function(padding) {
         padding.should.equal("7px 15px");
       })

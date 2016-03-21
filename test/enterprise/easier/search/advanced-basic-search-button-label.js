@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("advanced search - basic search button label", function() {
   this.timeout(60000);
   var browser;
@@ -38,15 +36,13 @@ describe("advanced search - basic search button label", function() {
   });
 
   it("should be Basic Search", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.search-container .btn.advanced-link').click().sleep(500) // open advanced form
-      .elementByCss('.search-container .btn.advanced-link').text()
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectPersonPartySearch('.btn.advanced-link').click().sleep(500) // open advanced form
+      .dcmSelectPersonPartySearch('.btn.advanced-link').text()
       .then(function(text) {
         text.should.equal("Basic Search");
       })

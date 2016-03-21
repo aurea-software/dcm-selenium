@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("search - dropdown menu rollover bg color", function() {
   this.timeout(60000);
   var browser;
@@ -38,15 +36,13 @@ describe("search - dropdown menu rollover bg color", function() {
   });
 
   it("should be #313541 rgba(49, 53, 65, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.search-container .bootstrap-select button').click()
-      .elementByCss('.search-container .bootstrap-select .dropdown-menu > li > a').moveTo().sleep(150)
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectSearch('.bootstrap-select button').click()
+      .dcmSelectSearch('.bootstrap-select .dropdown-menu > li > a').moveTo().sleep(150)
       .getComputedCss('background-color').then(function(bgcolor) {
         bgcolor.should.equal("rgba(49, 53, 65, 1)");
       })

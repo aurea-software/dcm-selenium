@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("search - clear button label", function() {
   this.timeout(60000);
   var browser;
@@ -38,14 +36,12 @@ describe("search - clear button label", function() {
   });
 
   it("should be Clear", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.search-container .btn.btn-xs').text()
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectPersonPartySearch('.btn.btn-xs').text()
       .then(function(text) {
         text.should.equal("Clear");
       })

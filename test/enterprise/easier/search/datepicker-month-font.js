@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("search - datepicker month font", function() {
   this.timeout(60000);
   var browser;
@@ -38,13 +36,11 @@ describe("search - datepicker month font", function() {
   });
 
   it("should be SourceSansProLight", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('DCM Admin').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmAdminTab()
+      .dcmAuditAdminPage()
       .elementByCss('.datepicker.dropdown-menu .datepicker-days .switch')
       .getComputedCss('font-family').then(function(font) {
         font.should.equal("SourceSansProLight");

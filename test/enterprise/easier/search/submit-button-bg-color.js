@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("search - submit button background color", function() {
   this.timeout(60000);
   var browser;
@@ -38,14 +36,12 @@ describe("search - submit button background color", function() {
   });
 
   it("should be #28BD8B rgba(40, 189, 139, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementByCss('.search-container .btn.btn-green')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmPersonPartyPage()
+      .dcmSelectSearch('.btn.btn-green')
       .getComputedCss('background-color').then(function(bgcolor) {
         bgcolor.should.equal("rgba(40, 189, 139, 1)");
       })

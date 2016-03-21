@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("search - datepicker day of month inactive font color", function() {
   this.timeout(60000);
   var browser;
@@ -38,13 +36,11 @@ describe("search - datepicker day of month inactive font color", function() {
   });
 
   it("should be #313541 rgba(49, 53, 65, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('DCM Admin').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmAdminTab()
+      .dcmAuditAdminPage()
       .elementByCss('.datepicker.dropdown-menu .datepicker-days .day.old')
       .getComputedCss('color').then(function(color) {
         color.should.equal("rgba(49, 53, 65, 1)");
