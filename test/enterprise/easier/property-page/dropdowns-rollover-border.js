@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("property page - dropdowns rollover border", function() {
   this.timeout(60000);
   var browser;
@@ -38,18 +36,11 @@ describe("property page - dropdowns rollover border", function() {
   });
 
   it("should be 1px solid #28BD8B rgb(40, 189, 139)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementById('Button_Person_Main_NewPerson').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('proppage')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmNewPersonPartyPage()
       .elementByCss('.bootstrap-select button').moveTo().sleep(150)
       .getComputedCss('border-bottom')
       .then(function(border) {

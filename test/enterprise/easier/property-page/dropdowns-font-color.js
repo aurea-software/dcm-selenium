@@ -13,8 +13,6 @@ var url = config.get("url");
 var username = config.get("username");
 var password = config.get("password");
 
-var common = require('../../../../test/lib/common');
-
 describe("property page - dropdowns font color", function() {
   this.timeout(60000);
   var browser;
@@ -38,18 +36,11 @@ describe("property page - dropdowns font color", function() {
   });
 
   it("should be #282C37 rgba(40, 44, 55, 1)", function  (done) {
-    common.login(browser, url, username, password)
-      .frame('navbar')
-      .elementById('Party').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('subpage')
-      .elementById('Button_Person_Main_NewPerson').click()
-      .frame()
-      .frame('container')
-      .frame('cacheframe0')
-      .frame('proppage')
+    browser
+      .dcm({url: url})
+      .dcmLogin(username, password)
+      .dcmPartyTab()
+      .dcmNewPersonPartyPage()
       .elementByCss('.bootstrap-select button').getComputedCss('color')
       .then(function(font) {
         font.should.equal("rgba(40, 44, 55, 1)");
