@@ -39,9 +39,9 @@ describe("search - datepicker bg color", function() {
     browser
       .dcm({url: url})
       .dcmLogin(username, password)
-      .dcmPartyTab()
-      .dcmPersonPartyPage()
-      .dcmSelectPersonPartySearch('.datepicker.dropdown-menu').getComputedCss('background-color')
+      .dcmAdminTab()
+      .dcmAuditAdminPage()
+      .elementByCss('.datepicker.dropdown-menu').getComputedCss('background-color')
       .then(function(bgcolor) {
         bgcolor.should.equal("rgba(31, 34, 45, 1)");
       })
