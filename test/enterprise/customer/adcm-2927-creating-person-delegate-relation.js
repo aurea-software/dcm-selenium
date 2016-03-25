@@ -5,6 +5,7 @@ var chai = require("chai");
 var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 chai.should();
+var expect = chai.expect;
 
 var DCM = require('dcm-selenium-common');
 var wd = DCM(require('wd'));
@@ -38,7 +39,7 @@ describe("ADCM-2927 creating person delegate relation", function() {
       .nodeify(done);
   });
 
-  it("should not throw exception and display form", function(done) {
+  it("should not throw exception", function(done) {
     var taxId = uuid.v4().substring(0, 32);
     var party = {
       firstName: 'DelegatorParty' + taxId,
@@ -61,8 +62,10 @@ describe("ADCM-2927 creating person delegate relation", function() {
       .dcmSidebar()
       .dcmPersonPartyDelegationSubmenu()
       .dcmNewPersonPartyDelegatePage()
-      .elementByCss('.bootstrap-select button span').text()
-      .should.eventually.become('Full')
+      .elementByCss('a#cancel').click()
+      .elementByCssOrNull('h3.heading').then(function (value) {
+        expect(value).to.be.null;
+      })
       .nodeify(done);
   });
 });
