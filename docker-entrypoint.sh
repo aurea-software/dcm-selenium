@@ -14,7 +14,7 @@ fi
 
 # patching config
 sed -i "s#\"remote\":.*#\"remote\": \"${SELENIUM_URL}\",#g" test/lib/config.json
-sed -i "s#\"address\":.*#\"url\": \"${DCM_URL}\",#g" test/lib/config.json
+sed -i "s#\"address\":.*#\"address\": \"${DCM_URL}\",#g" test/lib/config.json
 sed -i "s#\"url\":.*#\"url\": \"${DCM_URL}/DMS/dmswelcome.jsp\",#g" test/lib/config.json
 
 echo "USING SELENIUM: ${SELENIUM_URL}"
