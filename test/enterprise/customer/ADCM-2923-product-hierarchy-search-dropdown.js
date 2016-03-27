@@ -42,7 +42,7 @@ describe("ADCM-2923 product hierarchy search dropdown", function() {
       .dcmLogin(username, password)
       .dcmHierarchyTab()
       .dcmSidebar()
-      .dcmProductSearchSubmenu()
+      .dcmProductHierSearchSubmenu()
       .dcmPartyHierarchyPage()
       .elementByCss('#Search_ProductHierarchySearch_Main_primary_display_div .bootstrap-select button').click()
       .sleep(1000)
