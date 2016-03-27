@@ -1,6 +1,7 @@
 {
     "remote": "http://192.168.99.100:4444/wd/hub",
     "environment": { "browserName": "chrome" },
+    "address": "http://192.168.99.100:8081",
     "url": "http://192.168.99.100:8081/DMS/dmswelcome.jsp",
     "username": "sa",
     "password": "sa",
