@@ -41,14 +41,14 @@ describe("create product hierarchy", function() {
   it("should create new product hierarchy", function  (done) {
     var id = uuid.v4().substring(0, 32);
     var hier = {
-        name: 'ProdHier' + id
+        name: 'Prod Hier' + id
       };
     var columnElementId;
 
     browser
       .dcm({url: url})
       .dcmLogin(username, password)
-      .dcmCreateProductHier(hier)
+      .dcmCreateProductHierarchy(hier)
       .dcmHierarchyTab()
       .dcmProductHierarchyPage()
       .dcmSearchProductHierarchyByName(hier.name)
