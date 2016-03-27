@@ -59,8 +59,6 @@ describe("ADCM-2927 creating person delegate relation", function() {
       .dcmPartyTab()
       .dcmPersonPartyPage()
       .dcmSearchPersonPartyByTaxId(party.taxId)
-      .dcmSidebar()
-      .dcmPersonPartyDelegationSubmenu()
       .dcmNewPersonPartyDelegatePage()
       .elementByCss('a#cancel').click()
       .elementByCssOrNull('h3.heading').then(function (value) {
