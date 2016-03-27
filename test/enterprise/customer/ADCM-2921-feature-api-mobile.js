@@ -10,10 +10,10 @@ var request = require('supertest');
 
 var address = config.get("address");
 
-describe("ADCM-2920 feature API", function() {
+describe("ADCM-2921 feature API", function() {
   this.timeout(30000);
 
-  it("should contain EASIER feature after installation", function(done) {
+  it("should contain MOBILE feature after installation", function(done) {
     request(address)
       .get('/DMS/feature/list')
       .set('Accept', 'application/json')
@@ -21,7 +21,7 @@ describe("ADCM-2920 feature API", function() {
       .expect(200)
       .end(function(err, res){
         if (err) return done(err);
-        expect(res.body).to.deep.include.members([{"feature": "EASIER", "enabled": "true"}]);
+        expect(res.body).to.deep.include.members([{"feature": "MOBILE", "enabled": "true"}]);
         done();
       });
   });
