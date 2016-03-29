@@ -84,7 +84,7 @@ describe("ADCM-2935 comp hierarchy view in hierarchy button", function() {
       .dcmCompHierSearchSubmenu().sleep(500) // expand Comp Hier Search menu
       .dcmViewInCompHierarchyPage()
       .elementByCssOrNull('a.pass[name=Button_EditPosition]').then(function (value) {
-         expect(value).to.be.null; // buttons should not has "pass" class
+         expect(value).to.be.null; // button should not has "pass" class
       })
       .nodeify(done);
   });
